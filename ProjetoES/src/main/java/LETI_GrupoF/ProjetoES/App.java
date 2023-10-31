@@ -1,4 +1,4 @@
-package LETI_GrupoF.ProjetoES;
+package ProjetoES.src.main.java.LETI_GrupoF.ProjetoES;
 
 /**
  * Hello world!

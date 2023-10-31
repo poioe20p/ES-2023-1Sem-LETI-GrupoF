@@ -1,4 +1,4 @@
-package LETI_GrupoF.ProjetoES;
+package ProjetoES.src.test.java.LETI_GrupoF.ProjetoES;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
