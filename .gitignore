@@ -1,8 +1,8 @@
 /bin/
 /.idea/
 /out/
-/target/
-/.classpath/
-/.project/
-/user_interface/UserForm.form
+/ProjetoES/target/
+/ProjetoES/.classpath/
+/ProjetoES/.project/
+/ProjetoES/user_interface/UserForm.form
 /Exemplo.html/
