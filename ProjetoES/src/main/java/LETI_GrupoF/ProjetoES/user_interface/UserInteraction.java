@@ -8,14 +8,18 @@ import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
-//Esta class dá interatividade ao utilizador atraves da pagina
+//Esta class dá interatividade a pagina acedida pelo uitlizador
 public class UserInteraction {
 
     private UserForm userForm;
-    static final private String filePath = "ProjetoES/Horario.html";
+    static final private String filePath = "Horario.html";
 
     //Para fazer correr o programa
+
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             UserInteraction userInteraction = new UserInteraction();
@@ -41,6 +45,7 @@ public class UserInteraction {
             File file = new File(filePath);
             if (file.exists()) {
                 try {
+                    //generateHtmlPage(filePath, data);
                     desktop.browse(file.toURI());
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -53,7 +58,7 @@ public class UserInteraction {
         }
     }
 
-    public void generateHtmlPage(String filePath, String[][] data) {
+    public void generateHtmlPage(String filePath, Map<String, Object> data, java.util.List<String> columnTitles) {
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_28);
         try {
             //Vai buscar o template da pagina HTML
@@ -64,8 +69,12 @@ public class UserInteraction {
             File outputHTML = new File(filePath);
             FileWriter rewriteHTML = new FileWriter(outputHTML);
 
-            // Adiciona os dados à pagina HTML
-            template.process(data, rewriteHTML);
+            // Preenche as variaveis do template
+            Map<String, Object> root = new HashMap<>();
+            root.put("data", data);
+            root.put("columnTitles", columnTitles);
+
+            template.process(root, rewriteHTML);
 
             rewriteHTML.close();
 
