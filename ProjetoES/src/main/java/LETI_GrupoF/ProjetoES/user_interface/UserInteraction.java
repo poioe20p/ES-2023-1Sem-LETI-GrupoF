@@ -13,7 +13,7 @@ import java.io.IOException;
 public class UserInteraction {
 
     private UserForm userForm;
-    static final private String filePath = "ProjetoES/Horario.html";
+    static final private String filePath = "Horario.html";
 
     //Para fazer correr o programa
     public static void main(String[] args) {

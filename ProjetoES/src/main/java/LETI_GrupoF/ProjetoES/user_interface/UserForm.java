@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-//Este UserFrome como indica é a pagina que o utilizador vai ver quando entrar no programa
+//Este UserForm como indica é a pagina que o utilizador vai ver quando entrar no programa
 public class UserForm extends JFrame {
 
     private JButton submitFileButton;
