@@ -1,7 +1,13 @@
 package LETI_GrupoF.ProjetoES;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class Reader {
@@ -34,9 +40,42 @@ public class Reader {
 
 	}
 
+	public void dividirPorColunaJP(String siglaCurso) {
+
+		String dataToRead = "HorarioDeExemplo.csv";
+		String line;
+		String delimiter = ",";
+		List<List<String>> data = new ArrayList<>();// cada indice de da lista representa uma linhado ficheiro csv
+
+		try (BufferedReader bf = new BufferedReader(new FileReader(dataToRead))) {
+
+			while ((line = bf.readLine()) != null) {
+
+				String[] values = line.split(delimiter);
+				if (values[0].equals(siglaCurso)) {
+					data.add(Arrays.asList(values));
+				}
+
+			}
+			System.out.println(data.get(1));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for (List<String> row : data) {// escrever todas a linhas
+
+			System.out.println(row);
+		
+		}
+	}
+
 	public static void main(String[] args) {
 		Reader a = new Reader();
-		a.dividirPorColuna();
+		a.dividirPorColunaJP("LETI");
+
 	}
 
 }
