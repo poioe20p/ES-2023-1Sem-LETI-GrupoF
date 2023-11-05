@@ -3,7 +3,7 @@
 /out/
 ProjetoES/target/
 ProjetoES/.settings/
-ProjetoES/.classpath/
-ProjetoES/.project/
+ProjetoES/.classpath
+ProjetoES/.project
 ProjetoES/src/main/java/LETI_GrupoF/ProjetoES/user_interface/UserForm.form
 /Exemplo.html/
