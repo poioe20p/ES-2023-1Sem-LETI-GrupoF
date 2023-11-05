@@ -4,18 +4,24 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import javax.swing.*;
+
+import LETI_GrupoF.ProjetoES.Reader;
+
 import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 //Esta class dá interatividade a pagina acedida pelo uitlizador
 public class UserInteraction {
 
     private UserForm userForm;
-    static final private String filePath = "Horario.html";
+    static final private String pageFilePath = "Horario.html";
+    static final private String dataFilePath = "HorarioDeExemplo.csv";
+    static final private String turma = "ET-A7";
 
     //Para fazer correr o programa
 
@@ -32,7 +38,7 @@ public class UserInteraction {
         userForm.setVisible(true);
 
         userForm.setSubmitFileButtonActionListener(e -> {
-            openSchedule(filePath);
+            openSchedule(pageFilePath);
         });
 
     }
@@ -45,7 +51,8 @@ public class UserInteraction {
             File file = new File(filePath);
             if (file.exists()) {
                 try {
-                    //generateHtmlPage(filePath, data);
+                    Reader horario = new Reader(dataFilePath, turma);
+                    generateHtmlPage(filePath, horario.getTableData(), horario.getColumnTitles());
                     desktop.browse(file.toURI());
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -58,7 +65,7 @@ public class UserInteraction {
         }
     }
 
-    public void generateHtmlPage(String filePath, Map<String, Object> data, java.util.List<String> columnTitles) {
+    public void generateHtmlPage(String filePath, List<List<String>> data, List<String> columnTitles) {
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_28);
         try {
             //Vai buscar o template da pagina HTML
