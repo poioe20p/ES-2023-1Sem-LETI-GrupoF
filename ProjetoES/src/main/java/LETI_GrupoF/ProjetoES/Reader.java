@@ -74,17 +74,16 @@ public class Reader {
 	}
 
 // 	 Descomentar e correr a classe para ver o resultado
-//
-//	public static void main(String[] args) {
-//		Reader horario = new Reader("HorarioParaTestes.csv", "CI-CT-02");
-//		List<String> cabecalho = horario.getColumnTitles();
-//		System.out.println(cabecalho);
-//		List<List<String>> data = horario.getTableData();
-//		for (List<String> row : data) {
-//
-//			System.out.println(row);
-//
-//		}
-//	}
+	public static void main(String[] args) {
+		Reader horario = new Reader("ProjetoES/HorarioDeExemplo.csv", "MEA1");
+		List<String> cabecalho = horario.getColumnTitles();
+		System.out.println(cabecalho);
+		List<List<String>> data = horario.getTableData();
+		for (List<String> row : data) {
+
+			System.out.println(row);
+
+		}
+	}
 
 }

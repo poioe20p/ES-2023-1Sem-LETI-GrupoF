@@ -8,6 +8,9 @@ import java.awt.event.ActionListener;
 public class UserForm extends JFrame {
 
     private JButton submitFileButton;
+    private JTextField csvFileLocation;
+
+    private JTextField classValue;
 
     //Construtor para criar a pagina
     public UserForm() {
@@ -32,18 +35,32 @@ public class UserForm extends JFrame {
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.anchor = GridBagConstraints.CENTER;
 
+        JLabel headerLabel = new JLabel("CSV to WebBrowser Schedulle ");
+        headerLabel.setFont(new Font("Arial", Font.BOLD, 28));
+        headerLabel.setForeground(new Color(44, 62, 80));
+
+        csvFileLocation = new JTextField( "Please submit full .csv file location here" ,60);
+
+
         submitFileButton = new JButton("Submit File");
-        submitFileButton.setBackground(Color.WHITE);
-        submitFileButton.setForeground(Color.BLACK);
+        submitFileButton.setBackground(Color.BLUE);
+        submitFileButton.setForeground(Color.WHITE);
         submitFileButton.setPreferredSize(new Dimension(120, 40));
 
-
+        centerPanel.add(headerLabel, gbc);
+        gbc.gridy++;
+        centerPanel.add(csvFileLocation, gbc);
+        gbc.gridy++;
         centerPanel.add(submitFileButton, gbc);
+
         add(centerPanel, BorderLayout.CENTER);
     }
 
-    //Este método permite definir o que acontece quando o utilizador carrega no botão
-    void setSubmitFileButtonActionListener(ActionListener actionListener) {
-        submitFileButton.addActionListener(actionListener);
+    JTextField getCsvFileLocation() {
+        return csvFileLocation;
     }
+    JButton getSubmitFileButton() {
+        return submitFileButton;
+    }
+
 }
