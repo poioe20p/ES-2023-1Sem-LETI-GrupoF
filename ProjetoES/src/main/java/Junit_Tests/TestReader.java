@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -16,6 +17,7 @@ class TestReader {
 	static File ficheiroCSV = new File("HorarioParaTestes.csv");
 	static String nomeFicheiroCSV = "HorarioParaTestes.csv";
 	static Reader readerCICT02, readerA7, readerGC2, readerHorarioNExiste, readerSemNextLine;
+	static List<String> listaCabecalhos;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -24,7 +26,9 @@ class TestReader {
 		readerGC2 = new Reader(nomeFicheiroCSV, "GC2");
 		readerHorarioNExiste = new Reader("HorarioQueNaoExiste.csv", "ET-A8");
 		readerSemNextLine = new Reader("FicheiroVazio.csv", "ET-A7");
-//		List<String> listaCabecalhos = new ArrayList<String>();
+		listaCabecalhos = new ArrayList<String>(Arrays.asList("Curso", "Unidade Curricular", "Turno", "Turma",
+				"Inscritos no turno", "Dia da semana", "Hora inÃ­cio da aula", "Hora fim da aula", "Data da aula",
+				"CaracterÃ­sticas da sala pedida para a aula", "Sala atribuÃ­da Ã  aula"));
 //		listaCabecalhos.addAll("Curso", "Unidade Curricular", "Turno", "Turma", "Inscritos no turno", "Dia da semana",
 //				"Hora inÃ­cio da aula", "Hora fim da aula", "Data da aula",
 //				"CaracterÃ­sticas da sala pedida para a aula", "Sala atribuÃ­da Ã  aula");
@@ -37,6 +41,7 @@ class TestReader {
 		assertNotNull(readerCICT02);
 		assertEquals(ficheiroCSV, readerCICT02.getFicheiroCSV());
 		assertEquals("CI-CT-02", readerCICT02.getTurma());
+		assertEquals(listaCabecalhos, readerCICT02.getColumnTitles());
 		;
 
 		assertNotNull(readerA7);
