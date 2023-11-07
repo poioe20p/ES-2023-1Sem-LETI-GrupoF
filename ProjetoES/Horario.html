@@ -1,0 +1,38 @@
+<html>
+ <head>
+  <title>Horário</title>
+ </head>
+ <body></body>
+</html>
+<head>
+ <link rel="stylesheet" href="https://unpkg.com/tabulator-tables@4.8.4/dist/css/tabulator.min.css">
+</head>
+<body>
+ <div id="horario"></div>
+ <script src="https://unpkg.com/tabulator-tables@4.8.4/dist/js/tabulator.min.js"></script>
+ <script type="text/javascript">var tableData = [{ cursoL: "ME", turnoL: 'B', ucL: 'Projeto de Engenharia de Software', turmaL: 'ET-A7', inscritosL: '20', diaL: 'Segunda-feira', horaInicioL: '14:00', horaFimL: '16:00', dataL: '2021-05-03', caracteristicasL: 'Laboratório', salaL: 'B.1.01' },
+{ cursoL: 'ME', turnoL: 'B', ucL: 'Projeto de Engenharia de Software', turmaL: 'ET-A2', inscritosL: '20', diaL: 'Quarta-feira', horaInicioL: '14:00', horaFimL: '16:00', dataL: '2021-05-05', caracteristicasL: 'Laboratório', salaL: 'B.1.01' },
+{ cursoL: 'ME', turnoL: 'B', ucL: 'Projeto de Engenharia de Software', turmaL: 'ET-A7', inscritosL: '20', diaL: 'Sexta-feira', horaInicioL: '14:00', horaFimL: '16:00', dataL: '2021-05-07', caracteristicasL: 'Laboratório', salaL: 'B.1.01'}];
+var table = new Tabulator('#horario', {
+    	data: tableData,
+    	pagination:"local",
+    	layout: 'fitDatafill',
+    	paginationSize:10,
+    	movableColumns:true,
+        paginationCounter:"rows",
+        paginationSizeSelector:[5, 10, 20, 40],
+        initialSort:[{column:"building",dir:"asc"},],
+        columns: [
+            {title: 'Curso', field: 'cursoL', headerFilter:'input'},
+            {title: 'Unidade Curricular', field: 'ucL', headerFilter:'input'},
+            {title: 'Turno', field: 'turnoL', headerFilter:'input'},
+            {title: 'Turma', field: 'turmaL', headerFilter:'input'},
+            {title: 'Inscritos no turno', field: 'inscritosL', headerFilter:'input'},
+            {title: 'Dia da semana', field: 'diaL', headerFilter:'input'},
+            {title: 'Hora de início da aula' , field: 'horaInicioL', headerFilter:'input'},
+            {title: 'Hora de fim da aula', field: 'horaFimL', headerFilter:'input'},
+            {title: 'Data da aula', field: 'dataL', headerFilter:'input'},
+            {title: 'Características da sala pedida para a aula', field: 'caracteristicasL', headerFilter:'input'},
+            {title: 'Sala atribuída', field: 'salaL', headerFilter:'input'},],});;
+</script>
+</body>
