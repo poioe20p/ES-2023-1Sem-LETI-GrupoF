@@ -12,31 +12,49 @@ public class Reader {
 	private File ficheiroCSV;
 	private List<String> columnTitles;
 	private List<List<String>> tableData;
+	private String turma;
 
 	public Reader(String ficheiroLocal, String turma) {
+		this.turma = turma;
 		ficheiroCSV = new File(ficheiroLocal);
 		tableData = dividirPorColuna(ficheiroCSV, turma);
 	}
 
-	public List<List<String>> dividirPorColuna(File csv, String turma) {
+	private List<List<String>> dividirPorColuna(File csv, String turma) {
 		List<List<String>> data = new ArrayList<>();
 		Scanner sc;
 		try {
 			sc = new Scanner(csv);
-			if (sc.hasNextLine()) { // ignora a primeira linha
-				columnTitles = Arrays.asList(sc.nextLine().split(";"));
-			}
+			columnTitles = readColumnTitles(sc);
 			while (sc.hasNextLine()) {
 				List<String> linha = Arrays.asList(sc.nextLine().split(";"));
-				if(linha.get(3).contains(turma)) {
-					data.add(Arrays.asList(sc.nextLine().split(";")));
+				if (existsTurma(linha.get(3),turma)) {
+					data.add(linha);
 				}
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 		return data;
+	}
+
+	public List<String> readColumnTitles(Scanner sc) throws FileNotFoundException {
+		List<String> titles = new ArrayList<>();
+		if (sc.hasNextLine()) {
+			titles = Arrays.asList(sc.nextLine().split(";"));
+		}
+		return titles;
+	}
+
+	private boolean existsTurma(String linha, String turma) {
+		String[] turmas = linha.split(",");
+		boolean resultado = false;
+		for (int i = 0; i != turmas.length; i++) {
+			if (turmas[i].trim().equals(turma))
+				resultado = true;
+		}
+		return resultado;
 	}
 
 	public List<String> getColumnTitles() {
@@ -47,17 +65,25 @@ public class Reader {
 		return tableData;
 	}
 
-//	Descomentar e correr a classe para ver o resultado
-//	
+	public File getFicheiroCSV() {
+		return ficheiroCSV;
+	}
+
+	public String getTurma() {
+		return turma;
+	}
+
+// 	 Descomentar e correr a classe para ver o resultado
+//
 //	public static void main(String[] args) {
-//		Reader horario = new Reader("HorarioDeExemplo.csv", "ET-A7");
+//		Reader horario = new Reader("HorarioParaTestes.csv", "CI-CT-02");
 //		List<String> cabecalho = horario.getColumnTitles();
 //		System.out.println(cabecalho);
 //		List<List<String>> data = horario.getTableData();
 //		for (List<String> row : data) {
 //
 //			System.out.println(row);
-//		
+//
 //		}
 //	}
 
