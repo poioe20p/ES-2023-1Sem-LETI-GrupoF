@@ -12,8 +12,10 @@ public class Reader {
 	private File ficheiroCSV;
 	private List<String> columnTitles;
 	private List<List<String>> tableData;
+	private String turma;
 
 	public Reader(String ficheiroLocal, String turma) {
+		this.turma = turma;
 		ficheiroCSV = new File(ficheiroLocal);
 		tableData = dividirPorColuna(ficheiroCSV, turma);
 	}
@@ -44,6 +46,7 @@ public class Reader {
 		}
 		return titles;
 	}
+
 	private boolean existsTurma(String linha, String turma) {
 		String[] turmas = linha.split(",");
 		boolean resultado = false;
@@ -62,10 +65,18 @@ public class Reader {
 		return tableData;
 	}
 
+	public File getFicheiroCSV() {
+		return ficheiroCSV;
+	}
+
+	public String getTurma() {
+		return turma;
+	}
+
 // 	 Descomentar e correr a classe para ver o resultado
 //
 //	public static void main(String[] args) {
-//		Reader horario = new Reader("HorarioDeExemplo.csv", "ET-A1");
+//		Reader horario = new Reader("HorarioParaTestes.csv", "CI-CT-02");
 //		List<String> cabecalho = horario.getColumnTitles();
 //		System.out.println(cabecalho);
 //		List<List<String>> data = horario.getTableData();
