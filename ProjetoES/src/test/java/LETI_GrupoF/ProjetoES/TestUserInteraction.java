@@ -20,4 +20,5 @@ class TestUserInteraction {
 		assertNotNull(ui);
 	}
 
+
 }

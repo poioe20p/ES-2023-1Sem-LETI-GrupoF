@@ -8,12 +8,11 @@ import org.junit.jupiter.api.Test;
 class TestHtmlCreator {
 	static HtmlCreator horarioMEA1, horarioNaoExistente;
 	static String pageFilePath = "Horario.html";
-    static String turma = "MEA1";
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		horarioNaoExistente = new HtmlCreator("ProjetoEs/HorarioNaoExiste.html", turma);
-		horarioMEA1 = new HtmlCreator(pageFilePath, turma);
+		horarioNaoExistente = new HtmlCreator("ProjetoEs/HorarioNaoExiste.html");
+		horarioMEA1 = new HtmlCreator(pageFilePath);
 	}
 
 	@Test
