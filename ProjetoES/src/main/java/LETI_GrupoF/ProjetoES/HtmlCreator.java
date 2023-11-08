@@ -12,7 +12,7 @@ import java.util.List;
 public class HtmlCreator {
 
     static final private String pageFilePath = "ProjetoES/Horario.html";
-    
+
     private final List<List<String>> dataForHtml;
     private final List<String> columnFields;
 
@@ -68,15 +68,16 @@ public class HtmlCreator {
 
         for (List<String> row : dataForHtml) {
 
-                jsCode.append("{ ");
-                for (int i = 0; i < columnFields.size(); i++) {
-                    jsCode.append(columnFields.get(i));
-                    String s = "'" + row.get(i) + "', ";
-                    jsCode.append(s);
-                }
+            jsCode.append("{ ");
+            for (int i = 0; i < columnFields.size(); i++) {
+                jsCode.append(columnFields.get(i));
+                String s = "'" + row.get(i) + "', ";
+                jsCode.append(s);
+            }
 
             jsCode.delete(jsCode.length() - 2, jsCode.length());
             jsCode.append(" }, ");
+
         }
         return jsCode.substring(0, jsCode.length() - 2) + "];";
     }
@@ -160,9 +161,9 @@ public class HtmlCreator {
 
         return success;
     }
-    
+
     public String getHtmlPath() {
-    	return pageFilePath;
+        return pageFilePath;
     }
 
 }
