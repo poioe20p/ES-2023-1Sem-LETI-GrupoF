@@ -56,10 +56,11 @@ public class UserForm extends JFrame {
         add(centerPanel, BorderLayout.CENTER);
     }
 
-    JTextField getCsvFileLocation() {
+    public JTextField getCsvFileLocation() {
         return csvFileLocation;
     }
-    JButton getSubmitFileButton() {
+    
+    public JButton getSubmitFileButton() {
         return submitFileButton;
     }
 

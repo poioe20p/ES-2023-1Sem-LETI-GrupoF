@@ -12,9 +12,9 @@ import java.util.List;
 public class HtmlCreator {
 
     static final private String pageFilePath = "ProjetoES/Horario.html";
-    static final private String dataFilePath = "ProjetoEs/HorarioDeExemplo.csv";
-
+    static final private String dataFilePath = "ProjetoES/HorarioDeExemplo.csv";
     static final private String turma = "MEA1";
+    
     private final List<List<String>> dataForHtml;
     private final List<String> columnFields;
 
