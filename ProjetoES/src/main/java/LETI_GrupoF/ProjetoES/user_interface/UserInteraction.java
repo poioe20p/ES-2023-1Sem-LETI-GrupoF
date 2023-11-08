@@ -12,7 +12,7 @@ public class UserInteraction {
     //Pagina da GUI
     private UserForm userForm;
     private HtmlCreator htmlCreator;
-    static final private String pageFilePath = "ProjetoES/Horario.html";
+//    static final private String pageFilePath = "Horario.html";
     static final private String turma = "ET-A7";
 
     //Para fazer correr o programa
@@ -34,8 +34,8 @@ public class UserInteraction {
                 File file = new File(input);
                 if(file.exists()){
                     //Se existir usa o csv para gerar os dados para a pagina HTML e depois abre a pagina
-                    htmlCreator = new HtmlCreator(pageFilePath, input, "METI-A1");
-                    openSchedule(pageFilePath);
+                    htmlCreator = new HtmlCreator(input, "MEA1");
+                    openSchedule(htmlCreator.getHtmlPath());
                 } else {
                     //No caso de não existir o ficheiro aparece uma mensagem de erro
                     JOptionPane.showMessageDialog(userForm, "File does not exist: " + file, "Error", JOptionPane.ERROR_MESSAGE);

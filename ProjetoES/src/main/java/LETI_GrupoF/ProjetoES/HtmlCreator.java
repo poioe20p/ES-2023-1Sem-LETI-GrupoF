@@ -11,15 +11,13 @@ import java.util.List;
 //Esta class cria a pagina HTML
 public class HtmlCreator {
 
-    static final private String pageFilePath = "ProjetoES/Horario.html";
-    static final private String dataFilePath = "ProjetoES/HorarioDeExemplo.csv";
-    static final private String turma = "MEA1";
+    static final private String pageFilePath = "Horario.html";
     
     private final List<List<String>> dataForHtml;
     private final List<String> columnFields;
 
 
-    public HtmlCreator(String pageFilePath, String dataFilePath, String turma) {
+    public HtmlCreator(String dataFilePath, String turma) {
         Reader dataFromCSV = new Reader(dataFilePath, turma);
         this.dataForHtml = dataFromCSV.getTableData();
 
@@ -46,15 +44,15 @@ public class HtmlCreator {
                 }
             }
             else {
-                continue;
+            	continue;
             }
+                
             jsCode.delete(jsCode.length() - 2, jsCode.length());
             jsCode.append(" }, ");
+      
         }
         return jsCode.substring(0, jsCode.length() - 2) + "];";
     }
-
-
 
     //Cria a pagina HTML
     public boolean generateHtmlPage() {
@@ -133,6 +131,10 @@ public class HtmlCreator {
         }
 
         return success;
+    }
+    
+    public String getHtmlPath() {
+    	return pageFilePath;
     }
 
 }

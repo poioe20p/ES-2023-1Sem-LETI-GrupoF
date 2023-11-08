@@ -9,6 +9,7 @@ public class UserForm extends JFrame {
 
     private JButton submitFileButton;
     private JTextField csvFileLocation;
+    private JTextField classFilter;
 
     private JTextField classValue;
 
@@ -40,6 +41,7 @@ public class UserForm extends JFrame {
         headerLabel.setForeground(new Color(44, 62, 80));
 
         csvFileLocation = new JTextField( "Please submit full .csv file location here" ,60);
+//        classFilter = new JTextField("Class for filtering", )
 
 
         submitFileButton = new JButton("Submit File");
