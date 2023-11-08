@@ -71,7 +71,8 @@ public class HtmlCreator {
             jsCode.append("{ ");
             for (int i = 0; i < columnFields.size(); i++) {
                 jsCode.append(columnFields.get(i));
-                String s = "'" + row.get(i) + "', ";
+                String s1 = row.get(i).replace("'", "");
+                String s = "'" + s1 + "', ";
                 jsCode.append(s);
             }
 
