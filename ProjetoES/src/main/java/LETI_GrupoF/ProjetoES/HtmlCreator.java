@@ -11,7 +11,7 @@ import java.util.List;
 //Esta class cria a pagina HTML
 public class HtmlCreator {
 
-    static final private String pageFilePath = "ProjetoES/Horario.html";
+    static final private String pageFilePath = "Horario.html";
 
     private final List<List<String>> dataForHtml;
     private final List<String> columnFields;
@@ -26,41 +26,6 @@ public class HtmlCreator {
                 "cursoL: ", "ucL: ", "turnoL: ", "turmaL: ", "inscritosL: ",
                 "diaL: ", "horaInicioL: ", "horaFimL: ", "dataL: ", "caracteristicasL: ", "salaL: "));
     }
-
-//    public HtmlCreator(String dataFilePath, String turma) {
-//        Reader dataFromCSV = new Reader(dataFilePath, turma);
-//        this.dataForHtml = dataFromCSV.getTableData();
-//
-//        //Gera a lista com os fields usados no tabulator para cada coluna
-//        this.columnFields = new ArrayList<>(List.of(
-//                "cursoL: ", "ucL: ", "turnoL: ", "turmaL: ", "inscritosL: ",
-//                "diaL: ", "horaInicioL: ", "horaFimL: ", "dataL: ", "caracteristicasL: ", "salaL: "));
-//    }
-
-
-    //Associa cada valor de cada coluna ao respetivo field, formando uma string de JavaScript que
-    // corresponde a um objeto que na sua essência é um vetor de vetores onde cada vetor possui 11 pares field:valor
-//    private String formatDataForHtml() {
-//        StringBuilder jsCode = new StringBuilder();
-//        jsCode.append("var tableData = [");
-//
-//        for (List<String> row : dataForHtml) {
-//            if(row.size() == 11) {
-//                jsCode.append("{ ");
-//                for (int i = 0; i < columnFields.size(); i++) {
-//                    jsCode.append(columnFields.get(i));
-//                    String s = "'" + row.get(i) + "', ";
-//                    jsCode.append(s);
-//                }
-//            }
-//            else {
-//                continue;
-//            }
-//            jsCode.delete(jsCode.length() - 2, jsCode.length());
-//            jsCode.append(" }, ");
-//        }
-//        return jsCode.substring(0, jsCode.length() - 2) + "];";
-//    }
 
     private String formatDataForHtml() {
         StringBuilder jsCode = new StringBuilder();

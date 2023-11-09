@@ -6,25 +6,27 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class TestHtmlCreator {
-	static HtmlCreator horarioMEA1, horarioNaoExistente;
-	static String pageFilePath = "Horario.html";
+	static HtmlCreator horario, horarioNaoExistente;
+	static String dataFilePath = "HorarioParaTestes.csv";
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		horarioNaoExistente = new HtmlCreator("ProjetoEs/HorarioNaoExiste.html");
-		horarioMEA1 = new HtmlCreator(pageFilePath);
+		horario = new HtmlCreator(dataFilePath);
 	}
 
 	@Test
 	void testHtmlCreator() {
-		assertNotNull(horarioMEA1);
-		assertNotNull(horarioNaoExistente);
+		assertNotNull(horario);
 	}
 
 	@Test
 	void testGenerateHtmlPage() {
-		assertTrue(horarioMEA1.generateHtmlPage());
-		assertFalse(horarioNaoExistente.generateHtmlPage());
+		assertTrue(horario.generateHtmlPage());
 	}
 
+	@Test
+	void testGetHtmlPath() {
+		assertEquals(horario.getHtmlPath(), "Horario.html");
+	}
+	
 }

@@ -12,8 +12,6 @@ public class UserInteraction {
     //Pagina da GUI
     private final UserForm userForm;
     private HtmlCreator htmlCreator;
-    //    static final private String pageFilePath = "Horario.html";
-    static final private String turma = "ET-A7";
 
     //Para fazer correr o programa
     public static void main(String[] args) {
@@ -36,8 +34,8 @@ public class UserInteraction {
                         if( input.matches("^https?://.*")) {
                             try {
                                 URL remoteFile = new URL(input);
-                                if(saveToLocalFile(remoteFile.openStream(), "ProjetoES/HorarioRemoto.csv")) {
-                                    htmlCreator = new HtmlCreator("ProjetoES/HorarioRemoto.csv");
+                                if(saveToLocalFile(remoteFile.openStream(), "HorarioRemoto.csv")) {
+                                    htmlCreator = new HtmlCreator("HorarioRemoto.csv");
                                     openSchedule();
                                 }
                                 else {
