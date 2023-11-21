@@ -36,7 +36,7 @@ public class UserForm extends JFrame {
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.anchor = GridBagConstraints.CENTER;
 
-        JLabel headerLabel = new JLabel("CSV to WebBrowser Schedulle ");
+        JLabel headerLabel = new JLabel("CSV to WebBrowser Schedule ");
         headerLabel.setFont(new Font("Arial", Font.BOLD, 28));
         headerLabel.setForeground(new Color(44, 62, 80));
 
