@@ -11,7 +11,7 @@ import java.util.List;
 //Esta class cria a pagina HTML
 public class HtmlCreator {
 
-    static final private String pageFilePath = "Horario.html";
+    static final private String pageFilePath = "ProjetoES/Horario.html";
 
     private final List<List<String>> dataForHtml;
     private final List<String> columnFields;

@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.net.URL;
+import java.util.List;
 
 //Esta class dá interatividade a pagina acedida pelo uitlizador
 public class UserInteraction {
@@ -26,7 +27,7 @@ public class UserInteraction {
         //Define o comportamento do boão quando o mesmo é clicado
         userForm.getSubmitFileButton().addActionListener( e -> {
                     //Vai buscar o input do utilizador
-                    String input = userForm.getCsvFileLocation().getText();
+                    String input = userForm.getCsvFileLocationTextField().getText();
 
                     if(input != null && !input.isEmpty()) {
 
@@ -34,8 +35,8 @@ public class UserInteraction {
                         if( input.matches("^https?://.*")) {
                             try {
                                 URL remoteFile = new URL(input);
-                                if(saveToLocalFile(remoteFile.openStream(), "HorarioRemoto.csv")) {
-                                    htmlCreator = new HtmlCreator("HorarioRemoto.csv");
+                                if(saveToLocalFile(remoteFile.openStream(), "ProjetoES/HorarioRemoto.csv")) {
+                                    htmlCreator = new HtmlCreator("ProjetoES/HorarioRemoto.csv");
                                     openSchedule();
                                 }
                                 else {
@@ -66,6 +67,13 @@ public class UserInteraction {
 
     }
 
+    //Este método devolve os titulos das colunas da tabela ordenados pelo utilizador na GUI
+    public List<String> getUserOrderedColumnTitles() {
+        return userForm.getColumnTitles();
+    }
+
+
+    //Este método guarda o ficheiro remoto para um ficheiro local
     private boolean saveToLocalFile(InputStream inputStream, String localFilePath) {
         try {
             File localFile = new File(localFilePath);
@@ -114,6 +122,8 @@ public class UserInteraction {
             JOptionPane.showMessageDialog(userForm, "Desktop is not supported on this platform", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
+
 
 
 }

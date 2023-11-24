@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test;
 
 import LETI_GrupoF.ProjetoES.user_interface.UserForm;
 
+import java.util.ArrayList;
+import java.util.List;
+
 class TestUserForm {
 	static UserForm uf;
 
@@ -22,7 +25,7 @@ class TestUserForm {
 
 	@Test
 	void testGetCsvFileLocation() {
-		assertNotNull(uf.getCsvFileLocation());
+		assertNotNull(uf.getCsvFileLocationTextField());
 	}
 
 	@Test
