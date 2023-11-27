@@ -5,7 +5,12 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 //Este UserForm como indica é a pagina que o utilizador vai ver quando entrar no programa
+
+/**
+ * A classe UserForm representa a pagina principal da GUI.
+ */
 public class UserForm extends JFrame {
 
     private final JButton openScheduleButton;
@@ -19,6 +24,11 @@ public class UserForm extends JFrame {
             "Caracaterísticas da sala atribuída para a aula", "Sala de aula atribuída"));
 
     private JButton continueButton;
+
+    /**
+     * Construtor da classe UserForm.
+     *
+     */
 
     //Construtor para criar a pagina
     public UserForm() {
@@ -97,6 +107,11 @@ public class UserForm extends JFrame {
         //Faz com que a pagina ao ser iniciada apareça no centro do ecrã
         setLocationRelativeTo(null);
     }
+
+    /**
+     * Abre a pagina para o utilizador reordenar as colunas da tabela.
+     * @param userColumnTitles
+     */
 
     public void openReorderPage(List<String> userColumnTitles) {
         JFrame reorderFrame = new JFrame();
@@ -248,6 +263,13 @@ public class UserForm extends JFrame {
         reorderFrame.setVisible(true);
     }
 
+    /**
+     * Move a coluna selecionada para cima ou para baixo.
+     *
+     * @param list
+     * @param direction
+     */
+
     //Metodo que move as colunas visualmente e na lista de colunas de acordo com o botao que é clicado
     private void moveSelectedColumn(JList<String> list, int direction) {
         int selectedIndex = list.getSelectedIndex();
@@ -261,20 +283,57 @@ public class UserForm extends JFrame {
         }
     }
 
+
+    /**
+     * Devolve a caixa de texto quer serve para o utilizador submeter a locaização do ficheiro
+     *
+     * @return devolve a caixa de texto
+     */
+
     //Metodos que devolvem elementos da pagina
     public JTextField getCsvFileLocationTextField() {
         return csvFileLocation;
     }
 
+    /**
+     * Devolve o botao para abrir a pagina HTML.
+     *
+     * @return devolve o botão que tem o objetivo de ser usado para abrir o horario no browser
+     */
+
     public JButton getOpenScheduleButton() {
         return openScheduleButton;
     }
 
+    /**
+     * Devolve o botao para submeter o ficheiro.
+     *
+     * @return notão que tem o intuito de ser usado para levar o utilizador para a proxima pagina
+     */
     public JButton getContinueButton() { return continueButton;}
 
+
+    /**
+     * Devolve uma lista com os titulos das colunas ordenados pelo utilizador.
+     *
+     * @return o valor do booleano que indica se o ficheiro csv é remoto ou não
+     */
     public boolean isRemoteFile() { return isRemoteFile;}
 
+
+    /**
+     * Devolve uma lista com os titulos das colunas ordenados pelo utilizador.
+     *
+     * @param remoteFile
+     */
     public void setRemoteFile(boolean remoteFile) { isRemoteFile = remoteFile;}
+
+
+    /**
+     * Devolve uma lista com os titulos das colunas ordenados pelo utilizador.
+     *
+     * @return uma lista com os titulos das colunas ordenados pelo utilizador
+     */
 
     //Devolve uma lista com as colunas ordenadas pelo utilizador
     public List<String> getColumnTitles() {
