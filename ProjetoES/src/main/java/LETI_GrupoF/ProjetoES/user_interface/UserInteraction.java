@@ -1,6 +1,8 @@
 package LETI_GrupoF.ProjetoES.user_interface;
 
 import LETI_GrupoF.ProjetoES.HtmlCreator;
+import LETI_GrupoF.ProjetoES.Reader;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
@@ -25,7 +27,19 @@ public class UserInteraction {
         userForm.setVisible(true);
 
         //Define o comportamento do boão quando o mesmo é clicado
-        userForm.getSubmitFileButton().addActionListener( e -> {
+        userForm.getOpenScheduleButton().addActionListener(e -> {
+                    if(userForm.isRemoteFile()) {
+                        htmlCreator = new HtmlCreator("ProjetoES/HorarioRemoto.csv");
+                        openSchedule();
+                    }
+                    else {
+                        htmlCreator = new HtmlCreator(userForm.getCsvFileLocationTextField().getText());
+                        openSchedule();
+                    }
+                }
+        );
+
+        userForm.getContinueButton().addActionListener( e -> {
                     //Vai buscar o input do utilizador
                     String input = userForm.getCsvFileLocationTextField().getText();
 
@@ -33,11 +47,12 @@ public class UserInteraction {
 
                         //Verifica se o input é um URL ou um caminho para um ficheiro
                         if( input.matches("^https?://.*")) {
+                            userForm.setRemoteFile(true);
                             try {
                                 URL remoteFile = new URL(input);
                                 if(saveToLocalFile(remoteFile.openStream(), "ProjetoES/HorarioRemoto.csv")) {
-                                    htmlCreator = new HtmlCreator("ProjetoES/HorarioRemoto.csv");
-                                    openSchedule();
+                                    Reader reader = new Reader("ProjetoES/HorarioRemoto.csv");
+                                    userForm.openReorderPage(reader.getColumnTitles());
                                 }
                                 else {
                                     JOptionPane.showMessageDialog(userForm, "Error processing remote file, please try again", "Error", JOptionPane.ERROR_MESSAGE);
@@ -51,8 +66,8 @@ public class UserInteraction {
                             File file = new File(input);
                             if (file.exists()) {
                                 //Se existir usa o csv para gerar os dados para a pagina HTML e depois abre a pagina
-                                htmlCreator = new HtmlCreator(input);
-                                openSchedule();
+                                Reader reader = new Reader(input);
+                                userForm.openReorderPage(reader.getColumnTitles());
                             } else {
                                 //No caso de não existir o ficheiro aparece uma mensagem de erro
                                 JOptionPane.showMessageDialog(userForm, "File does not exist: " + file, "Error", JOptionPane.ERROR_MESSAGE);

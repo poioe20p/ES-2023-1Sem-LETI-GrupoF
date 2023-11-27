@@ -100,7 +100,8 @@ public class HtmlCreator {
                             {title: 'Hora de fim da aula', field: 'horaFimL', headerFilter:'input'},
                             {title: 'Data da aula', field: 'dataL', headerFilter:'input'},
                             {title: 'Características da sala pedida para a aula', field: 'caracteristicasL', headerFilter:'input'},
-                            {title: 'Sala atribuída', field: 'salaL', headerFilter:'input'},],});;
+                            {title: 'Sala atribuída', field: 'salaL', headerFilter:'input'
+                            },],});;
                 """;
 
         // Completa o código JavaScript com os dados da tabela

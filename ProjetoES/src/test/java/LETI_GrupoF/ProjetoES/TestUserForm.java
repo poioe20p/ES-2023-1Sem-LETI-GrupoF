@@ -7,9 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import LETI_GrupoF.ProjetoES.user_interface.UserForm;
 
-import java.util.ArrayList;
-import java.util.List;
-
 class TestUserForm {
 	static UserForm uf;
 
@@ -30,7 +27,7 @@ class TestUserForm {
 
 	@Test
 	void testGetSubmitFileButton() {
-		assertNotNull(uf.getSubmitFileButton());
+		assertNotNull(uf.getOpenScheduleButton());
 	}
 
 
