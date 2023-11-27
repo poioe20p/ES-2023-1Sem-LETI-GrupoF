@@ -53,9 +53,9 @@ public class Schedule {
 	}
 
 	/**
-	 * Obtém o índice da coluna "Turma" na tabela.
+	 * Obtem o indice da coluna "Turma" na tabela.
 	 *
-	 * @return O índice da coluna "Turma".
+	 * @return O indice da coluna "Turma".
 	 */
 
 	public int indiceColunaTurma() {
@@ -71,10 +71,10 @@ public class Schedule {
 	}
 
 	/**
-	 * Verifica se uma turma específica existe no horário.
+	 * Verifica se uma turma especifica existe no horário.
 	 *
 	 * @param linha A string que contem informações sobre a turma.
-	 * @return true se a turma existir no horário, false caso contrário.
+	 * @return true se a turma existir no horario, false caso contrario.
 	 */
 
 	boolean existsTurma(String linha) {
