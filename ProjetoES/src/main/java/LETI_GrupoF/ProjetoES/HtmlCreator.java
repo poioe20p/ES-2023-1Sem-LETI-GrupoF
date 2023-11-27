@@ -12,7 +12,6 @@ import java.util.List;
 public class HtmlCreator {
 
     static final private String pageFilePath = "ProjetoES/Horario.html";
-
     private final List<List<String>> dataForHtml;
     private final List<String> columnFields;
 
@@ -25,6 +24,15 @@ public class HtmlCreator {
         this.columnFields = new ArrayList<>(List.of(
                 "cursoL: ", "ucL: ", "turnoL: ", "turmaL: ", "inscritosL: ",
                 "diaL: ", "horaInicioL: ", "horaFimL: ", "dataL: ", "caracteristicasL: ", "salaL: "));
+    }
+
+    //Devolve uma lista com a posição dos valores assoicados a cada titulo na ordem do ficheiro CSV fornecido pelo utilizador
+    private List<String> tiltesPosition(List<String> csvHeaderl, List<String> userOrderTitles) {
+        List<String> titlesPosition = new ArrayList<>();
+        for( String title : userOrderTitles) {
+            titlesPosition.add(String.valueOf(csvHeaderl.indexOf(title)));
+        }
+        return titlesPosition;
     }
 
     private String formatDataForHtml() {
@@ -47,6 +55,7 @@ public class HtmlCreator {
         }
         return jsCode.substring(0, jsCode.length() - 2) + "];";
     }
+
 
 
     //Cria a pagina HTML
