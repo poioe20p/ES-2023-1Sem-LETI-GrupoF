@@ -1,5 +1,6 @@
 package LETI_GrupoF.ProjetoES;
 
+import LETI_GrupoF.ProjetoES.user_interface.UserInteraction;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
@@ -13,43 +14,53 @@ import java.util.List;
  */
 public class HtmlCreator {
 
-	static final private String pageFilePath = "Horario.html";
+	static final private String pageFilePath = "ProjetoES/Horario.html";
 	private final List<List<String>> dataForHtml;
 	private final List<String> columnFields;
+	private final Reader dataFromCSV;
+
+	private List<String> userOrderTitles = new ArrayList<>();
 
 	/**
 	 * Construtor da classe HtmlCreator. Inicializa um objeto HtmlCreator com o
 	 * caminho do arquivo CSV contendo os dados para a pagina HTML.
 	 *
 	 * @param dataFilePath O caminho local do arquivo CSV a ser lido.
+	 * @param userOrderTitles Lista com os titulos das colunas na ordem escolhida pelo utilizador.
 	 */
 
-	public HtmlCreator(String dataFilePath) {
-		Reader dataFromCSV = new Reader(dataFilePath);
-		this.dataForHtml = dataFromCSV.getTableData();
+	public HtmlCreator(String dataFilePath, List<String> userOrderTitles) {
+		dataFromCSV = new Reader(dataFilePath);
+		dataForHtml = dataFromCSV.getTableData();
+		this.userOrderTitles = userOrderTitles;
 
 		// Gera a lista com os fields usados no tabulator para cada coluna
-		this.columnFields = new ArrayList<>(List.of("cursoL: ", "ucL: ", "turnoL: ", "turmaL: ", "inscritosL: ",
-				"diaL: ", "horaInicioL: ", "horaFimL: ", "dataL: ", "caracteristicasL: ", "salaL: "));
+//		this.columnFields = new ArrayList<>(List.of("cursoL: ", "ucL: ", "turnoL: ", "turmaL: ", "inscritosL: ",
+//				"diaL: ", "horaInicioL: ", "horaFimL: ", "dataL: ", "caracteristicasL: ", "salaL: "));
+
+		this.columnFields = new ArrayList<>();
+		for(String titles: userOrderTitles) {
+			String titlesTrimmed = titles.replace(" ", "");
+			columnFields.add(titlesTrimmed + "_field");
+		}
 	}
 
 	/**
 	 * Devolve uma lista com a posicao dos valores associados a cada titulo na ordem
 	 * do arquivo CSV fornecido pelo usuario.
 	 *
-	 * @param csvHeaderl      Lista de titulos das colunas do arquivo CSV.
-	 * @param userOrderTitles Lista de titulos especificada pelo usuario.
 	 * @return Lista de strings contendo a posicao dos titulos.
 	 */
 	// Devolve uma lista com a posição dos valores assoicados a cada titulo na ordem
 	// do ficheiro CSV fornecido pelo utilizador
-	private List<String> tiltesPosition(List<String> csvHeaderl, List<String> userOrderTitles) {
+	private List<String> tiltesPosition() {
 		List<String> titlesPosition = new ArrayList<>();
 		for (String title : userOrderTitles) {
-			titlesPosition.add(String.valueOf(csvHeaderl.indexOf(title)));
+			titlesPosition.add(String.valueOf(dataFromCSV.getColumnTitles().indexOf(title)));
 		}
 		return titlesPosition;
 	}
+
 
 	/**
 	 * Formata os dados para a representacao em HTML.
@@ -59,15 +70,16 @@ public class HtmlCreator {
 	private String formatDataForHtml() {
 		StringBuilder jsCode = new StringBuilder();
 		jsCode.append("var tableData = [");
+		List<String> titlesPosition = tiltesPosition();
 
 		for (List<String> row : dataForHtml) {
 
 			jsCode.append("{ ");
 			for (int i = 0; i < columnFields.size(); i++) {
-				jsCode.append(columnFields.get(i));
-				String s1 = row.get(i).replace("'", "");
-				String s = "'" + s1 + "', ";
-				jsCode.append(s);
+				jsCode.append(columnFields.get(i) + ": ");
+				String columnValue = row.get(Integer.parseInt(titlesPosition.get(i))).replace("'", "");
+				String javaScriptFormatValue = "'" + columnValue + "', ";
+				jsCode.append(javaScriptFormatValue);
 			}
 
 			jsCode.delete(jsCode.length() - 2, jsCode.length());
@@ -75,6 +87,23 @@ public class HtmlCreator {
 
 		}
 		return jsCode.substring(0, jsCode.length() - 2) + "];";
+	}
+
+	/**
+	 * Constroi a string com as colunas da tabela.
+	 *
+	 * @return String contendo o codigo JavaScript com as colunas da tabela.
+	 */
+	private String buildColumnsForTable() {
+		StringBuilder jsCode = new StringBuilder();
+		jsCode.append("\t" + "\t").append("columns: [");
+
+		for (int i = 0; i < columnFields.size(); i++) {
+			jsCode.append("\t" + "\t").append("{title: '").append(userOrderTitles.get(i)).append("', field: '").append(columnFields.get(i)).append("', headerFilter:'input'},").append("\n");
+		}
+		jsCode.delete(jsCode.length() - 1, jsCode.length());
+		jsCode.append("],");
+		return jsCode.toString();
 	}
 
 	/**
@@ -135,14 +164,33 @@ public class HtmlCreator {
 				            },],});;
 				""";
 
+		String javaScriptTable1 =  """
+				var table = new Tabulator('#horario', {
+				    	data: tableData,
+				    	pagination:"local",
+				    	layout: 'fitDatafill',
+				    	paginationSize:10,
+				    	movableColumns:true,
+				        paginationCounter:"rows",
+				        paginationSizeSelector:[5, 10, 20, 40],
+				        initialSort:[{column:"building",dir:"asc"},],
+				        """;
+
+		String javaScriptColumns = buildColumnsForTable();
+
+		String javaScriptTable2 = javaScriptTable1 + javaScriptColumns + "});;";
+
 		// Completa o codigo JavaScript com os dados da tabela
-		String javascriptCode = formatDataForHtml() + "\n" + javascriptTable;
+		String javascriptCode = formatDataForHtml() + "\n" + javaScriptTable2;
 
 		// Adiciona o codigo JavaScript à página HTML
 		body.appendElement("script").attr("type", "text/javascript").text(javascriptCode);
+
 		try {
 			// Gera a string que representa o HTML
 			String htmlContent = doc.html();
+
+			System.out.println(htmlContent);
 
 			// Escreve a string no ficheiro HTML
 			FileWriter writer = new FileWriter(pageFilePath);

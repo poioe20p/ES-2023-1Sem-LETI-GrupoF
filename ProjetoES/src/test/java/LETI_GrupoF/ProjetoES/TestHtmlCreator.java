@@ -9,9 +9,10 @@ class TestHtmlCreator {
 	static HtmlCreator horario, horarioNaoExistente;
 	static String dataFilePath = "HorarioParaTestes.csv";
 
+	//Teste por fazer
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		horario = new HtmlCreator(dataFilePath);
+		horario = new HtmlCreator(dataFilePath, null);
 	}
 
 	@Test

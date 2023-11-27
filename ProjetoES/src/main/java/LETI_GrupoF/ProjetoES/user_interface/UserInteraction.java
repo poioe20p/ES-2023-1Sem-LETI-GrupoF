@@ -29,11 +29,11 @@ public class UserInteraction {
         //Define o comportamento do boão quando o mesmo é clicado
         userForm.getOpenScheduleButton().addActionListener(e -> {
                     if(userForm.isRemoteFile()) {
-                        htmlCreator = new HtmlCreator("ProjetoES/HorarioRemoto.csv");
+                        htmlCreator = new HtmlCreator("ProjetoES/HorarioRemoto.csv", getUserOrderedColumnTitles());
                         openSchedule();
                     }
                     else {
-                        htmlCreator = new HtmlCreator(userForm.getCsvFileLocationTextField().getText());
+                        htmlCreator = new HtmlCreator(userForm.getCsvFileLocationTextField().getText(), getUserOrderedColumnTitles());
                         openSchedule();
                     }
                 }
