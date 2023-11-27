@@ -109,16 +109,16 @@ public class Schedule {
 	 *
 	 * @param args Os argumentos da linha de comando (não sao usados neste caso).
 	 */
-	public static void main(String[] args) {
-		Reader reader = new Reader("HorarioParaTestes.csv");
-
-		Schedule horario = new Schedule("ET-A10", reader);
-
-		for (List<String> linha : horario.getHorario()) {
-			System.out.println(linha);
-
-		}
-
-	}
+//	public static void main(String[] args) {
+//		Reader reader = new Reader("HorarioParaTestes.csv");
+//
+//		Schedule horario = new Schedule("ET-A10", reader);
+//
+//		for (List<String> linha : horario.getHorario()) {
+//			System.out.println(linha);
+//
+//		}
+//
+//	}
 
 }
