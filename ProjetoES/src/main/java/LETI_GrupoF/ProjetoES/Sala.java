@@ -40,69 +40,38 @@ public class Sala {
 		this.tipo = tipo;
 	}
 
-	/**
-	 * Le as salas de um arquivo CSV e retorna uma lista de objetos Sala.
-	 *
-	 * @param csv O arquivo CSV contendo as informacoes das salas.
-	 * @return Lista de objetos Sala lidos do arquivo CSV.
-	 */
-	public List<Sala> lerSalasDoCSV(File csv) {
-		List<Sala> data = new ArrayList<>();
-		Scanner sc;
-		try {
-			sc = new Scanner(csv);
-			columnTitles = readColumnTitles(sc);
-			while (sc.hasNextLine()) {
-				List<String> linha = new ArrayList<>(List.of(sc.nextLine().split(";")));
-				data.add(criarSala(linha));
-			}
-
-		} catch (
-
-		FileNotFoundException e) {
-			e.printStackTrace();
-		}
-
-		return data;
+	public int getnCaracteristicas() {
+		return nCaracteristicas;
 	}
 
-	/**
-	 * Cria e retorna um objeto Sala a partir de uma linha de dados do arquivo CSV.
-	 *
-	 * @param linha Lista de strings representando uma linha de dados do arquivo
-	 *              CSV.
-	 * @return Objeto Sala criado a partir da linha de dados.
-	 */
-	public Sala criarSala(List<String> linha) {
-		String edificio = linha.get(0);
-		String nome = linha.get(1);
-		int capacidadeN = Integer.parseInt(linha.get(2));
-		int capacidadeE = Integer.parseInt(linha.get(3));
-		int nCaracteristicas = Integer.parseInt(linha.get(4));
-		List<String> tipo = new ArrayList<>();
-		for (int i = 5; i != linha.size(); i++) {
-			if (linha.get(i).trim() == "X") {
-				tipo.add(getColumnTitles().get(i));
-			}
-		}
-		return new Sala(edificio, nome, capacidadeN, capacidadeE, nCaracteristicas, tipo);
+	public void setnCaracteristicas(int nCaracteristicas) {
+		this.nCaracteristicas = nCaracteristicas;
 	}
 
-	/**
-	 * Le os titulos das colunas do arquivo CSV.
-	 *
-	 * @param sc Scanner para leitura do arquivo CSV.
-	 * @return Lista de strings contendo os titulos das colunas.
-	 * @throws FileNotFoundException Excecao lancada se o arquivo nao for
-	 *                               encontrado.
-	 */
-	public List<String> readColumnTitles(Scanner sc) throws FileNotFoundException {
-		List<String> titles = new ArrayList<>();
-		if (sc.hasNextLine()) {
-			titles = Arrays.asList(sc.nextLine().split(";"));
-		}
-		return titles;
+	public void setEdificio(String edificio) {
+		this.edificio = edificio;
 	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public void setCapacidadeN(int capacidadeN) {
+		this.capacidadeN = capacidadeN;
+	}
+
+	public void setCapacidadeE(int capacidadeE) {
+		this.capacidadeE = capacidadeE;
+	}
+
+	public void setTipo(List<String> tipo) {
+		this.tipo = tipo;
+	}
+
+	public void setColumnTitles(List<String> columnTitles) {
+		this.columnTitles = columnTitles;
+	}
+
 	// Metodos de acesso aos atributos da sala
 
 	/**
@@ -161,6 +130,13 @@ public class Sala {
 
 	public int getNCaracteristicas() {
 		return nCaracteristicas;
+	}
+
+	@Override
+	public String toString() {
+		return "Sala [edificio=" + edificio + ", nome=" + nome + ", capacidadeN=" + capacidadeN + ", capacidadeE="
+				+ capacidadeE + ", nCaracteristicas=" + nCaracteristicas + ", tipo=" + tipo + ", columnTitles="
+				+ columnTitles + "]";
 	}
 
 }
