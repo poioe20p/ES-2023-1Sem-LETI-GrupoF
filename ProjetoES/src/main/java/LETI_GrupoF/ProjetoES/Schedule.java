@@ -3,6 +3,8 @@ package LETI_GrupoF.ProjetoES;
 import java.util.ArrayList;
 import java.util.List;
 
+import LETI_GrupoF.ProjetoES.user_interface.UserInteraction;
+
 /**
  * A classe Schedule representa um horario especifico para uma determinada
  * turma.
@@ -10,7 +12,13 @@ import java.util.List;
 public class Schedule {
 	private String turma;
 	private Reader table;
-	private List<List<String>> horario = new ArrayList<>();;
+	private List<List<String>> horario = new ArrayList<>();
+	private List<Sala> salas = new ArrayList<>();
+	private int aulasSobrelotacao;
+	private int estudantesSobrelotacao;
+	private int numSalasMalAtribuidas;
+	private int numAulaSemSala;
+	private int nCaracteristicasDesperdicadas;
 
 	/**
 	 * Construtor da classe Schedule.
@@ -19,7 +27,7 @@ public class Schedule {
 	 * @param table, Reader de tabela que fornece os dados para o horario.
 	 */
 
-	public Schedule(String turma, Reader table) {
+	public Schedule(String turma, Reader table, UserInteraction uI) {
 		this.turma = turma;
 		this.table = table;
 		for (List<String> linha : table.getTableData()) {
@@ -70,6 +78,56 @@ public class Schedule {
 		return columnNumber;
 	}
 
+//	public double qualidadeHorario() {
+//		int linhasCorretas = 0;
+//		for (int i = 0; i != horario.size(); i++) {
+//			int posicaoSala = 0;
+//			int posicaoInscritos = 0;
+//			String salaHorario = horario.get(i).get(posicaoSala);
+//			Sala sala = 
+//		}
+//	}
+//			for (int j = 0; j != salas.size(); j++) {
+//				if (sala.equals(salas.get(j).getNome())) {
+//					numAulasSobrelotacao(Integer.parseInt(horario.get(i).get(posicaoInscritos)),
+//							salas.get(j).getCapacidadeN());
+//					// numCaracteristicasDesperdicadas(salas.get(j).getNCaracteristicas(),
+//					// horario.get(i).)
+//				}
+//			}
+//		}
+//		return linhasCorretas / horario.size() - 1;
+//	}
+
+	Sala getSala(String sala) {
+		Sala s = null;
+		for (int i = 0; i != salas.size(); i++) {
+			if (sala.equals(salas.get(i).getNome()))
+				s = salas.get(i);
+
+		}
+		return s;
+	}
+
+	void numAulasSobrelotacao(int a, int b) {
+		if (a - b > 0) {
+			aulasSobrelotacao++;
+			nEstudantesSobrelotacao(a, b);
+		}
+	}
+
+	void nEstudantesSobrelotacao(int a, int b) {
+		estudantesSobrelotacao += a - b;
+	}
+
+	void numAulasCaracteristicasDesperdicadas(int a, int b) {
+
+	}
+
+	void numCaracteristicasDesperdicadas(int a, int b) {
+		nCaracteristicasDesperdicadas += a - b;
+	}
+
 	/**
 	 * Verifica se uma turma especifica existe no horário.
 	 *
@@ -102,6 +160,26 @@ public class Schedule {
 	 */
 	public List<List<String>> getHorario() {
 		return horario;
+	}
+
+	public int getAulasSobrelotacao() {
+		return aulasSobrelotacao;
+	}
+
+	public int getEstudantesSobrelotacao() {
+		return estudantesSobrelotacao;
+	}
+
+	public int getNumSalasMalAtribuidas() {
+		return numSalasMalAtribuidas;
+	}
+
+	public int getNumAulaSemSala() {
+		return numAulaSemSala;
+	}
+
+	public int getnCaracteristicasDesperdicadas() {
+		return nCaracteristicasDesperdicadas;
 	}
 
 	/**

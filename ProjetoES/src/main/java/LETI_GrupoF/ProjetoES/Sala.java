@@ -17,6 +17,7 @@ public class Sala {
 	private String nome;
 	private int capacidadeN;
 	private int capacidadeE;
+	private int nCaracteristicas;
 	private List<String> tipo;
 	private List<String> columnTitles;
 
@@ -30,11 +31,12 @@ public class Sala {
 	 * @param tipo        A lista de tipos associados a sala.
 	 */
 
-	Sala(String edificio, String nome, int capacidadeN, int capacidadeE, List<String> tipo) {
+	Sala(String edificio, String nome, int capacidadeN, int capacidadeE, int nCaracteristicas, List<String> tipo) {
 		this.edificio = edificio;
 		this.nome = nome;
 		this.capacidadeN = capacidadeN;
 		this.capacidadeE = capacidadeE;
+		this.nCaracteristicas = nCaracteristicas;
 		this.tipo = tipo;
 	}
 
@@ -76,13 +78,14 @@ public class Sala {
 		String nome = linha.get(1);
 		int capacidadeN = Integer.parseInt(linha.get(2));
 		int capacidadeE = Integer.parseInt(linha.get(3));
+		int nCaracteristicas = Integer.parseInt(linha.get(4));
 		List<String> tipo = new ArrayList<>();
-		for (int i = 4; i != linha.size(); i++) {
+		for (int i = 5; i != linha.size(); i++) {
 			if (linha.get(i).trim() == "X") {
 				tipo.add(getColumnTitles().get(i));
 			}
 		}
-		return new Sala(edificio, nome, capacidadeN, capacidadeE, tipo);
+		return new Sala(edificio, nome, capacidadeN, capacidadeE, nCaracteristicas, tipo);
 	}
 
 	/**
@@ -154,6 +157,10 @@ public class Sala {
 	 */
 	public List<String> getTipo() {
 		return tipo;
+	}
+
+	public int getNCaracteristicas() {
+		return nCaracteristicas;
 	}
 
 }
