@@ -13,12 +13,12 @@ public class Schedule {
 	private String turma;
 	private Reader table;
 	private List<List<String>> horario = new ArrayList<>();
-	private List<Sala> salas = new ArrayList<>();
+	private Salas salas;
 	private int aulasSobrelotacao;
 	private int estudantesSobrelotacao;
 	private int numSalasMalAtribuidas;
-	private int numAulaSemSala;
-	private int nCaracteristicasDesperdicadas;
+	private int numAulasSemSala;
+	private int numCaracteristicasDesperdicadas;
 
 	/**
 	 * Construtor da classe Schedule.
@@ -99,17 +99,28 @@ public class Schedule {
 //		return linhasCorretas / horario.size() - 1;
 //	}
 
-	Sala getSala(String sala) {
-		Sala s = null;
-		for (int i = 0; i != salas.size(); i++) {
-			if (sala.equals(salas.get(i).getNome()))
-				s = salas.get(i);
+	public void calcularQualidade() {
+		int posicaoSala = 0;
+		int posicaoInscritos = 0;
+		int posicaoCaracteristicas = 0;
+		for (int i = 0; i != horario.size(); i++) {
+			nAulasSemSala(horario.get(i).get(posicaoSala));
+			for (int j = 0; j != salas.getData().size(); j++) {
 
+				if (horario.get(i).get(posicaoSala).equals(salas.getData().get(j).getNome())) {
+					nAulasSobrelotacao(Integer.parseInt(horario.get(i).get(posicaoInscritos)),
+							salas.getData().get(j).getCapacidadeN());
+					nSalasMalAtribuidas(salas.getData().get(j).getTipo(), horario.get(i).get(posicaoCaracteristicas));
+					nCaracteristicasDesperdicadas(salas.getData().get(j).getTipo(),
+							horario.get(i).get(posicaoCaracteristicas), salas.getData().get(j).getNCaracteristicas());
+
+				}
+
+			}
 		}
-		return s;
 	}
 
-	void numAulasSobrelotacao(int a, int b) {
+	void nAulasSobrelotacao(int a, int b) {
 		if (a - b > 0) {
 			aulasSobrelotacao++;
 			nEstudantesSobrelotacao(a, b);
@@ -120,15 +131,28 @@ public class Schedule {
 		estudantesSobrelotacao += a - b;
 	}
 
-	void numAulasCaracteristicasDesperdicadas(int a, int b) {
+	void nSalasMalAtribuidas(List<String> a, String b) {
+		if (!(a.contains(b))) {
+			numSalasMalAtribuidas++;
+		}
+	}
+
+	void nCaracteristicasDesperdicadas(List<String> a, String b, int c) {
+		if (a.contains(b)) {
+			numCaracteristicasDesperdicadas += c - 1;
+		} else {
+			numCaracteristicasDesperdicadas += c;
+		}
+	}
+
+	void nAulasSemSala(String sala) {
+		if (sala.equals("N/A")) {
+			numAulasSemSala++;
+		}
 
 	}
 
-	void numCaracteristicasDesperdicadas(int a, int b) {
-		nCaracteristicasDesperdicadas += a - b;
-	}
-
-	/**
+	/**«
 	 * Verifica se uma turma especifica existe no horário.
 	 *
 	 * @param linha A string que contem informações sobre a turma.
@@ -175,11 +199,15 @@ public class Schedule {
 	}
 
 	public int getNumAulaSemSala() {
-		return numAulaSemSala;
+		return numAulasSemSala;
 	}
 
 	public int getnCaracteristicasDesperdicadas() {
-		return nCaracteristicasDesperdicadas;
+		return numCaracteristicasDesperdicadas;
+	}
+
+	public int getNumCaracteristicasDesperdicadas() {
+		return numCaracteristicasDesperdicadas;
 	}
 
 	/**

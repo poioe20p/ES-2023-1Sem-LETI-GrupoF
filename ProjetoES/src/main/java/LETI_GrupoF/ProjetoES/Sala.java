@@ -1,11 +1,6 @@
 package LETI_GrupoF.ProjetoES;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * A classe Sala representa uma sala de um edificio, com informacoes como o
@@ -38,14 +33,6 @@ public class Sala {
 		this.capacidadeE = capacidadeE;
 		this.nCaracteristicas = nCaracteristicas;
 		this.tipo = tipo;
-	}
-
-	public int getnCaracteristicas() {
-		return nCaracteristicas;
-	}
-
-	public void setnCaracteristicas(int nCaracteristicas) {
-		this.nCaracteristicas = nCaracteristicas;
 	}
 
 	public void setEdificio(String edificio) {
