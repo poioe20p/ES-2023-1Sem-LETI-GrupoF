@@ -15,6 +15,8 @@ import java.util.List;
 public class UserInteraction {
 
 	// Pagina da GUI
+//	static final private String remoteCSVFilePath = "ProjetoES/HorarioRemoto.csv";
+	static final private String remoteCSVFilePath = "HorarioRemoto.csv";
 	private final UserForm userForm;
 	private HtmlCreator htmlCreator;
 
@@ -37,7 +39,7 @@ public class UserInteraction {
 		// Define o comportamento do boão quando o mesmo é clicado
 		userForm.getOpenScheduleButton().addActionListener(e -> {
 			if (userForm.isRemoteFile()) {
-				htmlCreator = new HtmlCreator("ProjetoES/HorarioRemoto.csv", getUserOrderedColumnTitles());
+				htmlCreator = new HtmlCreator(remoteCSVFilePath, getUserOrderedColumnTitles());
 				openSchedule();
 			} else {
 				htmlCreator = new HtmlCreator(userForm.getCsvFileLocationTextField().getText(),
@@ -57,8 +59,8 @@ public class UserInteraction {
 					userForm.setRemoteFile(true);
 					try {
 						URL remoteFile = new URL(input);
-						if (saveToLocalFile(remoteFile.openStream(), "ProjetoES/HorarioRemoto.csv")) {
-							Reader reader = new Reader("ProjetoES/HorarioRemoto.csv");
+						if (saveToLocalFile(remoteFile.openStream(), remoteCSVFilePath)) {
+							Reader reader = new Reader(remoteCSVFilePath);
 							userForm.openReorderPage(reader.getColumnTitles());
 						} else {
 							JOptionPane.showMessageDialog(userForm, "Error processing remote file, please try again",
