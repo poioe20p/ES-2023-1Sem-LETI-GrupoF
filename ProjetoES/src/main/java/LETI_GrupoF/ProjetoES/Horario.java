@@ -6,10 +6,10 @@ import java.util.List;
 import LETI_GrupoF.ProjetoES.user_interface.UserInteraction;
 
 /**
- * A classe Schedule representa um horario especifico para uma determinada
+ * A classe Horario representa um horario especifico para uma determinada
  * turma.
  */
-public class Schedule {
+public class Horario {
 	private String turma;
 	private Reader table;
 	private List<List<String>> horario = new ArrayList<>();
@@ -27,7 +27,7 @@ public class Schedule {
 	 * @param table, Reader de tabela que fornece os dados para o horario.
 	 */
 
-	public Schedule(String turma, Reader table, UserInteraction uI) {
+	public Horario(String turma, Reader table, UserInteraction uI) {
 		this.turma = turma;
 		this.table = table;
 		for (List<String> linha : table.getTableData()) {

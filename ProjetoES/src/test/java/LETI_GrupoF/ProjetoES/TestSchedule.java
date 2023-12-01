@@ -14,13 +14,13 @@ class TestSchedule {
 	static String nomeFicheiroCSV = "HorarioParaTestes.csv";
 	static Reader reader, readerHorarioNExiste, readerSemNextLine;
 	static List<String> listaCabecalhos;
-	static Schedule horario;
+	static Horario horario;
 	
 	@BeforeAll
 	
 	static void setUpBeforeClass() throws Exception {
 		Reader reader= new Reader(nomeFicheiroCSV);
-		horario= new Schedule("ET-A7", reader);
+		horario= new Horario("ET-A7", reader);
 	}
 
 	@Test
