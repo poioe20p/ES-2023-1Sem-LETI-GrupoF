@@ -24,7 +24,7 @@ public class Salas {
 		List<Sala> salas = new ArrayList<>();
 
 		for(int i = 0; i < tableData.size(); i++) {
-			salas.add(new Sala(tableData.get(i)));
+			salas.add(new Sala(tableData.get(i), getColumnTitles()));
 		}
 		
 		return salas;

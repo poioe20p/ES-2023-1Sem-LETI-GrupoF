@@ -18,9 +18,14 @@ public class Sala {
 	 * @param caracterizacaoSala   A lista de toda a informacao que caracteriza a sala.
 	 */
 	
-	Sala(List<String> caracterizacaoSala){
-		informacaoSala = caracterizacaoSala.subList(0, 4);
-		caracteristicasSala = caracterizacaoSala.subList(5, caracterizacaoSala.size());
+	Sala(List<String> dataSala, List<String> columnTitles){
+		informacaoSala = dataSala.subList(0, 4);
+		
+		for(int i = 5; i < dataSala.size(); i++) {
+			if(dataSala.get(i).equals("X")) {
+				caracteristicasSala.add(columnTitles.get(i));
+			}
+		}
 	}
 	
 	// Metodos de acesso aos atributos da sala
