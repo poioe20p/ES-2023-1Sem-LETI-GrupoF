@@ -17,7 +17,7 @@ public class HtmlCreator {
 	static final private String pageFilePath = "Horario.html";
 	private final List<List<String>> dataForHtml;
 	private final List<String> columnFields;
-	private final Reader dataFromCSV;
+	private final Horario dataFromCSV;
 
 	private List<String> userOrderTitles = new ArrayList<>();
 
@@ -30,8 +30,8 @@ public class HtmlCreator {
 	 */
 
 	public HtmlCreator(String dataFilePath, List<String> userOrderTitles) {
-		dataFromCSV = new Reader(dataFilePath);
-		dataForHtml = dataFromCSV.getTableData();
+		dataFromCSV = new Horario(dataFilePath);
+		dataForHtml = dataFromCSV.getHorario();
 		this.userOrderTitles = userOrderTitles;
 
 		// Gera a lista com os fields usados no tabulator para cada coluna
@@ -53,10 +53,10 @@ public class HtmlCreator {
 	 */
 	// Devolve uma lista com a posição dos valores assoicados a cada titulo na ordem
 	// do ficheiro CSV fornecido pelo utilizador
-	private List<String> tiltesPosition() {
-		List<String> titlesPosition = new ArrayList<>();
+	private List<Integer> tiltesPosition() {
+		List<Integer> titlesPosition = new ArrayList<>();
 		for (String title : userOrderTitles) {
-			titlesPosition.add(String.valueOf(dataFromCSV.getColumnTitles().indexOf(title)));
+			titlesPosition.add(dataFromCSV.getColumnTitles().indexOf(title));
 		}
 		return titlesPosition;
 	}
@@ -70,14 +70,14 @@ public class HtmlCreator {
 	private String formatDataForHtml() {
 		StringBuilder jsCode = new StringBuilder();
 		jsCode.append("var tableData = [");
-		List<String> titlesPosition = tiltesPosition();
+		List<Integer> titlesPosition = tiltesPosition();
 
 		for (List<String> row : dataForHtml) {
 
 			jsCode.append("{ ");
 			for (int i = 0; i < columnFields.size(); i++) {
 				jsCode.append(columnFields.get(i) + ": ");
-				String columnValue = row.get(Integer.parseInt(titlesPosition.get(i))).replace("'", "");
+				String columnValue = row.get(titlesPosition.get(i)).replace("'", "");
 				String javaScriptFormatValue = "'" + columnValue + "', ";
 				jsCode.append(javaScriptFormatValue);
 			}

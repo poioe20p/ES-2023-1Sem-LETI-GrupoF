@@ -1,24 +1,22 @@
 package LETI_GrupoF.ProjetoES;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import LETI_GrupoF.ProjetoES.user_interface.UserInteraction;
+import java.util.Map;
 
 /**
  * A classe Horario representa um horario especifico para uma determinada
  * turma.
  */
 public class Horario {
+
+	static final private String csvFilePath = "CaracterizaçãoDasSalas.csv";
+	
 	private String turma;
-	private Reader table;
-	private List<List<String>> horario = new ArrayList<>();
+	private List<List<String>> horario;
+	private final List<String> columnTitles;
 	private Salas salas;
-	private int aulasSobrelotacao;
-	private int estudantesSobrelotacao;
-	private int numSalasMalAtribuidas;
-	private int numAulasSemSala;
-	private int numCaracteristicasDesperdicadas;
+	
+	private Map<Metrica, Integer> metricas;
 
 	/**
 	 * Construtor da classe Schedule.
@@ -27,19 +25,32 @@ public class Horario {
 	 * @param table, Reader de tabela que fornece os dados para o horario.
 	 */
 
-	public Horario(String turma, Reader table, UserInteraction uI) {
+	public Horario(String turma, int indiceTurma, String horarioFilePath) {
 		this.turma = turma;
-		this.table = table;
-		for (List<String> linha : table.getTableData()) {
-			// System.out.println(linha.get(3));
-			if (existeTurma(linha.get(indiceColunaTurma()), turma)) {
-
+		
+		Reader dataHorarioDoCSV = new Reader(horarioFilePath);
+		columnTitles = dataHorarioDoCSV.getColumnTitles();
+		for (List<String> linha : dataHorarioDoCSV.getTableData()) {
+			if (existeTurma(linha.get(indiceTurma), turma)) {
 				this.horario.add(linha);
-
 			}
-
 		}
 
+		salas = new Salas(csvFilePath);
+	}
+	
+	/**
+	 * Construtor da classe Schedule.
+	 *
+	 * @param table, Reader de tabela que fornece os dados para o horario.
+	 */
+
+	public Horario(String horarioFilePath) {	
+		Reader dataHorarioDoCSV = new Reader(horarioFilePath);
+		columnTitles = dataHorarioDoCSV.getColumnTitles();
+		horario = dataHorarioDoCSV.getTableData();
+
+		salas = new Salas(csvFilePath);
 	}
 
 	/**
@@ -48,7 +59,7 @@ public class Horario {
 	 * @param linhaTurma A string que contem mais que uma turma ou nao de uma dada
 	 *                   linha.
 	 * @param turma      A turma a ser verificada.
-	 * @return true se a turma existir na linha, false caso contrario.
+	 * @return TRUE Se a turma existir na linha, FALSE caso contrario.
 	 */
 
 	private boolean existeTurma(String linhaTurma, String turma) {
@@ -60,113 +71,65 @@ public class Horario {
 		return false;
 	}
 
-	/**
-	 * Obtem o indice da coluna "Turma" na tabela.
-	 *
-	 * @return O indice da coluna "Turma".
-	 */
-
-	public int indiceColunaTurma() {
-		int columnNumber = 0;
-		int i = 0;
-		for (String title : table.getColumnTitles()) {
-			if (title.equals("Turma")) {
-				columnNumber = i;
-			}
-			i++;
+	public void calcularQualidade(Metrica metrica) {
+		List<String> formulas = metrica.getComponentesFormula();
+		for(int i = 0; i < formulas.size(); i++) {
+			
 		}
-		return columnNumber;
+		int resultado =
+		metricas.put(metrica, resultado);
 	}
-
-//	public double qualidadeHorario() {
-//		int linhasCorretas = 0;
+//		int posicaoSala = 0;
+//		int posicaoInscritos = 0;
+//		int posicaoCaracteristicas = 0;
 //		for (int i = 0; i != horario.size(); i++) {
-//			int posicaoSala = 0;
-//			int posicaoInscritos = 0;
-//			String salaHorario = horario.get(i).get(posicaoSala);
-//			Sala sala = 
-//		}
-//	}
-//			for (int j = 0; j != salas.size(); j++) {
-//				if (sala.equals(salas.get(j).getNome())) {
-//					numAulasSobrelotacao(Integer.parseInt(horario.get(i).get(posicaoInscritos)),
-//							salas.get(j).getCapacidadeN());
-//					// numCaracteristicasDesperdicadas(salas.get(j).getNCaracteristicas(),
-//					// horario.get(i).)
+//			nAulasSemSala(horario.get(i).get(posicaoSala));
+//			for (int j = 0; j != salas.getData().size(); j++) {
+//
+//				if (horario.get(i).get(posicaoSala).equals(salas.getData().get(j).getNome())) {
+//					nAulasSobrelotacao(Integer.parseInt(horario.get(i).get(posicaoInscritos)),
+//							salas.getData().get(j).getCapacidadeN());
+//					nSalasMalAtribuidas(salas.getData().get(j).getTipo(), horario.get(i).get(posicaoCaracteristicas));
+//					nCaracteristicasDesperdicadas(salas.getData().get(j).getTipo(),
+//							horario.get(i).get(posicaoCaracteristicas), salas.getData().get(j).getNCaracteristicas());
+//
 //				}
+//
 //			}
 //		}
-//		return linhasCorretas / horario.size() - 1;
 //	}
-
-	public void calcularQualidade() {
-		int posicaoSala = 0;
-		int posicaoInscritos = 0;
-		int posicaoCaracteristicas = 0;
-		for (int i = 0; i != horario.size(); i++) {
-			nAulasSemSala(horario.get(i).get(posicaoSala));
-			for (int j = 0; j != salas.getData().size(); j++) {
-
-				if (horario.get(i).get(posicaoSala).equals(salas.getData().get(j).getNome())) {
-					nAulasSobrelotacao(Integer.parseInt(horario.get(i).get(posicaoInscritos)),
-							salas.getData().get(j).getCapacidadeN());
-					nSalasMalAtribuidas(salas.getData().get(j).getTipo(), horario.get(i).get(posicaoCaracteristicas));
-					nCaracteristicasDesperdicadas(salas.getData().get(j).getTipo(),
-							horario.get(i).get(posicaoCaracteristicas), salas.getData().get(j).getNCaracteristicas());
-
-				}
-
-			}
-		}
-	}
-
-	void nAulasSobrelotacao(int a, int b) {
-		if (a - b > 0) {
-			aulasSobrelotacao++;
-			nEstudantesSobrelotacao(a, b);
-		}
-	}
-
-	void nEstudantesSobrelotacao(int a, int b) {
-		estudantesSobrelotacao += a - b;
-	}
-
-	void nSalasMalAtribuidas(List<String> a, String b) {
-		if (!(a.contains(b))) {
-			numSalasMalAtribuidas++;
-		}
-	}
-
-	void nCaracteristicasDesperdicadas(List<String> a, String b, int c) {
-		if (a.contains(b)) {
-			numCaracteristicasDesperdicadas += c - 1;
-		} else {
-			numCaracteristicasDesperdicadas += c;
-		}
-	}
-
-	void nAulasSemSala(String sala) {
-		if (sala.equals("N/A")) {
-			numAulasSemSala++;
-		}
-
-	}
-
-	/**«
-	 * Verifica se uma turma especifica existe no horário.
-	 *
-	 * @param linha A string que contem informações sobre a turma.
-	 * @return true se a turma existir no horario, false caso contrario.
-	 */
-
-	boolean existsTurma(String linha) {
-		if (linha.equals(this.turma)) {
-
-			return true;
-		}
-		return false;
-
-	}
+//
+//	void nAulasSobrelotacao(int a, int b) {
+//		if (a - b > 0) {
+//			aulasSobrelotacao++;
+//			nEstudantesSobrelotacao(a, b);
+//		}
+//	}
+//
+//	void nEstudantesSobrelotacao(int a, int b) {
+//		estudantesSobrelotacao += a - b;
+//	}
+//
+//	void nSalasMalAtribuidas(List<String> a, String b) {
+//		if (!(a.contains(b))) {
+//			numSalasMalAtribuidas++;
+//		}
+//	}
+//
+//	void nCaracteristicasDesperdicadas(List<String> a, String b, int c) {
+//		if (a.contains(b)) {
+//			numCaracteristicasDesperdicadas += c - 1;
+//		} else {
+//			numCaracteristicasDesperdicadas += c;
+//		}
+//	}
+//
+//	void nAulasSemSala(String sala) {
+//		if (sala.equals("N/A")) {
+//			numAulasSemSala++;
+//		}
+//
+//	}
 
 	/**
 	 * Obtem o nome da turma associada a este horario.
@@ -178,6 +141,15 @@ public class Horario {
 	}
 
 	/**
+	 * Obtem os cabecalhos associados a este horario.
+	 *
+	 * @return O cabecalho.
+	 */
+	public List<String> getColumnTitles() {
+		return columnTitles;
+	}
+
+	/**
 	 * Obtem o horario associado a esta turma.
 	 *
 	 * @return O horario como uma lista de listas de strings.
@@ -186,29 +158,19 @@ public class Horario {
 		return horario;
 	}
 
-	public int getAulasSobrelotacao() {
-		return aulasSobrelotacao;
+	/**
+	 * Obtem o horario associado a esta turma.
+	 *
+	 * @return O horario como uma lista de listas de strings.
+	 */
+	public Salas getSalas() {
+		return salas;
 	}
 
-	public int getEstudantesSobrelotacao() {
-		return estudantesSobrelotacao;
+	public Map<Metrica, Integer> getMetricas() {
+		return metricas;
 	}
 
-	public int getNumSalasMalAtribuidas() {
-		return numSalasMalAtribuidas;
-	}
-
-	public int getNumAulaSemSala() {
-		return numAulasSemSala;
-	}
-
-	public int getnCaracteristicasDesperdicadas() {
-		return numCaracteristicasDesperdicadas;
-	}
-
-	public int getNumCaracteristicasDesperdicadas() {
-		return numCaracteristicasDesperdicadas;
-	}
 
 	/**
 	 * Metodo main para testar a classe Schedule.
