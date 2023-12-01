@@ -18,11 +18,11 @@ public class Sala {
 	 * @param caracterizacaoSala   A lista de toda a informacao que caracteriza a sala.
 	 */
 	
-	Sala(List<String> dataSala, List<String> columnTitles){
+	public Sala(List<String> dataSala, List<String> columnTitles){
 		informacaoSala = dataSala.subList(0, 4);
 		
 		for(int i = 5; i < dataSala.size(); i++) {
-			if(dataSala.get(i).equals("X")) {
+			if(dataSala.get(i).trim().equals("X")) {
 				caracteristicasSala.add(columnTitles.get(i));
 			}
 		}

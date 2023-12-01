@@ -5,13 +5,13 @@ import java.util.List;
 
 public class Salas {
 
-	static final private String csvFilePath = "CaracterizaçãoDasSalas.csv";
-	private List<Sala> salas = new ArrayList<>();
-	private final Reader dataFromCSV;
+	private List<Sala> salas;
+	private List<String> columnTitles;
 
-	Salas() {
-		dataFromCSV = new Reader(csvFilePath);
+	public Salas(String csvFilePath) {
+		Reader dataFromCSV = new Reader(csvFilePath);
 		salas = lerSalasDoCSV(dataFromCSV.getTableData());
+		columnTitles = dataFromCSV.getColumnTitles();
 	}
 
 	/**
@@ -20,7 +20,7 @@ public class Salas {
 	 * @param tableData A informacao das salas lida do ficheiro CSV.
 	 * @return Lista de objetos Sala obtidos da informacao do ficheiro CSV.
 	 */
-	public List<Sala> lerSalasDoCSV(List<List<String>> tableData) {
+	private List<Sala> lerSalasDoCSV(List<List<String>> tableData) {
 		List<Sala> salas = new ArrayList<>();
 
 		for(int i = 0; i < tableData.size(); i++) {
@@ -35,6 +35,6 @@ public class Salas {
 	}
 
 	public List<String> getColumnTitles() {
-		return dataFromCSV.getColumnTitles();
+		return columnTitles;
 	}
 }
