@@ -1,6 +1,5 @@
 package LETI_GrupoF.ProjetoES;
 
-import LETI_GrupoF.ProjetoES.user_interface.UserInteraction;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
@@ -14,7 +13,8 @@ import java.util.List;
  */
 public class HtmlCreator {
 
-	static final private String pageFilePath = "ProjetoES/Horario.html";
+//	static final private String pageFilePath = "ProjetoES/Horario.html";
+	static final private String pageFilePath = "Horario.html";
 	private final List<List<String>> dataForHtml;
 	private final List<String> columnFields;
 	private final Reader dataFromCSV;
@@ -189,8 +189,6 @@ public class HtmlCreator {
 		try {
 			// Gera a string que representa o HTML
 			String htmlContent = doc.html();
-
-			System.out.println(htmlContent);
 
 			// Escreve a string no ficheiro HTML
 			FileWriter writer = new FileWriter(pageFilePath);

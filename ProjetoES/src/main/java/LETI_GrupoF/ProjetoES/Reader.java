@@ -44,7 +44,7 @@ public class Reader {
 			columnTitles = readColumnTitles(sc);
 			while (sc.hasNextLine()) {
 				List<String> linha = new ArrayList<>(List.of(sc.nextLine().split(";")));
-				data.add(formatDataFromFile(linha, csv));
+				data.add(formatDataFromFile(linha));
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -60,8 +60,8 @@ public class Reader {
 	 * @param s Lista de strings representando uma linha de dados do arquivo CSV.
 	 * @return Lista de strings formatada.
 	 */
-	private List<String> formatDataFromFile(List<String> s, File csv) throws FileNotFoundException {
-		while (s.size() < readColumnTitles(new Scanner(csv)).size()) {
+	private List<String> formatDataFromFile(List<String> s) throws FileNotFoundException {
+		while (s.size() < getColumnTitles().size()) {
 			s.add("N/A");
 		}
 		return s;
