@@ -1,5 +1,6 @@
 package LETI_GrupoF.ProjetoES;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,94 +9,21 @@ import java.util.List;
  */
 public class Sala {
 
-	private String edificio;
-	private String nome;
-	private int capacidadeN;
-	private int capacidadeE;
-	private int nCaracteristicas;
-	private List<String> tipo;
-	private List<String> columnTitles;
-
+	private List<String> informacaoSala = new ArrayList<>();
+	private List<String> caracteristicasSala = new ArrayList<>();
+	
 	/**
 	 * Construtor da classe Sala. Inicializa uma sala com as informações fornecidas.
 	 *
-	 * @param edificio    O nome do edificio ao qual a sala pertence.
-	 * @param nome        O nome da sala.
-	 * @param capacidadeN A capacidade normal da sala.
-	 * @param capacidadeE A capacidade extra da sala.
-	 * @param tipo        A lista de tipos associados a sala.
+	 * @param caracterizacaoSala   A lista de toda a informacao que caracteriza a sala.
 	 */
-
-	Sala(String edificio, String nome, int capacidadeN, int capacidadeE, int nCaracteristicas, List<String> tipo) {
-		this.edificio = edificio;
-		this.nome = nome;
-		this.capacidadeN = capacidadeN;
-		this.capacidadeE = capacidadeE;
-		this.nCaracteristicas = nCaracteristicas;
-		this.tipo = tipo;
+	
+	Sala(List<String> caracterizacaoSala){
+		informacaoSala = caracterizacaoSala.subList(0, 4);
+		caracteristicasSala = caracterizacaoSala.subList(5, caracterizacaoSala.size());
 	}
-
-	public void setEdificio(String edificio) {
-		this.edificio = edificio;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public void setCapacidadeN(int capacidadeN) {
-		this.capacidadeN = capacidadeN;
-	}
-
-	public void setCapacidadeE(int capacidadeE) {
-		this.capacidadeE = capacidadeE;
-	}
-
-	public void setTipo(List<String> tipo) {
-		this.tipo = tipo;
-	}
-
-	public void setColumnTitles(List<String> columnTitles) {
-		this.columnTitles = columnTitles;
-	}
-
+	
 	// Metodos de acesso aos atributos da sala
-
-	/**
-	 * Obtem o nome da sala.
-	 *
-	 * @return Nome da sala.
-	 */
-	String getNome() {
-		return nome;
-	}
-
-	/**
-	 * Obtem os titulos das colunas do arquivo CSV.
-	 *
-	 * @return Lista de strings contendo os titulos das colunas.
-	 */
-	public List<String> getColumnTitles() {
-		return columnTitles;
-	}
-
-	/**
-	 * Obtem a capacidade extra da sala.
-	 *
-	 * @return Capacidade extra da sala.
-	 */
-	public int getCapacidadeE() {
-		return capacidadeE;
-	}
-
-	/**
-	 * Obtem a capacidade normal da sala.
-	 *
-	 * @return Capacidade normal da sala.
-	 */
-	public int getCapacidadeN() {
-		return capacidadeN;
-	}
 
 	/**
 	 * Obtem o nome do edificio ao qual a sala pertence.
@@ -103,27 +31,59 @@ public class Sala {
 	 * @return Nome do edificio.
 	 */
 	public String getEdificio() {
-		return edificio;
+		return informacaoSala.get(0);
+	}
+
+	/**
+	 * Obtem o nome da sala.
+	 *
+	 * @return Nome da sala.
+	 */
+	String getNome() {
+		return informacaoSala.get(1);
+	}
+
+	/**
+	 * Obtem a capacidade normal da sala.
+	 *
+	 * @return Capacidade normal da sala.
+	 */
+	public int getCapacidadeNormal() {
+		return Integer.parseInt(informacaoSala.get(2));
+	}
+
+	/**
+	 * Obtem a capacidade extra da sala.
+	 *
+	 * @return Capacidade extra da sala.
+	 */
+	public int getCapacidadeExame() {
+		return Integer.parseInt(informacaoSala.get(3));
+	}
+
+	/**
+	 * Obtem o numero de atriburos associados a sala.
+	 *
+	 * @return Lista de tipos da sala.
+	 */
+	public int getNumeroCaracteristicas() {
+		return caracteristicasSala.size();
 	}
 
 	/**
 	 * Obtem a lista de tipos associados a sala.
 	 *
-	 * @return Lista de tipos da sala.
+	 * @return Lista de caracteristicas da sala.
 	 */
-	public List<String> getTipo() {
-		return tipo;
-	}
-
-	public int getNCaracteristicas() {
-		return nCaracteristicas;
+	public List<String> getCaracteristicasSala() {
+		return caracteristicasSala;
 	}
 
 	@Override
 	public String toString() {
-		return "Sala [edificio=" + edificio + ", nome=" + nome + ", capacidadeN=" + capacidadeN + ", capacidadeE="
-				+ capacidadeE + ", nCaracteristicas=" + nCaracteristicas + ", tipo=" + tipo + ", columnTitles="
-				+ columnTitles + "]";
+		return "Sala [edificio=" + getEdificio() + ", nome=" + getNome() + ", capacidadeNormal=" + getCapacidadeNormal()
+				+ ", capacidadeExame=" + getCapacidadeExame() + ", nCaracteristicas=" + getNumeroCaracteristicas()
+				+ ", caracteristicas=" + getCaracteristicasSala().toString() + "]";
 	}
 
 }
