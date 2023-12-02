@@ -4,18 +4,16 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A classe Horario representa um horario especifico para uma determinada
- * turma.
+ * A classe Horario representa um horario especifico para uma determinada turma.
  */
 public class Horario {
 
 	static final private String csvFilePath = "CaracterizaçãoDasSalas.csv";
-	
 	private String turma;
 	private List<List<String>> horario;
 	private final List<String> columnTitles;
 	private Salas salas;
-	
+
 	private Map<Metrica, Integer> metricas;
 
 	/**
@@ -27,7 +25,7 @@ public class Horario {
 
 	public Horario(String turma, int indiceTurma, String horarioFilePath) {
 		this.turma = turma;
-		
+
 		Reader dataHorarioDoCSV = new Reader(horarioFilePath);
 		columnTitles = dataHorarioDoCSV.getColumnTitles();
 		for (List<String> linha : dataHorarioDoCSV.getTableData()) {
@@ -38,14 +36,14 @@ public class Horario {
 
 		salas = new Salas(csvFilePath);
 	}
-	
+
 	/**
 	 * Construtor da classe Schedule.
 	 *
 	 * @param table, Reader de tabela que fornece os dados para o horario.
 	 */
 
-	public Horario(String horarioFilePath) {	
+	public Horario(String horarioFilePath) {
 		Reader dataHorarioDoCSV = new Reader(horarioFilePath);
 		columnTitles = dataHorarioDoCSV.getColumnTitles();
 		horario = dataHorarioDoCSV.getTableData();
@@ -71,14 +69,91 @@ public class Horario {
 		return false;
 	}
 
-	public void calcularQualidade(Metrica metrica) {
-		List<String> formulas = metrica.getComponentesFormula();
-		for(int i = 0; i < formulas.size(); i++) {
-			
-		}
-		int resultado =
-		metricas.put(metrica, resultado);
+//	public void calcularQualidade(Metrica metrica) {
+//		List<String> formulas = metrica.getComponentesFormula();
+//		for(int i = 0; i < formulas.size(); i++) {
+//			
+//		}
+//		int resultado =
+//		metricas.put(metrica, resultado);
+//	}
+
+//int calculoCapacidadeE
+
+	boolean isInColumnTitles(String titulo) {
+		if (columnTitles.contains(titulo))
+			return true;
+		return false;
+
 	}
+
+	int valorMetricaUser(Metrica metrica) {
+		List<String> formulas = metrica.getComponentesFormula();
+		int index1 = 0;
+		int index2 = 0;
+		int counter=0;
+		String arg1 = formulas.get(0);
+		String arg2 = formulas.get(0);
+
+		if (isInColumnTitles(arg1)) {
+			index1 = columnTitles.indexOf(arg1);
+		} else if (arg1.equals("Capacidade Exame")) {
+
+		} else if (arg1.equals("Capacidade Exame")) {
+
+		}
+
+		switch (formulas.get(1)) {
+		case "*":
+			break;
+		case "=":
+		case "+":
+		case "-":
+		case "/":
+		default:
+		}
+return counter;
+	}
+
+	int AulasSobrelotadas(HtmlCreator htmlCreator) {
+		int counter = 0;
+		int indexinscritos = htmlCreator.tiltesPosition().get(4);
+		int indexSala = htmlCreator.tiltesPosition().get(10);
+		for (List<String> linha : horario) {
+			for (Sala sala : salas.getSalas()) {
+				if (sala.getNome().equals(linha.get(indexSala))) {
+					if (sala.getCapacidadeNormal() < Integer.parseInt(linha.get(indexinscritos))) {
+						counter++;
+					}
+				}
+			}
+		}
+		return counter;
+	}
+
+//		int counter=0;
+//		int i=0;
+//		List<String> formulas = metrica.getComponentesFormula();
+//		for(String title:columnTitles) {
+//			
+//		if(formulas.get(0).equals(title)) {
+//			index=i;
+//		}
+//			i++;
+//		}
+//		int value1=
+//		int value2=
+//		int value3=
+//		if(formulas.get(i))
+//	    
+//		
+//	
+//		metricas.put(metrica, counter);
+//			
+//		
+
+	
+
 //		int posicaoSala = 0;
 //		int posicaoInscritos = 0;
 //		int posicaoCaracteristicas = 0;
@@ -170,7 +245,6 @@ public class Horario {
 	public Map<Metrica, Integer> getMetricas() {
 		return metricas;
 	}
-
 
 	/**
 	 * Metodo main para testar a classe Schedule.
