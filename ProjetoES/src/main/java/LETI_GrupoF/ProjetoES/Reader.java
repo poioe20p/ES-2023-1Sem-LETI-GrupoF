@@ -60,11 +60,11 @@ public class Reader {
 	 * @param s Lista de strings representando uma linha de dados do arquivo CSV.
 	 * @return Lista de strings formatada.
 	 */
-	private List<String> formatDataFromFile(List<String> s) throws FileNotFoundException {
-		while (s.size() < getColumnTitles().size()) {
-			s.add("N/A");
+	private List<String> formatDataFromFile(List<String> linha) throws FileNotFoundException {
+		while (linha.size() < getColumnTitles().size()) {
+			linha.add("N/A");
 		}
-		return s;
+		return linha;
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class Reader {
 	public List<List<String>> getTableData() {
 		return tableData;
 	}
-
+	
 	/**
 	 * Obtem o objeto File associado ao arquivo CSV.
 	 *
@@ -109,5 +109,5 @@ public class Reader {
 	public File getFicheiroCSV() {
 		return ficheiroCSV;
 	}
-
+	
 }

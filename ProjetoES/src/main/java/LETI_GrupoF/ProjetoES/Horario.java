@@ -1,5 +1,6 @@
 package LETI_GrupoF.ProjetoES;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -26,9 +27,9 @@ public class Horario {
 	public Horario(String turma, int indiceTurma, String horarioFilePath) {
 		this.turma = turma;
 
-		Reader dataHorarioDoCSV = new Reader(horarioFilePath);
-		columnTitles = dataHorarioDoCSV.getColumnTitles();
-		for (List<String> linha : dataHorarioDoCSV.getTableData()) {
+		Reader infoHorarioDoCSV = new Reader(horarioFilePath);
+		columnTitles = infoHorarioDoCSV.getColumnTitles();
+		for (List<String> linha : infoHorarioDoCSV.getTableData()) {
 			if (existeTurma(linha.get(indiceTurma), turma)) {
 				this.horario.add(linha);
 			}
@@ -69,141 +70,110 @@ public class Horario {
 		return false;
 	}
 
-//	public void calcularQualidade(Metrica metrica) {
-//		List<String> formulas = metrica.getComponentesFormula();
-//		for(int i = 0; i < formulas.size(); i++) {
-//			
-//		}
-//		int resultado =
-//		metricas.put(metrica, resultado);
-//	}
-
-//int calculoCapacidadeE
-
-	boolean isInColumnTitles(String titulo) {
-		if (columnTitles.contains(titulo))
-			return true;
-		return false;
-
+	public void adicionarMetrica(Metrica metrica) {
+		metricas.put(metrica, calcularQualidade(metrica));
 	}
-
-	int valorMetricaUser(Metrica metrica) {
-		List<String> formulas = metrica.getComponentesFormula();
-		int index1 = 0;
-		int index2 = 0;
-		int counter=0;
-		String arg1 = formulas.get(0);
-		String arg2 = formulas.get(0);
-
-		if (isInColumnTitles(arg1)) {
-			index1 = columnTitles.indexOf(arg1);
-		} else if (arg1.equals("Capacidade Exame")) {
-
-		} else if (arg1.equals("Capacidade Exame")) {
-
-		}
-
-		switch (formulas.get(1)) {
-		case "*":
-			break;
-		case "=":
-		case "+":
-		case "-":
-		case "/":
-		default:
-		}
-return counter;
-	}
-
-	int AulasSobrelotadas(HtmlCreator htmlCreator) {
-		int counter = 0;
-		int indexinscritos = htmlCreator.tiltesPosition().get(4);
-		int indexSala = htmlCreator.tiltesPosition().get(10);
-		for (List<String> linha : horario) {
-			for (Sala sala : salas.getSalas()) {
-				if (sala.getNome().equals(linha.get(indexSala))) {
-					if (sala.getCapacidadeNormal() < Integer.parseInt(linha.get(indexinscritos))) {
-						counter++;
-					}
-				}
+	
+	private int calcularQualidade(Metrica metrica) {
+		List<String> formula = metrica.getComponentesFormula();   //Vai buscar os componetes da formula para o calculo da metrica
+		List<String> nomeSalas = salas.getNomeSalas();   //Vai busacar uma lista com todos os nomes das salas
+		List<String> atributo1 = defineAtributo(formula.get(0));
+		List<String> atributo2 = defineAtributo(formula.get(2));
+		List<Integer> contaInicial = new ArrayList<>();
+		for(int i = 0; i < atributo1.size(); i++) {
+			switch(formula.get(1)) {
+			case "*":
+				contaInicial.add(Integer.parseInt(atributo1.get(i)) * Integer.parseInt(atributo2.get(i)));
+				break;
+			case "/":
+				contaInicial.add(Integer.parseInt(atributo1.get(i)) / Integer.parseInt(atributo2.get(i)));
+				break;
+			case "+":
+				contaInicial.add(Integer.parseInt(atributo1.get(i)) + Integer.parseInt(atributo2.get(i)));
+				break;
+			case "-":
+				contaInicial.add(Integer.parseInt(atributo1.get(i)) - Integer.parseInt(atributo2.get(i)));
+				break;
+	//		case "=":
+	//			break;
 			}
 		}
-		return counter;
+		int count = 0;
+		for(int i = 0; i < contaInicial.size(); i++) {
+			switch(formula.get(3)) {
+			case "<":
+				if(contaInicial.get(i) < Integer.parseInt(formula.get(4))) {
+					count++;
+				}
+				break;
+			case ">":
+				if(contaInicial.get(i) > Integer.parseInt(formula.get(4))) {
+					count++;
+				}
+				break;
+			}
+		}
+		return count;
 	}
 
-//		int counter=0;
-//		int i=0;
-//		List<String> formulas = metrica.getComponentesFormula();
-//		for(String title:columnTitles) {
-//			
-//		if(formulas.get(0).equals(title)) {
-//			index=i;
-//		}
-//			i++;
-//		}
-//		int value1=
-//		int value2=
-//		int value3=
-//		if(formulas.get(i))
-//	    
-//		
-//	
-//		metricas.put(metrica, counter);
-//			
-//		
-
+	/**
+	 * Devolve uma lista da informacao de um certo atributo/coluna, independentemeste do ficheiro em que se localiza
+	 *
+	 * @param coluna String da coluna que se quer obter informacao.
+//	 * @return Lista de strings representando os dados da coluna.
+	 */
+	private List<String> defineAtributo(String nomeAtributo) {
+		List<String> atributo = new ArrayList<>();
+		if(getColumnTitles().contains(nomeAtributo)) {   //Verifica se o atributo (que é um campo/coluna de um dos ficheiros(horario ou salas)) pertence ao horario
+			atributo = getHorario().get(getColumnTitles().indexOf(nomeAtributo));   //Vai busacar uma lista com todo o conteudo do atributo
+		}else if(getSalas().getColumnTitles().contains(nomeAtributo)){   //Verifica se o atributo pertence as salas
+			atributo = getHorario().get(getSalas().getColumnTitles().indexOf(nomeAtributo));   //Vai busacar uma lista com todo o conteudo do atributo
+		}
+		return atributo;
+	}
 	
-
-//		int posicaoSala = 0;
-//		int posicaoInscritos = 0;
-//		int posicaoCaracteristicas = 0;
-//		for (int i = 0; i != horario.size(); i++) {
-//			nAulasSemSala(horario.get(i).get(posicaoSala));
-//			for (int j = 0; j != salas.getData().size(); j++) {
+//	int valorMetricaUser(Metrica metrica) {
+//		List<String> formula = metrica.getComponentesFormula();
+//		int index1 = 0;
+//		int index2 = 0;
+//		int counter=0;
+//		String arg1 = formula.get(0);
+//		String arg2 = formula.get(0);
 //
-//				if (horario.get(i).get(posicaoSala).equals(salas.getData().get(j).getNome())) {
-//					nAulasSobrelotacao(Integer.parseInt(horario.get(i).get(posicaoInscritos)),
-//							salas.getData().get(j).getCapacidadeN());
-//					nSalasMalAtribuidas(salas.getData().get(j).getTipo(), horario.get(i).get(posicaoCaracteristicas));
-//					nCaracteristicasDesperdicadas(salas.getData().get(j).getTipo(),
-//							horario.get(i).get(posicaoCaracteristicas), salas.getData().get(j).getNCaracteristicas());
+//		if (isInColumnTitles(arg1)) {
+//			index1 = columnTitles.indexOf(arg1);
+//		} else if (arg1.equals("Capacidade Exame")) {
 //
+//		} else if (arg1.equals("Capacidade Exame")) {
+//
+//		}
+//
+//		switch (formula.get(1)) {
+//		case "*":
+//			break;
+//		case "=":
+//		case "+":
+//		case "-":
+//		case "/":
+//		default:
+//		}
+//return counter;
+//	}
+//
+//	int AulasSobrelotadas(HtmlCreator htmlCreator) {
+//		int counter = 0;
+//		int indexinscritos = htmlCreator.tiltesPosition().get(4);
+//		int indexSala = htmlCreator.tiltesPosition().get(10);
+//		for (List<String> linha : horario) {
+//			for (Sala sala : salas.getSalas()) {
+//				if (sala.getNome().equals(linha.get(indexSala))) {
+//					if (sala.getCapacidadeNormal() < Integer.parseInt(linha.get(indexinscritos))) {
+//						counter++;
+//					}
 //				}
-//
 //			}
 //		}
-//	}
-//
-//	void nAulasSobrelotacao(int a, int b) {
-//		if (a - b > 0) {
-//			aulasSobrelotacao++;
-//			nEstudantesSobrelotacao(a, b);
-//		}
-//	}
-//
-//	void nEstudantesSobrelotacao(int a, int b) {
-//		estudantesSobrelotacao += a - b;
-//	}
-//
-//	void nSalasMalAtribuidas(List<String> a, String b) {
-//		if (!(a.contains(b))) {
-//			numSalasMalAtribuidas++;
-//		}
-//	}
-//
-//	void nCaracteristicasDesperdicadas(List<String> a, String b, int c) {
-//		if (a.contains(b)) {
-//			numCaracteristicasDesperdicadas += c - 1;
-//		} else {
-//			numCaracteristicasDesperdicadas += c;
-//		}
-//	}
-//
-//	void nAulasSemSala(String sala) {
-//		if (sala.equals("N/A")) {
-//			numAulasSemSala++;
-//		}
-//
+//		return counter;
 //	}
 
 	/**
@@ -244,6 +214,10 @@ return counter;
 
 	public Map<Metrica, Integer> getMetricas() {
 		return metricas;
+	}
+
+	public Reader getInfoHorarioDoCSV() {
+		return infoHorarioDoCSV;
 	}
 
 	/**

@@ -9,9 +9,9 @@ public class Salas {
 	private List<String> columnTitles;
 
 	public Salas(String csvFilePath) {
-		Reader dataFromCSV = new Reader(csvFilePath);
-		salas = lerSalasDoCSV(dataFromCSV.getTableData());
-		columnTitles = dataFromCSV.getColumnTitles();
+		Reader infoFromCSV = new Reader(csvFilePath);
+		salas = lerSalasDoCSV(infoFromCSV.getTableData());
+		columnTitles = infoFromCSV.getColumnTitles();
 	}
 
 	/**
@@ -34,7 +34,16 @@ public class Salas {
 		return salas;
 	}
 
+	public List<String> getNomeSalas() {
+		List<String> nomeSalas = new ArrayList<>();
+		for(int i = 0; i < getSalas().size(); i++) {
+			nomeSalas.add(getSalas().get(i).getNome());
+		}
+		return nomeSalas;
+	}
+	
 	public List<String> getColumnTitles() {
 		return columnTitles;
 	}
+	
 }
