@@ -18,7 +18,6 @@ public class HtmlCreator {
 	private final List<List<String>> dataForHtml;
 	private final List<String> columnFields;
 	private final Reader dataFromCSV;
-
 	private List<String> userOrderTitles = new ArrayList<>();
 
 	/**
@@ -33,17 +32,17 @@ public class HtmlCreator {
 		dataFromCSV = new Reader(dataFilePath);
 		dataForHtml = dataFromCSV.getTableData();
 		this.userOrderTitles = userOrderTitles;
-
-		// Gera a lista com os fields usados no tabulator para cada coluna
-//		this.columnFields = new ArrayList<>(List.of("cursoL: ", "ucL: ", "turnoL: ", "turmaL: ", "inscritosL: ",
-//				"diaL: ", "horaInicioL: ", "horaFimL: ", "dataL: ", "caracteristicasL: ", "salaL: "));
-
 		this.columnFields = new ArrayList<>();
 		for(String titles: userOrderTitles) {
 			String titlesTrimmed = titles.replace(" ", "");
 			columnFields.add(titlesTrimmed + "_field");
 		}
 	}
+
+
+//	public List<String> getUserOrderTitles() {
+//		return userOrderTitles;
+//	}
 
 	/**
 	 * Devolve uma lista com a posicao dos valores associados a cada titulo na ordem
@@ -53,14 +52,13 @@ public class HtmlCreator {
 	 */
 	// Devolve uma lista com a posição dos valores assoicados a cada titulo na ordem
 	// do ficheiro CSV fornecido pelo utilizador
-	private List<String> tiltesPosition() {
+	public List<String> tiltesPosition() {
 		List<String> titlesPosition = new ArrayList<>();
 		for (String title : userOrderTitles) {
 			titlesPosition.add(String.valueOf(dataFromCSV.getColumnTitles().indexOf(title)));
 		}
 		return titlesPosition;
 	}
-
 
 	/**
 	 * Formata os dados para a representacao em HTML.
@@ -139,31 +137,6 @@ public class HtmlCreator {
 		body.appendElement("script").attr("src", "https://unpkg.com/tabulator-tables@4.8.4/dist/js/tabulator.min.js");
 
 		// Código JavaScript para criar a tabela e as suas propriedades
-		String javascriptTable = """
-				var table = new Tabulator('#horario', {
-				    	data: tableData,
-				    	pagination:"local",
-				    	layout: 'fitDatafill',
-				    	paginationSize:10,
-				    	movableColumns:true,
-				        paginationCounter:"rows",
-				        paginationSizeSelector:[5, 10, 20, 40],
-				        initialSort:[{column:"building",dir:"asc"},],
-				        columns: [
-				            {title: 'Curso', field: 'cursoL', headerFilter:'input'},
-				            {title: 'Unidade Curricular', field: 'ucL', headerFilter:'input'},
-				            {title: 'Turno', field: 'turnoL', headerFilter:'input'},
-				            {title: 'Turma', field: 'turmaL', headerFilter:'input'},
-				            {title: 'Inscritos no turno', field: 'inscritosL', headerFilter:'input'},
-				            {title: 'Dia da semana', field: 'diaL', headerFilter:'input'},
-				            {title: 'Hora de início da aula' , field: 'horaInicioL', headerFilter:'input'},
-				            {title: 'Hora de fim da aula', field: 'horaFimL', headerFilter:'input'},
-				            {title: 'Data da aula', field: 'dataL', headerFilter:'input'},
-				            {title: 'Características da sala pedida para a aula', field: 'caracteristicasL', headerFilter:'input'},
-				            {title: 'Sala atribuída', field: 'salaL', headerFilter:'input'
-				            },],});;
-				""";
-
 		String javaScriptTable1 =  """
 				var table = new Tabulator('#horario', {
 				    	data: tableData,
@@ -176,9 +149,7 @@ public class HtmlCreator {
 				        initialSort:[{column:"building",dir:"asc"},],
 				        """;
 
-		String javaScriptColumns = buildColumnsForTable();
-
-		String javaScriptTable2 = javaScriptTable1 + javaScriptColumns + "});;";
+		String javaScriptTable2 = javaScriptTable1 + buildColumnsForTable() + "});;";
 
 		// Completa o codigo JavaScript com os dados da tabela
 		String javascriptCode = formatDataForHtml() + "\n" + javaScriptTable2;
@@ -213,6 +184,10 @@ public class HtmlCreator {
 	 */
 	public String getHtmlPath() {
 		return pageFilePath;
+	}
+
+	public List<List<String>> getSchedule() {
+		return dataForHtml;
 	}
 
 }

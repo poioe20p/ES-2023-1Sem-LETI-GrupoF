@@ -2,6 +2,7 @@ package LETI_GrupoF.ProjetoES.user_interface;
 
 import LETI_GrupoF.ProjetoES.HtmlCreator;
 import LETI_GrupoF.ProjetoES.Reader;
+import LETI_GrupoF.ProjetoES.Schedule;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,11 +16,12 @@ import java.util.List;
 public class UserInteraction {
 
 	// Pagina da GUI
-	private final UserForm userForm;
+	private final SubmitFilePage submitFilePage;
 	private HtmlCreator htmlCreator;
-
+	private ScheduleQualityCalculationPage scheduleQualityCalculationPage;
+	private ColumnsOrderingPage columnsOrderingPage;
 	/**
-	 * 
+	 *
 	 * @param args
 	 */
 	// Para fazer correr o programa
@@ -27,41 +29,49 @@ public class UserInteraction {
 		SwingUtilities.invokeLater(UserInteraction::new);
 	}
 
-	 /**
-     * Construtor para inicializar a pagina GUI.
-     */
+	/**
+	 * Construtor para inicializar a pagina GUI.
+	 */
 	public UserInteraction() {
-		userForm = new UserForm();
-		userForm.setVisible(true);
+		submitFilePage = new SubmitFilePage();
+		submitFilePage.setVisible(true);
+		setUpContinueAndSubmitButton();
+//		setUpOpenScheduleButton();
 
-		// Define o comportamento do boão quando o mesmo é clicado
-		userForm.getOpenScheduleButton().addActionListener(e -> {
-			if (userForm.isRemoteFile()) {
-				htmlCreator = new HtmlCreator("ProjetoES/HorarioRemoto.csv", getUserOrderedColumnTitles());
-				openSchedule();
-			} else {
-				htmlCreator = new HtmlCreator(userForm.getCsvFileLocationTextField().getText(),
-						getUserOrderedColumnTitles());
-				openSchedule();
-			}
-		});
+	}
 
-		userForm.getContinueButton().addActionListener(e -> {
+//	private void setUpOpenScheduleButton() {
+//		// Define o comportamento do boão quando o mesmo é clicado
+////		submitFilePage.getOpenScheduleButton().addActionListener(e -> {
+//			if (submitFilePage.isRemoteFile()) {
+////				htmlCreator = new HtmlCreator("ProjetoES/HorarioRemoto.csv", getUserOrderedColumnTitles());
+//				openSchedule();
+////				Schedule schedule = new Schedule(htmlCreator.getSchedule());
+//			} else {
+////				htmlCreator = new HtmlCreator(submitFilePage.getCsvFileLocationTextField().getText(),
+////						getUserOrderedColumnTitles());
+//				openSchedule();
+//			}
+//		});
+//	}
+
+	private void setUpContinueAndSubmitButton () {
+		submitFilePage.getContinueButton().addActionListener(e -> {
 			// Vai buscar o input do utilizador
-			String input = userForm.getCsvFileLocationTextField().getText();
+			String input = submitFilePage.getCsvFileLocationTextField().getText();
 
 			if (input != null && !input.isEmpty()) {
 
 				// Verifica se o input é um URL ou um caminho para um ficheiro
 				if (input.matches("^https?://.*")) {
-					userForm.setRemoteFile(true);
+					submitFilePage.setRemoteFile(true);
 					try {
 						URL remoteFile = new URL(input);
 						if (saveToLocalFile(remoteFile.openStream(), "ProjetoES/HorarioRemoto.csv")) {
 							Reader reader = new Reader("ProjetoES/HorarioRemoto.csv");
-							userForm.openReorderPage(reader.getColumnTitles());
+//							submitFilePage.openReorderPage(reader.getColumnTitles());
 						} else {
-							JOptionPane.showMessageDialog(userForm, "Error processing remote file, please try again",
+							JOptionPane.showMessageDialog(submitFilePage, "Error processing remote file, please try again",
 									"Error", JOptionPane.ERROR_MESSAGE);
 						}
 					} catch (IOException ex) {
@@ -75,33 +85,35 @@ public class UserInteraction {
 						// Se existir usa o csv para gerar os dados para a pagina HTML e depois abre a
 						// pagina
 						Reader reader = new Reader(input);
-						userForm.openReorderPage(reader.getColumnTitles());
+//						submitFilePage.openReorderPage(reader.getColumnTitles());
 					} else {
 						// No caso de não existir o ficheiro aparece uma mensagem de erro
-						JOptionPane.showMessageDialog(userForm, "File does not exist: " + file, "Error",
+						JOptionPane.showMessageDialog(submitFilePage, "File does not exist: " + file, "Error",
 								JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			} else {
 				// No caso de não existir o ficheiro aparece uma mensagem de erro
-				JOptionPane.showMessageDialog(userForm, "Invalid file path.", "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(submitFilePage, "Invalid file path.", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		});
-
 	}
 
-	 /**
-     * Este metodo retorna os titulos das colunas da tabela 
-     * ordenados pelo usuario na GUI.
-     */
-	
-	public List<String> getUserOrderedColumnTitles() {
-		return userForm.getColumnTitles();
-	}
+	/**
+	 * Este metodo retorna os titulos das colunas da tabela
+	 * ordenados pelo usuario na GUI.
+	 */
 
-	 /**
-     * Este metodo salva o arquivo remoto em um arquivo local.
-     */
+//	public List<String> getUserOrderedColumnTitles() {
+//		return submitFilePage.getUserOrderedColumnTitles();
+//	}
+
+	public HtmlCreator getHtmlCreator() {
+		return htmlCreator;
+	}
+	/**
+	 * Este metodo salva o arquivo remoto em um arquivo local.
+	 */
 	private boolean saveToLocalFile(InputStream inputStream, String localFilePath) {
 		try {
 			File localFile = new File(localFilePath);
@@ -124,8 +136,8 @@ public class UserInteraction {
 	}
 
 	/**
-     * Este metodo abre a pagina HTML com a tabela no navegador e verifica se a pagina HTML foi gerada com sucesso.
-     */
+	 * Este metodo abre a pagina HTML com a tabela no navegador e verifica se a pagina HTML foi gerada com sucesso.
+	 */
 	private void openSchedule() {
 		if (Desktop.isDesktopSupported()) {
 			Desktop desktop = Desktop.getDesktop();
@@ -144,11 +156,11 @@ public class UserInteraction {
 				}
 			} else {
 				// No caso de não existir o ficheiro aparece uma mensagem de erro
-				JOptionPane.showMessageDialog(userForm, "File does not exist: " + file, "Error",
+				JOptionPane.showMessageDialog(submitFilePage, "File does not exist: " + file, "Error",
 						JOptionPane.ERROR_MESSAGE);
 			}
 		} else {
-			JOptionPane.showMessageDialog(userForm, "Desktop is not supported on this platform", "Error",
+			JOptionPane.showMessageDialog(submitFilePage, "Desktop is not supported on this platform", "Error",
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
