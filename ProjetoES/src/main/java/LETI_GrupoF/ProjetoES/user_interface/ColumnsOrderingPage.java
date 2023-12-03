@@ -42,6 +42,9 @@ public class ColumnsOrderingPage extends JFrame implements LayoutDefinable {
         for(String userColumnTitle: userColumnTitles) {
             userListModel.addElement(userColumnTitle);
         }
+        for(String defaultColumnTitle: defaultColumnTitles) {
+            defaultListModel.addElement(defaultColumnTitle);
+        }
 
         //Cria uma outra lista de colunas (com base da lista prévia) que pode ter uma barra lateral para arrastar o display da lista
         JList<String> userList = new JList<>(userListModel);
@@ -63,6 +66,10 @@ public class ColumnsOrderingPage extends JFrame implements LayoutDefinable {
                         "Please make sure you follow the default columns order.",
                 "Arial", Font.PLAIN, 15, Color.darkGray, Color.WHITE);
 
+        scheduleQualityButton = LayoutDefinable.defineButtonLayout(Color.BLUE,
+                Color.WHITE, "Schedule Quality", new Dimension(150, 50));
+        openScheduleButton = LayoutDefinable.defineButtonLayout(Color.BLUE,
+                Color.WHITE, "Open Schedule", new Dimension(150, 50));
         JButton moveUpButton = LayoutDefinable.defineButtonLayout(Color.BLUE, Color.WHITE, "Move Up", new Dimension(130, 50));
         moveUpButton.addActionListener(e -> moveSelectedColumn(userList, -1));
         JButton moveDownButton = LayoutDefinable.defineButtonLayout(Color.BLUE, Color.WHITE, "Move Down", new Dimension(130, 50));
@@ -75,6 +82,7 @@ public class ColumnsOrderingPage extends JFrame implements LayoutDefinable {
             dispose();
             previousFrame.setVisible(true);
         });
+
         gbc.gridwidth = 2;
         //Adiciona os elementos ao painel lateral esquerdo
         leftPanel.add(defaultColumnsLabel, gbc);
@@ -105,6 +113,8 @@ public class ColumnsOrderingPage extends JFrame implements LayoutDefinable {
         gbc.gridy++;
         gbc.fill = GridBagConstraints.CENTER;
         rightPanel.add(confirmButton, gbc);
+        gbc.gridy++;
+        rightPanel.add(goBackButton, gbc);
 
         gbc = resetGBC(gbc);
         gbc.gridheight = 3;
@@ -138,12 +148,6 @@ public class ColumnsOrderingPage extends JFrame implements LayoutDefinable {
         JTextField dialogTextField = LayoutDefinable.defineTextFieldLayout(
                 "Are you sure you want to confirm this ordering?",
                 "Arial", Font.PLAIN, 15, Color.darkGray, Color.WHITE);
-
-        scheduleQualityButton = LayoutDefinable.defineButtonLayout(Color.BLUE,
-                Color.WHITE, "Schedule Quality", new Dimension(150, 50));
-
-        openScheduleButton = LayoutDefinable.defineButtonLayout(Color.BLUE,
-                Color.WHITE, "Open Schedule", new Dimension(150, 50));
 
         JButton goBack = LayoutDefinable.defineButtonLayout(Color.RED,
                 Color.WHITE, "Go Back", new Dimension(150, 50));

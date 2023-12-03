@@ -56,8 +56,6 @@ public class Reader {
 	/**
 	 * Metodo privado que formata os dados lidos do arquivo, preenchendo valores
 	 * ausentes.
-	 *
-	 * @param s Lista de strings representando uma linha de dados do arquivo CSV.
 	 * @return Lista de strings formatada.
 	 */
 	private List<String> formatDataFromFile(List<String> linha) throws FileNotFoundException {

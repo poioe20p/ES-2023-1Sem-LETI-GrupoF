@@ -10,10 +10,10 @@ class TestHtmlCreator {
 	static String dataFilePath = "HorarioParaTestes.csv";
 
 	//Teste por fazer
-	@BeforeAll
-	static void setUpBeforeClass() throws Exception {
-		horario = new HtmlCreator(dataFilePath, null);
-	}
+//	@BeforeAll
+//	static void setUpBeforeClass() throws Exception {
+//		horario = new HtmlCreator(dataFilePath, null);
+//	}
 
 	@Test
 	void testHtmlCreator() {

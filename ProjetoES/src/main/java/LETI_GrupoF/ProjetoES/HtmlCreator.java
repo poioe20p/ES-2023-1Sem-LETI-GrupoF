@@ -17,20 +17,19 @@ public class HtmlCreator {
 	static final private String pageFilePath = "ProjetoES/Horario.html";
 	private final List<List<String>> dataForHtml;
 	private final List<String> columnFields;
-	private final Reader dataFromCSV;
+	private Horario horario;
 	private List<String> userOrderTitles = new ArrayList<>();
 
 	/**
 	 * Construtor da classe HtmlCreator. Inicializa um objeto HtmlCreator com o
 	 * caminho do arquivo CSV contendo os dados para a pagina HTML.
 	 *
-	 * @param dataFilePath O caminho local do arquivo CSV a ser lido.
 	 * @param userOrderTitles Lista com os titulos das colunas na ordem escolhida pelo utilizador.
 	 */
 
-	public HtmlCreator(String dataFilePath, List<String> userOrderTitles) {
-		dataFromCSV = new Reader(dataFilePath);
-		dataForHtml = dataFromCSV.getTableData();
+	public HtmlCreator(Horario horario, List<String> userOrderTitles) {
+		this.horario = horario;
+		dataForHtml = horario.getHorario();
 		this.userOrderTitles = userOrderTitles;
 		this.columnFields = new ArrayList<>();
 		for(String titles: userOrderTitles) {
@@ -55,7 +54,7 @@ public class HtmlCreator {
 	public List<String> tiltesPosition() {
 		List<String> titlesPosition = new ArrayList<>();
 		for (String title : userOrderTitles) {
-			titlesPosition.add(String.valueOf(dataFromCSV.getColumnTitles().indexOf(title)));
+			titlesPosition.add(String.valueOf(horario.getColumnTitles().indexOf(title)));
 		}
 		return titlesPosition;
 	}

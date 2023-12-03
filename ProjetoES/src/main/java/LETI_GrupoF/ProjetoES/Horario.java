@@ -9,7 +9,7 @@ import java.util.Map;
  */
 public class Horario {
 
-	static final private String csvFilePath = "CaracterizaçãoDasSalas.csv";
+	static final private String csvFilePath = "ProjetoES/CaracterizaçãoDasSalas.csv";
 	private String turma;
 	private List<List<String>> horario;
 	private final List<String> columnTitles;
@@ -21,7 +21,7 @@ public class Horario {
 	 * Construtor da classe Schedule.
 	 *
 	 * @param turma, turma para a qual o horario esta sendo gerado.
-	 * @param table, Reader de tabela que fornece os dados para o horario.
+//	 * @param table, Reader de tabela que fornece os dados para o horario.
 	 */
 
 	public Horario(String turma, int indiceTurma, String horarioFilePath) {
@@ -41,7 +41,7 @@ public class Horario {
 	/**
 	 * Construtor da classe Schedule.
 	 *
-	 * @param table, Reader de tabela que fornece os dados para o horario.
+//	 * @param table, Reader de tabela que fornece os dados para o horario.
 	 */
 
 	public Horario(String horarioFilePath) {
@@ -119,7 +119,7 @@ public class Horario {
 	/**
 	 * Devolve uma lista da informacao de um certo atributo/coluna, independentemeste do ficheiro em que se localiza
 	 *
-	 * @param coluna String da coluna que se quer obter informacao.
+//	 * @param coluna String da coluna que se quer obter informacao.
 //	 * @return Lista de strings representando os dados da coluna.
 	 */
 	private List<String> defineAtributo(String nomeAtributo) {
@@ -216,9 +216,9 @@ public class Horario {
 		return metricas;
 	}
 
-	public Reader getInfoHorarioDoCSV() {
-		return infoHorarioDoCSV;
-	}
+//	public Reader getInfoHorarioDoCSV() {
+//		return infoHorarioDoCSV;
+//	}
 
 	/**
 	 * Metodo main para testar a classe Schedule.

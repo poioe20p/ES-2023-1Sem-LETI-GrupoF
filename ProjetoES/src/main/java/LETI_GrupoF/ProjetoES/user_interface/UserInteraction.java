@@ -1,13 +1,13 @@
 package LETI_GrupoF.ProjetoES.user_interface;
 
+import LETI_GrupoF.ProjetoES.Horario;
 import LETI_GrupoF.ProjetoES.HtmlCreator;
-import LETI_GrupoF.ProjetoES.Reader;
-import LETI_GrupoF.ProjetoES.Schedule;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,24 +36,27 @@ public class UserInteraction {
 		submitFilePage = new SubmitFilePage();
 		submitFilePage.setVisible(true);
 		setUpContinueAndSubmitButton();
-//		setUpOpenScheduleButton();
-
 	}
 
-//	private void setUpOpenScheduleButton() {
-//		// Define o comportamento do boão quando o mesmo é clicado
-////		submitFilePage.getOpenScheduleButton().addActionListener(e -> {
-//			if (submitFilePage.isRemoteFile()) {
-////				htmlCreator = new HtmlCreator("ProjetoES/HorarioRemoto.csv", getUserOrderedColumnTitles());
-//				openSchedule();
-////				Schedule schedule = new Schedule(htmlCreator.getSchedule());
-//			} else {
-////				htmlCreator = new HtmlCreator(submitFilePage.getCsvFileLocationTextField().getText(),
-////						getUserOrderedColumnTitles());
-//				openSchedule();
-//			}
-//		});
-//	}
+	private void setUpColumnsOrderingPageButtons(ColumnsOrderingPage columnsOrderingPage, Horario horario) {
+		// Define o comportamento do boão quando o mesmo é clicado
+		columnsOrderingPage.getOpenScheduleButton().addActionListener(e -> {
+				htmlCreator = new HtmlCreator(horario, columnsOrderingPage.getUserOrderedColumnTitles());
+				openSchedule();
+		});
+
+		columnsOrderingPage.getScheduleQualityButton().addActionListener(e -> {
+			scheduleQualityCalculationPage = new ScheduleQualityCalculationPage(new ArrayList<>(List.of("Inscritos no turno", "Capacidade Normal de sala", "Capacidade de Exame de sala", "Características da sala pedida para a aula"
+			, "Sala atribuída à aula")),  columnsOrderingPage);
+			scheduleQualityCalculationPage.setVisible(true);
+			columnsOrderingPage.setVisible(false);
+		});
+	}
+
+
+	/**
+	 * Este metodo define o comportamento do botao de continuar e submeter.
+	 */
 
 	private void setUpContinueAndSubmitButton () {
 		submitFilePage.getContinueButton().addActionListener(e -> {
@@ -68,8 +71,11 @@ public class UserInteraction {
 					try {
 						URL remoteFile = new URL(input);
 						if (saveToLocalFile(remoteFile.openStream(), "ProjetoES/HorarioRemoto.csv")) {
-							Reader reader = new Reader("ProjetoES/HorarioRemoto.csv");
-//							submitFilePage.openReorderPage(reader.getColumnTitles());
+							Horario horario = new Horario("ProjetoES/HorarioRemoto.csv");
+							columnsOrderingPage = new ColumnsOrderingPage(horario.getColumnTitles(), submitFilePage);
+							setUpColumnsOrderingPageButtons(columnsOrderingPage, horario);
+							columnsOrderingPage.setVisible(true);
+							submitFilePage.setVisible(false);
 						} else {
 							JOptionPane.showMessageDialog(submitFilePage, "Error processing remote file, please try again",
 									"Error", JOptionPane.ERROR_MESSAGE);
@@ -84,8 +90,11 @@ public class UserInteraction {
 					if (file.exists()) {
 						// Se existir usa o csv para gerar os dados para a pagina HTML e depois abre a
 						// pagina
-						Reader reader = new Reader(input);
-//						submitFilePage.openReorderPage(reader.getColumnTitles());
+						Horario horario = new Horario(input);
+						columnsOrderingPage = new ColumnsOrderingPage(horario.getColumnTitles(), submitFilePage);
+						setUpColumnsOrderingPageButtons(columnsOrderingPage, horario);
+						columnsOrderingPage.setVisible(true);
+						submitFilePage.setVisible(false);
 					} else {
 						// No caso de não existir o ficheiro aparece uma mensagem de erro
 						JOptionPane.showMessageDialog(submitFilePage, "File does not exist: " + file, "Error",
