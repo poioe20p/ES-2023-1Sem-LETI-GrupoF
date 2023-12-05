@@ -1,20 +1,19 @@
 package LETI_GrupoF.ProjetoES;
 
-import LETI_GrupoF.ProjetoES.user_interface.UserInteraction;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 /**
  * A classe HtmlCreator e responsavel criar o ficheiro html.
  */
 public class HtmlCreator {
 
-	static final private String pageFilePath = "ProjetoES/Horario.html";
+	static final private String pageFilePath = "Horario.html";
 	private final List<List<String>> dataForHtml;
 	private final List<String> columnFields;
 	private Horario horario;
