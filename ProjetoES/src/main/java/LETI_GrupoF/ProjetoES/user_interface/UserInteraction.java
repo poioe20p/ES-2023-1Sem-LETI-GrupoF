@@ -2,13 +2,16 @@ package LETI_GrupoF.ProjetoES.user_interface;
 
 import LETI_GrupoF.ProjetoES.Horario;
 import LETI_GrupoF.ProjetoES.HtmlCreator;
+import LETI_GrupoF.ProjetoES.Metrica;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Esta classe fornece interatividade à página acessada pelo usuário.
@@ -20,6 +23,8 @@ public class UserInteraction {
 	private HtmlCreator htmlCreator;
 	private ScheduleQualityCalculationPage scheduleQualityCalculationPage;
 	private ColumnsOrderingPage columnsOrderingPage;
+
+	private List<Integer> indicesForUserCSVColumns;
 	/**
 	 *
 	 * @param args
@@ -38,21 +43,37 @@ public class UserInteraction {
 		setUpContinueAndSubmitButton();
 	}
 
+
+	/**
+	 * Este metodo define o comportamento dos botoes da pagina ColumnsOrderingPage.
+	 *
+	 * @param columnsOrderingPage
+	 * @param horario
+	 */
 	private void setUpColumnsOrderingPageButtons(ColumnsOrderingPage columnsOrderingPage, Horario horario) {
 		// Define o comportamento do boão quando o mesmo é clicado
 		columnsOrderingPage.getOpenScheduleButton().addActionListener(e -> {
-				htmlCreator = new HtmlCreator(horario, columnsOrderingPage.getUserOrderedColumnTitles());
-				openSchedule();
+			htmlCreator = new HtmlCreator(horario, columnsOrderingPage.getUserOrderedColumnTitles());
+			openSchedule();
 		});
 
 		columnsOrderingPage.getScheduleQualityButton().addActionListener(e -> {
-			scheduleQualityCalculationPage = new ScheduleQualityCalculationPage(new ArrayList<>(List.of("Inscritos no turno", "Capacidade Normal de sala", "Capacidade de Exame de sala", "Características da sala pedida para a aula"
-			, "Sala atribuída à aula")),  columnsOrderingPage);
+			scheduleQualityCalculationPage = new ScheduleQualityCalculationPage(variablesForMetricCalculation(columnsOrderingPage.getUserOrderedColumnTitles()), columnsOrderingPage, horario);
 			scheduleQualityCalculationPage.setVisible(true);
 			columnsOrderingPage.setVisible(false);
 		});
 	}
 
+	/**
+	 * Este devolve a lista de metricas definidas pelo utilizador.
+	 *
+	 * @return uma lista de strings com as metricas definidas pelo utilizador.
+	 */
+
+	public List<Metrica> getUserMetrics() {
+		return scheduleQualityCalculationPage == null ? null
+				: scheduleQualityCalculationPage.getScheduleMetrics();
+	}
 
 	/**
 	 * Este metodo define o comportamento do botao de continuar e submeter.
@@ -120,8 +141,16 @@ public class UserInteraction {
 	public HtmlCreator getHtmlCreator() {
 		return htmlCreator;
 	}
+
+
 	/**
 	 * Este metodo salva o arquivo remoto em um arquivo local.
+	 *
+	 * @param inputStream O arquivo remoto.
+	 *
+	 * @param localFilePath O caminho para o arquivo local.
+	 *
+	 * @return true se o arquivo foi salvo com sucesso, false caso contrario.
 	 */
 	private boolean saveToLocalFile(InputStream inputStream, String localFilePath) {
 		try {
@@ -146,6 +175,9 @@ public class UserInteraction {
 
 	/**
 	 * Este metodo abre a pagina HTML com a tabela no navegador e verifica se a pagina HTML foi gerada com sucesso.
+	 * Caso a pagina HTML nao tenha sido gerada com sucesso, aparece uma mensagem de erro.
+	 * Caso a pagina HTML tenha sido gerada com sucesso, abre a pagina HTML no navegador.
+	 *
 	 */
 	private void openSchedule() {
 		if (Desktop.isDesktopSupported()) {
@@ -172,6 +204,65 @@ public class UserInteraction {
 			JOptionPane.showMessageDialog(submitFilePage, "Desktop is not supported on this platform", "Error",
 					JOptionPane.ERROR_MESSAGE);
 		}
+	}
+
+	/**
+	 * Este metodo retorna um mapa onde para cada chave String (nome da coluna do CSV) temos associado um único inteiro correspondente
+	 * ao indice dessa coluna na lista de cabeçalho do CSV do utilizador.
+	 * Ou seja na primeira posicao da lista de cabeçalho tens o indice da posicao dos cursos na lista de cabeçalho do CSV do utilizador
+	 * porque na lista de cabeçalho default a primeira posicao corresponde ao curso. E assim sucessivamente.
+	 *
+	 * @param userOrderedColumnTitles Os titulos das colunas ordenados pelo utilizador.
+	 * @param columnTitles Os titulos das colunas do CSV do Utilizador.
+	 *
+	 * @return Um mapa onde para cada chave String (nome da coluna do CSV) temos associado um único inteiro correspondente
+	 */
+
+	public Map<String, Integer> getIndicesForUserCSVColumnsMapping (List<String> userOrderedColumnTitles, List<String> columnTitles) {
+		Map<String, Integer> indicesForUserCSVColumnsMap = new HashMap<>();
+		for (String userOrderedColumnTitle : userOrderedColumnTitles) {
+			indicesForUserCSVColumnsMap.put(userOrderedColumnTitle, columnTitles.indexOf(userOrderedColumnTitle));
+		}
+		return indicesForUserCSVColumnsMap;
+	}
+
+	/**
+	 * Este metodo retorna as variaveis fornecidas ao utilizador para o calculo das metricas.
+	 * Portanto estas sao as varivaveis que aparecem no menu dropdown da pagina GUI.
+	 *
+	 * @param userOrderedColumnTitles Os titulos das colunas ordenados pelo utilizador.
+	 * @return Uma lista de strings com as variaveis para o calculo das metricas.
+	 */
+
+	public List<String> variablesForMetricCalculation(List<String> userOrderedColumnTitles) {
+		List<String> variablesForMetricCalculation = new ArrayList<>();
+		if(userOrderedColumnTitles.size() >= 11) {
+			variablesForMetricCalculation.add(userOrderedColumnTitles.get(4));
+			variablesForMetricCalculation.add(userOrderedColumnTitles.get(9));
+			variablesForMetricCalculation.add(userOrderedColumnTitles.get(10));
+		} else if (userOrderedColumnTitles.size() == 10) {
+			variablesForMetricCalculation.add(userOrderedColumnTitles.get(4));
+			variablesForMetricCalculation.add(userOrderedColumnTitles.get(9));
+		}
+		else if (userOrderedColumnTitles.size() >= 5) {
+			variablesForMetricCalculation.add(userOrderedColumnTitles.get(4));
+		}
+
+//		variablesForMetricCalculation.add("Salas Aulas Mestrado");
+//		variablesForMetricCalculation.add("Salas Aulas Mestrado Plus");
+//		variablesForMetricCalculation.add("Salas Aulas Licenciatura");
+//		variablesForMetricCalculation.add("Sala NEE");
+//		variablesForMetricCalculation.add("Sala Provas");
+//		variablesForMetricCalculation.add("Sala Exames");
+//		variablesForMetricCalculation.add("Sala Reunião");
+//		variablesForMetricCalculation.add("Sala de Arquitetura");
+//		variablesForMetricCalculation.add("Sala de Arquitetura Plus");
+//		variablesForMetricCalculation.add("Sala de Aulas normal");
+//		variablesForMetricCalculation.add("Videoconferência");
+
+		variablesForMetricCalculation.add("Capacidade Normal");
+		variablesForMetricCalculation.add("Capacidade Exame");
+		return variablesForMetricCalculation;
 	}
 
 }

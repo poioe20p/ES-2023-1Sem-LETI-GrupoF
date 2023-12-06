@@ -13,7 +13,7 @@ import org.jsoup.nodes.Element;
  */
 public class HtmlCreator {
 
-	static final private String pageFilePath = "Horario.html";
+	static final private String pageFilePath = "ProjetoES/Horario.html";
 	private final List<List<String>> dataForHtml;
 	private final List<String> columnFields;
 	private Horario horario;
@@ -158,8 +158,6 @@ public class HtmlCreator {
 		try {
 			// Gera a string que representa o HTML
 			String htmlContent = doc.html();
-
-			System.out.println(htmlContent);
 
 			// Escreve a string no ficheiro HTML
 			FileWriter writer = new FileWriter(pageFilePath);
