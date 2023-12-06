@@ -12,7 +12,7 @@ public class ColumnsOrderingPage extends JFrame implements LayoutDefinable {
     private DefaultListModel<String> userListModel;
     private JButton scheduleQualityButton;
     GridBagConstraints gbc = new GridBagConstraints();
-
+    private List<String> userColumnTitles;
     private List<String> defaultColumnTitles = new ArrayList<>(List.of(
             "Curso", "Unidade Curricular", "Turno", "Turma", "Inscritos no turno",
             "Dia da semana", "Hora de início da aula", "Hora de fim da aula", "Data da aula",
@@ -22,6 +22,8 @@ public class ColumnsOrderingPage extends JFrame implements LayoutDefinable {
 
         //Estruturação da página
         gbc = resetGBC(gbc);
+
+        userColumnTitles = defaultColumnTitles;
 
         JPanel leftPanel = new JPanel(new GridBagLayout());
         leftPanel.setBackground(Color.darkGray);
@@ -217,6 +219,10 @@ public class ColumnsOrderingPage extends JFrame implements LayoutDefinable {
             columnTitlesUpdated.add(userListModel.get(i));
         }
         return columnTitlesUpdated;
+    }
+
+    public List<String> getUserColumnTitles() {
+        return userColumnTitles;
     }
 
     public static void main(String[] args) {
