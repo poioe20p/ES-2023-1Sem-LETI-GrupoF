@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ColumnsOrderingPage extends JFrame implements LayoutDefinable {
+	
     private JButton openScheduleButton;
     private DefaultListModel<String> userListModel;
     private JButton scheduleQualityButton;

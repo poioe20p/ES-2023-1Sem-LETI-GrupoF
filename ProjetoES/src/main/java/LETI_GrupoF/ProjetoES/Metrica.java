@@ -6,7 +6,7 @@ public class Metrica {
 
 	private String formula;
 	private List<String> componentesFormula;
-	private List<String> aulasComComtribuicao;
+	private List<List<String>> aulasComComtribuicao;
 
 	public Metrica(String formula) {
 		this.formula = formula;
@@ -21,11 +21,11 @@ public class Metrica {
 		return componentesFormula;
 	}
 
-	public void adicionarAula(String aula) {
+	public void adicionarAula(List<String> aula) {
 		aulasComComtribuicao.add(aula);
 	}
 
-	public List<String> getAulasComComtribuicao() {
+	public List<List<String>> getAulasComComtribuicao() {
 		return aulasComComtribuicao;
 	}
 	

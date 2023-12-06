@@ -20,6 +20,7 @@ public class UserInteraction {
 	private HtmlCreator htmlCreator;
 	private ScheduleQualityCalculationPage scheduleQualityCalculationPage;
 	private ColumnsOrderingPage columnsOrderingPage;
+	
 	/**
 	 *
 	 * @param args
@@ -70,8 +71,8 @@ public class UserInteraction {
 					submitFilePage.setRemoteFile(true);
 					try {
 						URL remoteFile = new URL(input);
-						if (saveToLocalFile(remoteFile.openStream(), "ProjetoES/HorarioRemoto.csv")) {
-							Horario horario = new Horario("ProjetoES/HorarioRemoto.csv");
+						if (saveToLocalFile(remoteFile.openStream(), "HorarioRemoto.csv")) {
+							Horario horario = new Horario("HorarioRemoto.csv");
 							columnsOrderingPage = new ColumnsOrderingPage(horario.getColumnTitles(), submitFilePage);
 							setUpColumnsOrderingPageButtons(columnsOrderingPage, horario);
 							columnsOrderingPage.setVisible(true);
