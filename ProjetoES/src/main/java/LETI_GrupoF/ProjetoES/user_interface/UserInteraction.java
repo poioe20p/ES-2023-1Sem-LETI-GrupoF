@@ -72,7 +72,7 @@ public class UserInteraction {
 					try {
 						URL remoteFile = new URL(input);
 						if (saveToLocalFile(remoteFile.openStream(), "HorarioRemoto.csv")) {
-							Horario horario = new Horario("HorarioRemoto.csv");
+							Horario horario = new Horario("HorarioRemoto.csv", get);
 							columnsOrderingPage = new ColumnsOrderingPage(horario.getColumnTitles(), submitFilePage);
 							setUpColumnsOrderingPageButtons(columnsOrderingPage, horario);
 							columnsOrderingPage.setVisible(true);
@@ -91,7 +91,7 @@ public class UserInteraction {
 					if (file.exists()) {
 						// Se existir usa o csv para gerar os dados para a pagina HTML e depois abre a
 						// pagina
-						Horario horario = new Horario(input);
+						Horario horario = new Horario(input, );
 						columnsOrderingPage = new ColumnsOrderingPage(horario.getColumnTitles(), submitFilePage);
 						setUpColumnsOrderingPageButtons(columnsOrderingPage, horario);
 						columnsOrderingPage.setVisible(true);

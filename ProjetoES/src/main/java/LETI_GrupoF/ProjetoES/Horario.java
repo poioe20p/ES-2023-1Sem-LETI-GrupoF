@@ -1,7 +1,6 @@
 package LETI_GrupoF.ProjetoES;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -24,11 +23,10 @@ public class Horario {
 //	 * @param table, Reader de tabela que fornece os dados para o horario.
 	 */
 
-	public Horario(String horarioFilePath, Map<String, Integer> ordemCampos) {
+	public Horario(String horarioFilePath) {
 		Reader dataHorarioDoCSV = new Reader(horarioFilePath);
 		columnTitles = dataHorarioDoCSV.getColumnTitles();
 		horario = dataHorarioDoCSV.getTableData();
-		this.ordemCampos = ordemCampos;
 
 		salas = new Salas(csvFilePath);
 	}
@@ -208,6 +206,10 @@ public class Horario {
 
 	public Map<Metrica, Integer> getMetricas() {
 		return metricas;
+	}
+
+	public void setOrdemCampos(Map<String, Integer> ordemCampos) {
+		this.ordemCampos = ordemCampos;
 	}
 
 	/**
