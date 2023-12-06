@@ -38,8 +38,7 @@ public class Horario {
 	}
 
 	private int calcularQualidade(Metrica metrica) {
-		List<String> formula = metrica.getComponentesFormula(); // Vai buscar os componetes da formula para o calculo da
-																// metrica
+		List<String> formula = metrica.getComponentesFormula(); // Vai buscar os componetes da formula para o calculo da metrica
 		List<String> atributo1 = defineAtributo(formula.get(0));
 		List<String> atributo2 = defineAtributo(formula.get(2));
 		List<String> contaInicial = new ArrayList<>();
@@ -89,34 +88,22 @@ public class Horario {
 	}
 
 	/**
-	 * Devolve uma lista da informacao de um certo atributo/coluna,
-	 * independentemente do ficheiro em que se localiza
+	 * Devolve uma lista da informacao de um certo atributo/coluna, independentemente do ficheiro em que se localiza
 	 *
-	 * // * @param coluna String da coluna que se quer obter informacao. //
-	 * * @return Lista de strings representando os dados da coluna.
+	 * @param coluna String da coluna que se quer obter informacao.
+	 * @return Lista de strings representando os dados da coluna.
 	 */
 	private List<String> defineAtributo(String nomeAtributo) {
 		List<String> atributo = new ArrayList<>();
-		if (getColumnTitles().contains(nomeAtributo)) { // Verifica se o atributo (que é um campo/coluna de um dos
-														// ficheiros(horario ou salas)) pertence ao horario
+		if (getColumnTitles().contains(nomeAtributo)) { // Verifica se o atributo (que é um campo/coluna de um dos ficheiros(horario ou salas)) pertence ao horario
 			atributo.add("horario");
 			for (int i = 0; i < getHorario().size(); i++) {
-				atributo.add(getHorario().get(i).get(ordemCampos.get(nomeAtributo))); // Vai busacar uma lista com todo
-																						// o conteudo do atributo
+				atributo.add(getHorario().get(i).get(ordemCampos.get(nomeAtributo))); // Vai busacar uma lista com todo o conteudo do atributo
 			}
 		} else if (getSalas().getColumnTitles().contains(nomeAtributo)) { // Verifica se o atributo pertence as salas
 			atributo.add("sala");
-			for (int i = 0; i < getHorario().size(); i++) {
-				atributo.add(getSalas().getSalas().get(i).getCampo(getSalas().getColumnTitles().indexOf(nomeAtributo))); // Vai
-																															// busacar
-																															// uma
-																															// lista
-																															// com
-																															// todo
-																															// o
-																															// conteudo
-																															// do
-																															// atributo
+			for (int i = 0; i < getSalas().getSalas().size(); i++) {
+				atributo.add(getSalas().getSalas().get(i).getCampo(getSalas().getColumnTitles().indexOf(nomeAtributo))); // Vai busacar uma lista com todo o conteudo do atributo
 			}
 		}
 		return atributo;
@@ -145,20 +132,16 @@ public class Horario {
 		for (int i = 1; i < atributoHoraio.size(); i++) {
 			switch (operador) {
 			case "*":
-				contaInicial.add(String.valueOf(Integer.parseInt(atributoHoraio.get(i))
-						* Integer.parseInt(atributoSala.get(indexSalaAula(i)))));
+				contaInicial.add(String.valueOf(Integer.parseInt(atributoHoraio.get(i))	* Integer.parseInt(atributoSala.get(indexSalaAula(i)))));
 				break;
 			case "/":
-				contaInicial.add(String.valueOf(Integer.parseInt(atributoHoraio.get(i))
-						/ Integer.parseInt(atributoSala.get(indexSalaAula(i)))));
+				contaInicial.add(String.valueOf(Integer.parseInt(atributoHoraio.get(i))	/ Integer.parseInt(atributoSala.get(indexSalaAula(i)))));
 				break;
 			case "+":
-				contaInicial.add(String.valueOf(Integer.parseInt(atributoHoraio.get(i))
-						+ Integer.parseInt(atributoSala.get(indexSalaAula(i)))));
+				contaInicial.add(String.valueOf(Integer.parseInt(atributoHoraio.get(i)) + Integer.parseInt(atributoSala.get(indexSalaAula(i)))));
 				break;
 			case "-":
-				contaInicial.add(String.valueOf(Integer.parseInt(atributoHoraio.get(i))
-						- Integer.parseInt(atributoSala.get(indexSalaAula(i)))));
+				contaInicial.add(String.valueOf(Integer.parseInt(atributoHoraio.get(i))	- Integer.parseInt(atributoSala.get(indexSalaAula(i)))));
 				break;
 			}
 		}
@@ -171,36 +154,32 @@ public class Horario {
 		for (int i = 1; i < atributoHoraio.size(); i++) {
 			switch (operador) {
 			case "*":
-				contaInicial.add(String.valueOf(Integer.parseInt(atributoSala.get(indexSalaAula(i)))
-						* Integer.parseInt(atributoHoraio.get(i))));
+				contaInicial.add(String.valueOf(Integer.parseInt(atributoSala.get(indexSalaAula(i))) * Integer.parseInt(atributoHoraio.get(i))));
 				break;
 			case "/":
-				contaInicial.add(String.valueOf(Integer.parseInt(atributoSala.get(indexSalaAula(i)))
-						/ Integer.parseInt(atributoHoraio.get(i))));
+				contaInicial.add(String.valueOf(Integer.parseInt(atributoSala.get(indexSalaAula(i))) / Integer.parseInt(atributoHoraio.get(i))));
 				break;
 			case "+":
-				contaInicial.add(String.valueOf(Integer.parseInt(atributoSala.get(indexSalaAula(i)))
-						+ Integer.parseInt(atributoHoraio.get(i))));
+				contaInicial.add(String.valueOf(Integer.parseInt(atributoSala.get(indexSalaAula(i))) + Integer.parseInt(atributoHoraio.get(i))));
 				break;
 			case "-":
-				contaInicial.add(String.valueOf(Integer.parseInt(atributoSala.get(indexSalaAula(i)))
-						- Integer.parseInt(atributoHoraio.get(i))));
+				contaInicial.add(String.valueOf(Integer.parseInt(atributoSala.get(indexSalaAula(i))) - Integer.parseInt(atributoHoraio.get(i))));
 				break;
 			}
 		}
 		return contaInicial;
 	}
 
-	private int indexSalaAula(int index) {
-		int indexSalaHorario = 0;
+	private int indexSalaAula(int indexAula) {
+		int posicaoColunaSalaHorario = 0;
 		int i = 1;
 		for (Map.Entry<String, Integer> entry : ordemCampos.entrySet()) {
 			if (ordemCampos.entrySet().size() == i) {
-				indexSalaHorario = entry.getValue();
+				posicaoColunaSalaHorario = entry.getValue();
 			}
 			i++;
 		}
-		return getSalas().getNomeSalas().indexOf(getHorario().get(index).get(indexSalaHorario));
+		return getSalas().getNomeSalas().indexOf(getHorario().get(indexAula).get(posicaoColunaSalaHorario));
 	}
 
 	/**
