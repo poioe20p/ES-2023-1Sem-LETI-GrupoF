@@ -54,11 +54,13 @@ public class UserInteraction {
 		// Define o comportamento do boão quando o mesmo é clicado
 		columnsOrderingPage.getOpenScheduleButton().addActionListener(e -> {
 			htmlCreator = new HtmlCreator(horario, columnsOrderingPage.getUserOrderedColumnTitles());
+			horario.setOrdemCampos(getIndicesForUserCSVColumnsMapping(columnsOrderingPage.getUserOrderedColumnTitles(), horario.getColumnTitles()));
 			openSchedule();
 		});
 
 		columnsOrderingPage.getScheduleQualityButton().addActionListener(e -> {
 			scheduleQualityCalculationPage = new ScheduleQualityCalculationPage(variablesForMetricCalculation(columnsOrderingPage.getUserOrderedColumnTitles()), columnsOrderingPage, horario);
+			horario.setOrdemCampos(getIndicesForUserCSVColumnsMapping(columnsOrderingPage.getUserOrderedColumnTitles(), horario.getColumnTitles()));
 			scheduleQualityCalculationPage.setVisible(true);
 			columnsOrderingPage.setVisible(false);
 		});
@@ -92,7 +94,7 @@ public class UserInteraction {
 					try {
 						URL remoteFile = new URL(input);
 						if (saveToLocalFile(remoteFile.openStream(), "ProjetoES/HorarioRemoto.csv")) {
-							Horario horario = new Horario("ProjetoES/HorarioRemoto.csv", getIndicesForUserCSVColumnsMapping(columnsOrderingPage.getUserOrderedColumnTitles(), columnsOrderingPage.getUserColumnTitles()));
+							Horario horario = new Horario("ProjetoES/HorarioRemoto.csv");
 							columnsOrderingPage = new ColumnsOrderingPage(horario.getColumnTitles(), submitFilePage);
 							setUpColumnsOrderingPageButtons(columnsOrderingPage, horario);
 							columnsOrderingPage.setVisible(true);

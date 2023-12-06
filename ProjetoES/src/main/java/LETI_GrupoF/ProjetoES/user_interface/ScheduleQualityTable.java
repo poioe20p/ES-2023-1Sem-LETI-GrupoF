@@ -22,13 +22,6 @@ public class ScheduleQualityTable extends JFrame {
             this.horario = horario;
         }
 
-//        private void getTotal() {
-//            for (Metrica metrica : metricas) {
-//                if (horario.getMetricas().containsKey(metrica)) {
-//                    metrica.adicionarAula(componente);
-//                }
-//            }
-//        }
         private final String[] columnNames = {"Metrica", "Total", "Aulas Não Qualificadas"};
 
         @Override
