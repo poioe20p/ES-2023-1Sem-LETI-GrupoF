@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ColumnsOrderingPage extends JFrame implements LayoutDefinable {
+	
     private JButton openScheduleButton;
     private DefaultListModel<String> userListModel;
     private JButton scheduleQualityButton;

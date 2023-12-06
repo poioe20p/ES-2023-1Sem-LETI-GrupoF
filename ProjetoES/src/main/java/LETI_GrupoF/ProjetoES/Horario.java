@@ -23,11 +23,10 @@ public class Horario {
 //	 * @param table, Reader de tabela que fornece os dados para o horario.
 	 */
 
-	public Horario(String horarioFilePath, Map<String, Integer> ordemCampos) {
+	public Horario(String horarioFilePath) {
 		Reader dataHorarioDoCSV = new Reader(horarioFilePath);
 		columnTitles = dataHorarioDoCSV.getColumnTitles();
 		horario = dataHorarioDoCSV.getTableData();
-		this.ordemCampos = ordemCampos;
 
 		salas = new Salas(csvFilePath);
 	}
@@ -38,7 +37,6 @@ public class Horario {
 	
 	private int calcularQualidade(Metrica metrica) {
 		List<String> formula = metrica.getComponentesFormula();   //Vai buscar os componetes da formula para o calculo da metrica
-//		List<String> nomeSalas = salas.getNomeSalas();   //Vai busacar uma lista com todos os nomes das salas
 		List<String> atributo1 = defineAtributo(formula.get(0));
 		List<String> atributo2 = defineAtributo(formula.get(2));
 		List<String> contaInicial = new ArrayList<>();
@@ -56,13 +54,13 @@ public class Horario {
 				case "<":
 					if(Integer.parseInt(contaInicial.get(i)) < Integer.parseInt(formula.get(4))) {
 						count++;
-						metrica.adicionarAula();
+						metrica.adicionarAula(getHorario().get(i));
 					}
 					break;
 				case ">":
 					if(Integer.parseInt(contaInicial.get(i)) > Integer.parseInt(formula.get(4))) {
 						count++;
-						metrica.adicionarAula();
+						metrica.adicionarAula(getHorario().get(i));
 					}
 					break;
 //				case "=":
@@ -130,16 +128,16 @@ public class Horario {
 		for(int i = 1; i < atributoHoraio.size(); i++) {
 			switch(operador) {
 			case "*":
-				contaInicial.add(String.valueOf(Integer.parseInt(atributoHoraio.get(i)) * Integer.parseInt(atributoSala.get(indexSalaAula(atributoSala, i)))));
+				contaInicial.add(String.valueOf(Integer.parseInt(atributoHoraio.get(i)) * Integer.parseInt(atributoSala.get(indexSalaAula(i)))));
 				break;
 			case "/":
-				contaInicial.add(String.valueOf(Integer.parseInt(atributoHoraio.get(i)) / Integer.parseInt(atributoSala.get(indexSalaAula(atributoSala, i)))));
+				contaInicial.add(String.valueOf(Integer.parseInt(atributoHoraio.get(i)) / Integer.parseInt(atributoSala.get(indexSalaAula(i)))));
 				break;
 			case "+":
-				contaInicial.add(String.valueOf(Integer.parseInt(atributoHoraio.get(i)) + Integer.parseInt(atributoSala.get(indexSalaAula(atributoSala, i)))));
+				contaInicial.add(String.valueOf(Integer.parseInt(atributoHoraio.get(i)) + Integer.parseInt(atributoSala.get(indexSalaAula(i)))));
 				break;
 			case "-":
-				contaInicial.add(String.valueOf(Integer.parseInt(atributoHoraio.get(i)) - Integer.parseInt(atributoSala.get(indexSalaAula(atributoSala, i)))));
+				contaInicial.add(String.valueOf(Integer.parseInt(atributoHoraio.get(i)) - Integer.parseInt(atributoSala.get(indexSalaAula(i)))));
 				break;
 			}
 		}
@@ -151,24 +149,32 @@ public class Horario {
 		for(int i = 1; i < atributoHoraio.size(); i++) {
 			switch(operador) {
 			case "*":
-				contaInicial.add(String.valueOf(Integer.parseInt(atributoSala.get(indexSalaAula(atributoSala, i))) * Integer.parseInt(atributoHoraio.get(i))));
+				contaInicial.add(String.valueOf(Integer.parseInt(atributoSala.get(indexSalaAula(i))) * Integer.parseInt(atributoHoraio.get(i))));
 				break;
 			case "/":
-				contaInicial.add(String.valueOf(Integer.parseInt(atributoSala.get(indexSalaAula(atributoSala, i))) / Integer.parseInt(atributoHoraio.get(i))));
+				contaInicial.add(String.valueOf(Integer.parseInt(atributoSala.get(indexSalaAula(i))) / Integer.parseInt(atributoHoraio.get(i))));
 				break;
 			case "+":
-				contaInicial.add(String.valueOf(Integer.parseInt(atributoSala.get(indexSalaAula(atributoSala, i))) + Integer.parseInt(atributoHoraio.get(i))));
+				contaInicial.add(String.valueOf(Integer.parseInt(atributoSala.get(indexSalaAula(i))) + Integer.parseInt(atributoHoraio.get(i))));
 				break;
 			case "-":
-				contaInicial.add(String.valueOf(Integer.parseInt(atributoSala.get(indexSalaAula(atributoSala, i))) - Integer.parseInt(atributoHoraio.get(i))));
+				contaInicial.add(String.valueOf(Integer.parseInt(atributoSala.get(indexSalaAula(i))) - Integer.parseInt(atributoHoraio.get(i))));
 				break;
 			}
 		}
 		return contaInicial;
 	}
 	
-	private int indexSalaAula(List<String> atributoSala, int index) {
-		return atributoSala.indexOf(getHorario().get(index).get(ordemCampos.));
+	private int indexSalaAula(int index) {
+		int indexSalaHorario = 0;
+		int i = 1;
+		for (Map.Entry<String, Integer> entry : ordemCampos.entrySet()) {
+			if(ordemCampos.entrySet().size() == i) {
+				indexSalaHorario = entry.getValue();
+			}
+			i++;
+		}
+		return getSalas().getNomeSalas().indexOf(getHorario().get(index).get(indexSalaHorario));
 	}
 
 	/**
@@ -200,6 +206,10 @@ public class Horario {
 
 	public Map<Metrica, Integer> getMetricas() {
 		return metricas;
+	}
+
+	public void setOrdemCampos(Map<String, Integer> ordemCampos) {
+		this.ordemCampos = ordemCampos;
 	}
 
 	/**

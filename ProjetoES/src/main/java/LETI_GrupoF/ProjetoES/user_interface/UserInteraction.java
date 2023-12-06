@@ -111,7 +111,7 @@ public class UserInteraction {
 					if (file.exists()) {
 						// Se existir usa o csv para gerar os dados para a pagina HTML e depois abre a
 						// pagina
-						Horario horario = new Horario(input, getIndicesForUserCSVColumnsMapping(columnsOrderingPage.getUserOrderedColumnTitles(), columnsOrderingPage.getUserColumnTitles()));
+						Horario horario = new Horario(input);
 						columnsOrderingPage = new ColumnsOrderingPage(horario.getColumnTitles(), submitFilePage);
 						setUpColumnsOrderingPageButtons(columnsOrderingPage, horario);
 						columnsOrderingPage.setVisible(true);
