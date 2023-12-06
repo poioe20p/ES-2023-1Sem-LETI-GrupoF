@@ -83,6 +83,19 @@ public class Sala {
 	public List<String> getCaracteristicasSala() {
 		return caracteristicasSala;
 	}
+	
+	/**
+	 * Obtem a lista de tipos associados a sala.
+	 *
+	 * @return Lista de caracteristicas da sala.
+	 */
+	public String getCampo(int index) {
+		if(index > 4) {
+			return informacaoSala.get(index);
+		}else {
+			return caracteristicasSala.get(index);
+		}
+	}
 
 	@Override
 	public String toString() {
