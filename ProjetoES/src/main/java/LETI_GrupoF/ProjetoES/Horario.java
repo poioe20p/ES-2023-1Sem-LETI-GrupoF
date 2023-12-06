@@ -109,8 +109,7 @@ public class Horario {
 		return atributo;
 	}
 
-	private List<String> calculoParcialHorario(List<String> atributoHoraio1, List<String> atributoHoraio2,
-			String operador) {
+	private List<String> calculoParcialHorario(List<String> atributoHoraio1, List<String> atributoHoraio2, String operador) {
 		List<String> contaInicial = new ArrayList<>();
 		for (int i = 1; i < atributoHoraio1.size(); i++) {
 			switch (operador) {
@@ -126,8 +125,7 @@ public class Horario {
 		return contaInicial;
 	}
 
-	private List<String> calculoParcialHorarioSala(List<String> atributoHoraio, List<String> atributoSala,
-			String operador) {
+	private List<String> calculoParcialHorarioSala(List<String> atributoHoraio, List<String> atributoSala, String operador) {
 		List<String> contaInicial = new ArrayList<>();
 		for (int i = 1; i < atributoHoraio.size(); i++) {
 			switch (operador) {
@@ -148,8 +146,7 @@ public class Horario {
 		return contaInicial;
 	}
 
-	private List<String> calculoParcialSalaHorario(List<String> atributoSala, List<String> atributoHoraio,
-			String operador) {
+	private List<String> calculoParcialSalaHorario(List<String> atributoSala, List<String> atributoHoraio, String operador) {
 		List<String> contaInicial = new ArrayList<>();
 		for (int i = 1; i < atributoHoraio.size(); i++) {
 			switch (operador) {
