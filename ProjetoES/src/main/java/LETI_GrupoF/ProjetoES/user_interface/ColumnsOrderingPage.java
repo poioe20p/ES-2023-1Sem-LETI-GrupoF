@@ -3,7 +3,9 @@ package LETI_GrupoF.ProjetoES.user_interface;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ColumnsOrderingPage extends JFrame implements LayoutDefinable {
 	

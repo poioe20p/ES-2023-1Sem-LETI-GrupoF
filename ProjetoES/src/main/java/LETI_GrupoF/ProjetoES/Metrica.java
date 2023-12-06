@@ -28,5 +28,9 @@ public class Metrica {
 	public List<List<String>> getAulasComComtribuicao() {
 		return aulasComComtribuicao;
 	}
+
+	public int getTotal () {
+		return aulasComComtribuicao != null ? aulasComComtribuicao.size() : 0;
+	}
 	
 }

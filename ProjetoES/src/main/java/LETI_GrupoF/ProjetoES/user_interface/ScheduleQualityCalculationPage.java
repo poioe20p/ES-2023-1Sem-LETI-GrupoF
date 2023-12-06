@@ -1,5 +1,8 @@
 package LETI_GrupoF.ProjetoES.user_interface;
 
+import LETI_GrupoF.ProjetoES.Horario;
+import LETI_GrupoF.ProjetoES.Metrica;
+
 import javax.swing.*;
 import javax.swing.text.NumberFormatter;
 import java.awt.*;
@@ -12,7 +15,6 @@ import java.util.stream.Stream;
 
 public class ScheduleQualityCalculationPage extends JFrame implements LayoutDefinable {
 
-    private JTextField classDesignationTextField;
     private JButton calculateScheduleQuality;
     private GridBagConstraints gbc = new GridBagConstraints();
     private JComboBox<String> listOfMatOperators;
@@ -21,15 +23,19 @@ public class ScheduleQualityCalculationPage extends JFrame implements LayoutDefi
     private JComboBox<String> listOfVariables;
     private JComboBox<String> listOfVariables2;
     private DefaultListModel<String> variableListModel;
-
     private List<String> metricas = new ArrayList<>();
+    private Horario horario;
+    private List<String> variablesForFormula = new ArrayList<>();
+    private boolean isListAltered = false;
 
 
 
-
-    public ScheduleQualityCalculationPage(List<String> variablesForFormula, JFrame previousFrame) {
+    public ScheduleQualityCalculationPage(List<String> variablesForFormula, JFrame previousFrame, Horario horario) {
         LayoutDefinable.basicLayout("Schedule Quality", this, Color.darkGray);
         setLayout(new BorderLayout());
+
+        this.horario = horario;
+        this.variablesForFormula = variablesForFormula;
 
         // Panel que corresponde ao separador que contém os elementos para criação de variaveis
         JPanel createFormulaPanel = new JPanel(new GridLayout(2,1));
@@ -90,10 +96,11 @@ public class ScheduleQualityCalculationPage extends JFrame implements LayoutDefi
         listOfVariables.setPreferredSize(new Dimension(200, 40));
         listOfVariables2 = new JComboBox<>(variablesForFormula.toArray(new String[0]));
         listOfVariables2.setPreferredSize(new Dimension(200, 40));
+        updateLists();
 
-        listOfMatOperators = new JComboBox<>(new String[] {"Mathematical Operation","+", "-", "*", "/" });
+        listOfMatOperators = new JComboBox<>(new String[]{"Operation", "=", "!=", "+", "-", "*", "/"});
         listOfMatOperators.setPreferredSize(new Dimension(200, 40));
-        listOfMatOperators2 = new JComboBox<>(new String[] {"Condition Operator (Optional) ", ">", "<", "="});
+        listOfMatOperators2 = new JComboBox<>(new String[] {"Condition Operator (Optional)", ">", "<", "="});
         listOfMatOperators2.setPreferredSize(new Dimension(200, 40));
 
         //Permite garantir que o utilizador apenas entra um inteiro na ultima coluna
@@ -184,7 +191,7 @@ public class ScheduleQualityCalculationPage extends JFrame implements LayoutDefi
         }
         else {
             if(!matOperator1.isBlank() && input != null) {
-               Stream.of(variable1, matOperator1, variable2, matOperator2, input).forEach(formula::add);
+                Stream.of(variable1, matOperator1, variable2, matOperator2, input).forEach(formula::add);
             }
             else {
                 Stream.of(variable1, matOperator1, variable2).forEach(formula::add);
@@ -194,15 +201,101 @@ public class ScheduleQualityCalculationPage extends JFrame implements LayoutDefi
     }
 
     public JButton getCalculateScheduleQualityButton() {
-      return calculateScheduleQuality;
+        return calculateScheduleQuality;
     };
 
-    public List<String> getScheduleMetrics() { return metricas;}
+    public List<Metrica> getScheduleMetrics() {
+        List<Metrica> metricasDoUtilizador = new ArrayList<>();
+        for(String metrica : metricas) {
+            metricasDoUtilizador.add(new Metrica(metrica));
+        }
+        return metricasDoUtilizador;
+    }
+
+    /**
+     * Este metodo verifica se a variavel selecionada pelo utilizador tem valores inteiros associados ou não,
+     * devolvendo true se tiver e false caso contrário.
+     *
+     * @param metricVariable variavel selecionada pelo utilizador
+     * @return true se a variavel selecionada pelo utilizador tiver valores inteiros associados e false caso contrário
+     */
+    private boolean hasIntegerValues(String metricVariable) {
+        List<List<String>> horarioCompleto = horario.getHorario();
+        for (String header : horario.getColumnTitles()) {
+            if(metricVariable.equals(header)) {
+                try {
+                    Integer.parseInt(horarioCompleto.get(0).get(horario.getColumnTitles().indexOf(header)));
+                    return true;
+                } catch (NumberFormatException e) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Este metodo atualiza as listas de variaveis e operadores matematicos de acordo com as variaveis que o utilizador
+     * seleciona tendo em conta o tipo de variavel selecionada na lista. Pois pretende-se que o utilizador apenas possa fazer operaçõe com varivaeis do mesmo tipo.
+     *
+     */
+    private void updateLists() {
+        JComboBox<String> stringOperation = new JComboBox<>(new String[] {"String Operation", "=", "!="});
+        stringOperation.setPreferredSize(new Dimension(200, 40));
+        JComboBox<String> mathOperation = new JComboBox<>(new String[]{"Mathematical Operation", "+", "-", "*", "/"});
+        mathOperation.setPreferredSize(new Dimension(200, 40));
+        List<String> auxVariablesForFormula = new ArrayList<>(variablesForFormula);
+        listOfVariables.addActionListener(e -> {
+            String variable = (String) listOfVariables.getSelectedItem();
+            if(!Objects.equals(variable, "Variable")) {
+                auxVariablesForFormula.remove(variable);
+                listOfVariables2.setModel(new DefaultComboBoxModel<>(auxVariablesForFormula.toArray(new String[0])));
+                if(hasIntegerValues(variable)) {
+                    listOfMatOperators.setModel(new DefaultComboBoxModel<>(new String[]{"Operation", "+", "-", "*", "/"}));
+                    isListAltered = true;
+                }
+                else {
+                    listOfMatOperators.setModel(new DefaultComboBoxModel<>(new String[]{"Operation", "=", "!="}));
+                    isListAltered = true;
+                }
+            }
+            else {
+                if(isListAltered) {
+                    listOfVariables2.setModel(new DefaultComboBoxModel<>(variablesForFormula.toArray(new String[0])));
+                    listOfMatOperators.setModel(new DefaultComboBoxModel<>(new String[]{"Operation", "=", "!=", "+", "-", "*", "/"}));
+                }
+            }
+        });
+
+        listOfVariables2.addActionListener(e -> {
+            String variable = (String) listOfVariables2.getSelectedItem();
+            if(!Objects.equals(variable, "Variable")) {
+                auxVariablesForFormula.remove(variable);
+                listOfVariables.setModel(new DefaultComboBoxModel<>(auxVariablesForFormula.toArray(new String[0])));
+                if(hasIntegerValues(variable)) {
+                    listOfMatOperators.setModel(new DefaultComboBoxModel<>(new String[]{"Operation", "+", "-", "*", "/"}));
+                    isListAltered = true;
+                }
+                else {
+                    listOfMatOperators.setModel(new DefaultComboBoxModel<>(new String[]{"Operation", "=", "!="}));
+                    isListAltered = true;
+                }
+            }
+            else {
+                if(isListAltered) {
+                    listOfVariables.setModel(new DefaultComboBoxModel<>(variablesForFormula.toArray(new String[0])));
+                    listOfMatOperators.setModel(new DefaultComboBoxModel<>(new String[]{"Operation", "=", "!=", "+", "-", "*", "/"}));
+                }
+            }
+        });
+        auxVariablesForFormula.clear();
+        auxVariablesForFormula.addAll(variablesForFormula);
+    }
 
     public static void main(String[] args) {
         List<String> variaveis = new ArrayList<>(List.of("AAAA", "SDKJFN", "AKDNSJ", "AKJDS"));
         JFrame frame = new JFrame();
-        ScheduleQualityCalculationPage sqcp = new ScheduleQualityCalculationPage(variaveis,  frame);
+        ScheduleQualityCalculationPage sqcp = new ScheduleQualityCalculationPage(variaveis,  frame, new Horario("ProjetoES/HorarioRemoto.csv"));
         LayoutDefinable.setVisibility(sqcp, true);
     }
 
