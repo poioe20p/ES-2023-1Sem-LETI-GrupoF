@@ -1,5 +1,6 @@
 package LETI_GrupoF.ProjetoES;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -38,18 +39,17 @@ public class Reader {
 	 */
 	private List<List<String>> dividirPorColuna(File csv) {
 		List<List<String>> data = new ArrayList<>();
-		Scanner sc;
+		BufferedReader br;
 		try {
-			sc = new Scanner(csv);
-			columnTitles = readColumnTitles(sc);
-			while (sc.hasNextLine()) {
-				List<String> linha = new ArrayList<>(List.of(sc.nextLine().split(";")));
+			br = new BufferedReader(csv);
+			columnTitles = readColumnTitles(br);
+			while (br.hasNextLine()) {
+				List<String> linha = new ArrayList<>(List.of(br.nextLine().split(";")));
 				data.add(formatDataFromFile(linha));
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-
 		return data;
 	}
 
