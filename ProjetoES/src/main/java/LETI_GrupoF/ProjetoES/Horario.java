@@ -87,7 +87,10 @@ public class Horario {
 		} else {
 			int sum = 0;
 			for (int i = 0; i < contaInicial.size(); i++) {
-				sum += Integer.parseInt(contaInicial.get(i));
+				if(Integer.parseInt(contaInicial.get(i)) != 0){
+					sum += Integer.parseInt(contaInicial.get(i));
+					metrica.adicionarAula(getHorario().get(i));
+				}
 			}
 			return sum;
 		}
@@ -174,7 +177,12 @@ public class Horario {
 				contaInicial.add(String.valueOf(Integer.parseInt(atributoHoraio.get(i)) + Integer.parseInt(atributoSala.get(indexSalaAula(i)))));
 				break;
 			case "-":
-				contaInicial.add(String.valueOf(Integer.parseInt(atributoHoraio.get(i))	- Integer.parseInt(atributoSala.get(indexSalaAula(i)))));
+				int resultado = Integer.parseInt(atributoHoraio.get(i))	- Integer.parseInt(atributoSala.get(indexSalaAula(i)));
+				if(resultado > 0) {
+					contaInicial.add(String.valueOf(resultado)); //Ha sobrelotacao
+				}else {
+					contaInicial.add("0"); //Nao ha sobrelotacao
+				}
 				break;
 			}
 		}
@@ -195,7 +203,12 @@ public class Horario {
 				contaInicial.add(String.valueOf(Integer.parseInt(atributoSala.get(indexSalaAula(i))) + Integer.parseInt(atributoHoraio.get(i))));
 				break;
 			case "-":
-				contaInicial.add(String.valueOf(Integer.parseInt(atributoSala.get(indexSalaAula(i))) - Integer.parseInt(atributoHoraio.get(i))));
+				int resultado = Integer.parseInt(atributoSala.get(indexSalaAula(i))) - Integer.parseInt(atributoHoraio.get(i));
+				if(resultado > 0) {
+					contaInicial.add(String.valueOf(resultado)); //Ha sobrelotacao
+				}else {
+					contaInicial.add("0"); //Nao ha sobrelotacao
+				}
 				break;
 			}
 		}
