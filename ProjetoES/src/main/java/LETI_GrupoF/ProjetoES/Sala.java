@@ -90,7 +90,7 @@ public class Sala {
 	 * @return Lista de caracteristicas da sala.
 	 */
 	public String getCampo(int index) {
-		if(index > 4) {
+		if(index < 4) {
 			return informacaoSala.get(index);
 		}else {
 			return caracteristicasSala.get(index);

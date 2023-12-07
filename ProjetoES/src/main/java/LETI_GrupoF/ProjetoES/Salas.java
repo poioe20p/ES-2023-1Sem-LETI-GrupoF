@@ -10,8 +10,8 @@ public class Salas {
 
 	public Salas(String csvFilePath) {
 		Reader infoFromCSV = new Reader(csvFilePath);
-		salas = lerSalasDoCSV(infoFromCSV.getTableData());
 		columnTitles = infoFromCSV.getColumnTitles();
+		salas = lerSalasDoCSV(infoFromCSV.getTableData());
 	}
 
 	/**

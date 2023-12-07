@@ -1,1 +1,1 @@
-Inscritos no turno - Capacidade Normal > 0
+Capacidade Normal - Inscritos no turno > 0
