@@ -10,7 +10,7 @@ import java.util.Map;
  */
 public class Horario {
 
-	static final private String csvFilePath = "ProjetoES/CaracterizaçãoDasSalas.csv";
+	static final private String csvFilePath = "CaracterizaçãoDasSalas.csv";
 	private List<List<String>> horario;
 	private List<String> columnTitles;
 	private Map<String, Integer> ordemCampos;
@@ -262,22 +262,5 @@ public class Horario {
 		this.ordemCampos = ordemCampos;
 		ss.guardarHorario(csvFilePath, ordemCampos);
 	}
-
-	/**
-	 * Metodo main para testar a classe Schedule.
-	 *
-	 * @param args Os argumentos da linha de comando (não sao usados neste caso).
-	 */
-//	public static void main(String[] args) {
-//		Reader reader = new Reader("HorarioParaTestes.csv");
-//
-//		Schedule horario = new Schedule("ET-A10", reader);
-//
-//		for (List<String> linha : horario.getHorario()) {
-//			System.out.println(linha);
-//
-//		}
-//
-//	}
 
 }
