@@ -37,6 +37,17 @@ public class HtmlCreator {
 		}
 	}
 
+	public HtmlCreator(List<List<String>> dataForHtml, List<String> userOrderTitles) {
+		this.dataForHtml = dataForHtml;
+		this.userOrderTitles = userOrderTitles;
+		this.columnFields = new ArrayList<>();
+		for(String titles: userOrderTitles) {
+			String titlesTrimmed = titles.replace(" ", "");
+			columnFields.add(titlesTrimmed + "_field");
+		}
+		this.horario = null;
+	}
+
 
 //	public List<String> getUserOrderTitles() {
 //		return userOrderTitles;
@@ -53,7 +64,11 @@ public class HtmlCreator {
 	public List<String> tiltesPosition() {
 		List<String> titlesPosition = new ArrayList<>();
 		for (String title : userOrderTitles) {
-			titlesPosition.add(String.valueOf(horario.getColumnTitles().indexOf(title)));
+			if(horario != null) {
+				titlesPosition.add(String.valueOf(horario.getColumnTitles().indexOf(title)));
+			} else {
+				titlesPosition.add(String.valueOf(dataForHtml.get(0).indexOf(title)));
+			}
 		}
 		return titlesPosition;
 	}

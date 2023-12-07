@@ -8,10 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Esta classe fornece interatividade à página acessada pelo usuário.
@@ -23,6 +21,7 @@ public class UserInteraction {
 	private HtmlCreator htmlCreator;
 	private ScheduleQualityCalculationPage scheduleQualityCalculationPage;
 	private ColumnsOrderingPage columnsOrderingPage;
+	private ScheduleQualityTable scheduleQualityTable;
 
 	private List<Integer> indicesForUserCSVColumns;
 	/**
@@ -53,18 +52,57 @@ public class UserInteraction {
 	private void setUpColumnsOrderingPageButtons(ColumnsOrderingPage columnsOrderingPage, Horario horario) {
 		// Define o comportamento do boão quando o mesmo é clicado
 		columnsOrderingPage.getOpenScheduleButton().addActionListener(e -> {
-			htmlCreator = new HtmlCreator(horario, columnsOrderingPage.getUserOrderedColumnTitles());
 			horario.setOrdemCampos(getIndicesForUserCSVColumnsMapping(columnsOrderingPage.getUserOrderedColumnTitles(), horario.getColumnTitles()));
+			htmlCreator = new HtmlCreator(horario, columnsOrderingPage.getUserOrderedColumnTitles());
 			openSchedule();
 		});
 
 		columnsOrderingPage.getScheduleQualityButton().addActionListener(e -> {
-			scheduleQualityCalculationPage = new ScheduleQualityCalculationPage(variablesForMetricCalculation(columnsOrderingPage.getUserOrderedColumnTitles()), columnsOrderingPage, horario);
 			horario.setOrdemCampos(getIndicesForUserCSVColumnsMapping(columnsOrderingPage.getUserOrderedColumnTitles(), horario.getColumnTitles()));
+			scheduleQualityCalculationPage = new ScheduleQualityCalculationPage(variablesForMetricCalculation(columnsOrderingPage.getUserOrderedColumnTitles()), columnsOrderingPage, horario);
+			setUpScheduelQualityPageButton(horario);
 			scheduleQualityCalculationPage.setVisible(true);
 			columnsOrderingPage.setVisible(false);
 		});
 	}
+
+	/**
+	 * Este metodo define o comportamento dos botoes da pagina ScheduleQualityPage que corresponde à pagina onde as metricas sao calculadas.
+	 *
+	 * @param horario
+	 */
+
+	private void setUpScheduelQualityPageButton(Horario horario) {
+		scheduleQualityCalculationPage.getCalculateScheduleQualityButton().addActionListener(e -> {
+			for(Metrica metrica: scheduleQualityCalculationPage.getScheduleMetrics()) {
+				//Calculo de cada metrica acontece aqui
+				horario.adicionarMetrica(metrica);
+			}
+			scheduleQualityTable = new ScheduleQualityTable
+					(horario, scheduleQualityCalculationPage);
+			setUpScheduleQualityTableButtons();
+			scheduleQualityTable.setVisible(true);
+			scheduleQualityCalculationPage.setVisible(false);
+		});
+	}
+
+	/**
+	 * Este metodo define o comportamento dos botoes da pagina ScheduleQualityTable que
+	 * corresponde à pagina onde as metricas sao apresentadas.
+	 */
+	private void setUpScheduleQualityTableButtons() {
+		scheduleQualityTable.getOpenMetricScheduleButton().addActionListener(e -> {
+			String formulaMetricaLinhaSelecionada = (String) scheduleQualityTable.getTable().
+					getValueAt(scheduleQualityTable.getTable().getSelectedRow(), 0);
+			for(Metrica metrica: scheduleQualityTable.getData()) {
+				if(metrica.getFormula().equals(formulaMetricaLinhaSelecionada)) {
+					htmlCreator = new HtmlCreator(metrica.getAulasComComtribuicao(), columnsOrderingPage.getUserOrderedColumnTitles());
+					openSchedule();
+				}
+			}
+		});
+	}
+
 
 	/**
 	 * Este devolve a lista de metricas definidas pelo utilizador.
@@ -221,7 +259,7 @@ public class UserInteraction {
 	 */
 
 	public Map<String, Integer> getIndicesForUserCSVColumnsMapping (List<String> userOrderedColumnTitles, List<String> columnTitles) {
-		Map<String, Integer> indicesForUserCSVColumnsMap = new HashMap<>();
+		Map<String, Integer> indicesForUserCSVColumnsMap = new LinkedHashMap<>();
 		for (String userOrderedColumnTitle : userOrderedColumnTitles) {
 			indicesForUserCSVColumnsMap.put(userOrderedColumnTitle, columnTitles.indexOf(userOrderedColumnTitle));
 		}

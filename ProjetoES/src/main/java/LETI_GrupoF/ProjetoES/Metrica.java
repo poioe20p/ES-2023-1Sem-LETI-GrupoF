@@ -1,18 +1,19 @@
 package LETI_GrupoF.ProjetoES;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Metrica {
 
-	private String formula;
-	private List<String> componentesFormula;
-	private List<List<String>> aulasComComtribuicao;
+	private final String formula;
+	private final List<String> componentesFormula;
+	private final List<List<String>> aulasComComtribuicao;
 
 	public Metrica(String formula) {
 		this.formula = formula;
 		componentesFormula = List.of(formula.split(";"));
+		aulasComComtribuicao = new ArrayList<>();
 	}
-
 	public String getFormula() {
 		return formula.replace(";", " ");
 	}

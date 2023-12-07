@@ -1,6 +1,7 @@
 package LETI_GrupoF.ProjetoES;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,14 +10,13 @@ import java.util.Map;
  */
 public class Horario {
 
-	static final private String csvFilePath = "CaracterizaçãoDasSalas.csv";
+	static final private String csvFilePath = "ProjetoES/CaracterizaçãoDasSalas.csv";
 	private List<List<String>> horario;
 	private List<String> columnTitles;
 	private Map<String, Integer> ordemCampos;
 	private Salas salas;
 	private SaveState ss = new SaveState();
-
-	private Map<Metrica, Integer> metricas;
+	private Map<Metrica, Integer> metricas = new LinkedHashMap<>();
 
 	/**
 	 * Construtor da classe Schedule.
@@ -28,7 +28,8 @@ public class Horario {
 		Reader dataHorarioDoCSV = new Reader(horarioFilePath);
 		columnTitles = dataHorarioDoCSV.getColumnTitles();
 		horario = dataHorarioDoCSV.getTableData();
-		ss.guardarHorario(csvFilePath, ordemCampos);
+		//ss.guardarHorario(csvFilePath, ordemCampos); //Ta comentado porque se neste momento ordemCampos ainda nao foi inicializado
+		//Faz mais sentido tar no metodo setOrdemCampos
 		salas = new Salas(csvFilePath);
 	}
 
@@ -236,6 +237,7 @@ public class Horario {
 
 	public void setOrdemCampos(Map<String, Integer> ordemCampos) {
 		this.ordemCampos = ordemCampos;
+		ss.guardarHorario(csvFilePath, ordemCampos);
 	}
 
 	/**

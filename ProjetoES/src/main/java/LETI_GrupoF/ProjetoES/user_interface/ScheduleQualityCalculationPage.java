@@ -4,11 +4,8 @@ import LETI_GrupoF.ProjetoES.Horario;
 import LETI_GrupoF.ProjetoES.Metrica;
 
 import javax.swing.*;
-import javax.swing.text.NumberFormatter;
 import java.awt.*;
-import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -204,6 +201,7 @@ public class ScheduleQualityCalculationPage extends JFrame implements LayoutDefi
         return calculateScheduleQuality;
     };
 
+
     public List<Metrica> getScheduleMetrics() {
         List<Metrica> metricasDoUtilizador = new ArrayList<>();
         for(String metrica : metricas) {
@@ -252,15 +250,14 @@ public class ScheduleQualityCalculationPage extends JFrame implements LayoutDefi
                 listOfVariables2.setModel(new DefaultComboBoxModel<>(auxVariablesForFormula.toArray(new String[0])));
                 if(hasIntegerValues(variable)) {
                     listOfMatOperators.setModel(new DefaultComboBoxModel<>(new String[]{"Operation", "+", "-", "*", "/"}));
-//                    auxVariablesForFormula.remove("Capacidade Normal");
-//                    auxVariablesForFormula.remove("Capacidade Exame");
                     listOfVariables2.setModel(new DefaultComboBoxModel<>(auxVariablesForFormula.toArray(new String[0])));
                     isListAltered = true;
                 }
                 else {
-                    listOfMatOperators.setModel(new DefaultComboBoxModel<>(new String[]{"Operation", "=", "!="}));
+                    listOfMatOperators.setModel(new DefaultComboBoxModel<>(new String[]{"Operation", "-", "=", "!="}));
                     auxVariablesForFormula.remove("Capacidade Normal");
                     auxVariablesForFormula.remove("Capacidade Exame");
+                    auxVariablesForFormula.removeIf(this::hasIntegerValues);
                     listOfVariables2.setModel(new DefaultComboBoxModel<>(auxVariablesForFormula.toArray(new String[0])));
                     isListAltered = true;
                 }
@@ -281,10 +278,15 @@ public class ScheduleQualityCalculationPage extends JFrame implements LayoutDefi
                 listOfVariables.setModel(new DefaultComboBoxModel<>(auxVariablesForFormula.toArray(new String[0])));
                 if(hasIntegerValues(variable)) {
                     listOfMatOperators.setModel(new DefaultComboBoxModel<>(new String[]{"Operation", "+", "-", "*", "/"}));
+                    listOfVariables.setModel(new DefaultComboBoxModel<>(auxVariablesForFormula.toArray(new String[0])));
                     isListAltered = true;
                 }
                 else {
-                    listOfMatOperators.setModel(new DefaultComboBoxModel<>(new String[]{"Operation", "=", "!="}));
+                    listOfMatOperators.setModel(new DefaultComboBoxModel<>(new String[]{"Operation", "-", "=", "!="}));
+                    auxVariablesForFormula.remove("Capacidade Normal");
+                    auxVariablesForFormula.remove("Capacidade Exame");
+                    auxVariablesForFormula.removeIf(this::hasIntegerValues);
+                    listOfVariables.setModel(new DefaultComboBoxModel<>(auxVariablesForFormula.toArray(new String[0])));
                     isListAltered = true;
                 }
             }

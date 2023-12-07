@@ -1,0 +1,13 @@
+ProjetoES/CaracterizaçãoDasSalas.csv
+Curso:0
+Unidade Curricular:0
+Turno:0
+Turma:0
+Inscritos no turno:0
+Dia da semana:0
+Hora início da aula:0
+Hora fim da aula:0
+Data da aula:0
+Características da sala pedida para a aula:0
+Sala atribuída à aula:0
+FOC

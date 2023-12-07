@@ -52,7 +52,7 @@ public class SaveState {
 	 * estado anterior das formulas caso o utilizador pretenda recuperar a sessao
 	 * anterior
 	 *
-	 * @param formula A formula criada pelo utilizador que sera guardada. Permite
+//	 * @param formula A formula criada pelo utilizador que sera guardada. Permite
 	 *                recuperar a formula caso o utilizador retome a sessão.
 	 */
 
