@@ -38,15 +38,27 @@ class TestSala {
 	}
 
 	@Test
+	/**
+	 * teste da sala
+	 * 
+	 */
 	void testSala() {
+		// not nulls
 	assertNotNull(sala.getCapacidadeExame());
 	assertNotNull(sala.getCapacidadeNormal());
 	assertNotNull(sala.getCaracteristicasSala());
 	assertNotNull(sala.getEdificio());
 	assertNotNull(sala.getNome());
 	assertNotNull(sala.getNumeroCaracteristicas());
+		//assertsEquals
+	
 	assertEquals(4,sala.getNumeroCaracteristicas());
 	assertEquals("Auditório Silva Leal",sala.getNome());
+	assertEquals(54, sala.getCapacidadeNormal());
+	assertEquals(27,sala.getCapacidadeExame());
+	assertEquals("Ala Autonoma ISCTE-IUL", sala.getEdificio());
+	
+									
 	
 	
 		}
