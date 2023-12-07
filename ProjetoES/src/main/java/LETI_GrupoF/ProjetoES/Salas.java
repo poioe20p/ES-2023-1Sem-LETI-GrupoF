@@ -30,14 +30,14 @@ public class Salas {
 		return salas;
 	}
 
-	public List<Sala> getSalas() {
+	public List<Sala> getListaSalas() {
 		return salas;
 	}
 
 	public List<String> getNomeSalas() {
 		List<String> nomeSalas = new ArrayList<>();
-		for(int i = 0; i < getSalas().size(); i++) {
-			nomeSalas.add(getSalas().get(i).getNome());
+		for(int i = 0; i < getListaSalas().size(); i++) {
+			nomeSalas.add(getListaSalas().get(i).getNome());
 		}
 		return nomeSalas;
 	}

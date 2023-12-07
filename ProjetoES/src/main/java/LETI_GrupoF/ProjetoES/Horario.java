@@ -14,7 +14,7 @@ public class Horario {
 	private List<String> columnTitles;
 	private Map<String, Integer> ordemCampos;
 	private Salas salas;
-	private SaveState ss = new SaveState();
+//	private SaveState ss = new SaveState();
 
 	private Map<Metrica, Integer> metricas;
 
@@ -28,12 +28,12 @@ public class Horario {
 		Reader dataHorarioDoCSV = new Reader(horarioFilePath);
 		columnTitles = dataHorarioDoCSV.getColumnTitles();
 		horario = dataHorarioDoCSV.getTableData();
-		ss.guardarHorario(csvFilePath, ordemCampos);
+//		ss.guardarHorario(csvFilePath, ordemCampos);
 		salas = new Salas(csvFilePath);
 	}
 
 	public void adicionarMetrica(Metrica metrica) {
-		ss.guardarMetricas(metrica);
+//		ss.guardarMetricas(metrica);
 		metricas.put(metrica, calcularQualidade(metrica));
 	}
 
@@ -49,7 +49,7 @@ public class Horario {
 		} else if (atributo1.get(0).equals("horario") && atributo2.get(0).equals("sala")) {
 			contaInicial = calculoParcialSalaHorario(atributo1, atributo2, formula.get(1));
 		}
-		if (formula.get(3) != null) {
+		if (formula.size() > 2) {
 			int count = 0;
 			for (int i = 0; i < contaInicial.size(); i++) {
 				switch (formula.get(3)) {
@@ -65,8 +65,12 @@ public class Horario {
 						metrica.adicionarAula(getHorario().get(i));
 					}
 					break;
-//				case "=":
-//					break;
+				case "=":
+					if (contaInicial.get(i).equals(formula.get(4))) {
+						count++;
+						metrica.adicionarAula(getHorario().get(i));
+					}
+					break;
 				}
 			}
 			return count;
@@ -75,6 +79,7 @@ public class Horario {
 			for (int i = 0; i < contaInicial.size(); i++) {
 				if (contaInicial.get(i).equals("true")) {
 					count++;
+					metrica.adicionarAula(getHorario().get(i));
 				}
 			}
 			return count;
@@ -102,8 +107,8 @@ public class Horario {
 			}
 		} else if (getSalas().getColumnTitles().contains(nomeAtributo)) { // Verifica se o atributo pertence as salas
 			atributo.add("sala");
-			for (int i = 0; i < getSalas().getSalas().size(); i++) {
-				atributo.add(getSalas().getSalas().get(i).getCampo(getSalas().getColumnTitles().indexOf(nomeAtributo))); // Vai busacar uma lista com todo o conteudo do atributo
+			for (int i = 0; i < getSalas().getListaSalas().size(); i++) {
+				atributo.add(getSalas().getListaSalas().get(i).getCampo(getSalas().getColumnTitles().indexOf(nomeAtributo))); // Vai busacar uma lista com todo o conteudo do atributo
 			}
 		}
 		return atributo;
@@ -111,15 +116,44 @@ public class Horario {
 
 	private List<String> calculoParcialHorario(List<String> atributoHoraio1, List<String> atributoHoraio2, String operador) {
 		List<String> contaInicial = new ArrayList<>();
-		for (int i = 1; i < atributoHoraio1.size(); i++) {
+		if(isListaDeSalas(atributoHoraio1)) {
+			contaInicial = comparaAtributos(atributoHoraio2, atributoHoraio1, operador);
+		}else {
+			contaInicial = comparaAtributos(atributoHoraio1, atributoHoraio2, operador);
+		}
+		return contaInicial;
+	}
+	
+	private boolean isListaDeSalas(List<String> atributo) {
+		if(getSalas().getNomeSalas().contains(atributo.get(1))) {
+			return true;
+		}
+		return false;
+	}
+	
+	private List<String> comparaAtributos(List<String> listaRequesitosSalas, List<String> salaAtribuida, String operador) {
+		List<String> contaInicial = new ArrayList<>();
+		for (int i = 1; i < listaRequesitosSalas.size(); i++) {
+			List<String> caracteristicasSala = getSalas().getListaSalas().get(getSalas().getNomeSalas().indexOf(salaAtribuida.get(i))).getCaracteristicasSala();
 			switch (operador) {
-//			case "-":
-//				contaInicial.add(String.valueOf(Integer.parseInt(atributoHoraio1.get(i)) - Integer.parseInt(atributoHoraio2.get(i))));
-//				break;
-//			case "=":
-//				break;
-//			case "!=":
-//				break;
+			case "-":
+				caracteristicasSala.removeAll(listaRequesitosSalas);
+				contaInicial.add(String.valueOf(caracteristicasSala.size()));
+				break;
+			case "=":
+				if(caracteristicasSala.contains(listaRequesitosSalas.get(i))) {
+					contaInicial.add("true");
+				}else {
+					contaInicial.add("false");
+				}
+				break;
+			case "!=":
+				if(caracteristicasSala.contains(listaRequesitosSalas.get(i))) {
+					contaInicial.add("false");
+				}else {
+					contaInicial.add("true");
+				}
+				break;
 			}
 		}
 		return contaInicial;
