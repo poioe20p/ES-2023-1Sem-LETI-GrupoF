@@ -25,6 +25,8 @@ public class ScheduleQualityCalculationPage extends JFrame implements LayoutDefi
     private List<String> variablesForFormula = new ArrayList<>();
     private boolean isListAltered = false;
 
+    private static final long serialVersionUID = 1L;
+
 
 
     public ScheduleQualityCalculationPage(List<String> variablesForFormula, JFrame previousFrame, Horario horario) {

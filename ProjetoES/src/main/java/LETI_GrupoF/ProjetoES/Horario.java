@@ -99,7 +99,6 @@ public class Horario {
 	/**
 	 * Devolve uma lista da informacao de um certo atributo/coluna, independentemente do ficheiro em que se localiza
 	 *
-	 * @param coluna String da coluna que se quer obter informacao.
 	 * @return Lista de strings representando os dados da coluna.
 	 */
 	private List<String> defineAtributo(String nomeAtributo) {
