@@ -139,10 +139,10 @@ public class Horario {
 		for (int i = 0; i < listaRequesitosSalas.size(); i++) {
 			int linhaSalaFicheiroCSVSalas = getSalas().getNomeSalas().indexOf(salaAtribuida.get(i));
 			if(!getHorario().get(i).get(posicaoColunaSalaHorario()).equals("N/A") && linhaSalaFicheiroCSVSalas >= 0) {
-				List<String> caracteristicasSala = getSalas().getListaSalas().get(linhaSalaFicheiroCSVSalas).getCaracteristicasSala();
+				List<String> caracteristicasSala = new ArrayList<>(getSalas().getListaSalas().get(linhaSalaFicheiroCSVSalas).getCaracteristicasSala());
 				switch (operador) {
 				case "-":
-					caracteristicasSala.removeAll(listaRequesitosSalas);
+					caracteristicasSala.remove(listaRequesitosSalas.get(i));
 					contaInicial.add(String.valueOf(caracteristicasSala.size()));
 					break;
 				case "=":
