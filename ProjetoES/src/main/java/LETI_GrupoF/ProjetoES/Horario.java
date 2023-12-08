@@ -44,13 +44,13 @@ public class Horario {
 		List<String> atributo2 = defineAtributo(formula.get(2));
 		List<String> contaInicial = new ArrayList<>();
 		if (atributo1.get(0).equals("horario") && atributo2.get(0).equals("horario")) {
-			contaInicial = calculoParcialHorario(atributo1, atributo2, formula.get(1));
+			contaInicial = calculoParcialHorario(atributo1.subList(1,atributo1.size()), atributo2.subList(1,atributo2.size()), formula.get(1));
+		} else if (atributo1.get(0).equals("horario") && atributo2.get(0).equals("sala")) {
+			contaInicial = calculoParcialHorarioSala(atributo1.subList(1,atributo1.size()), atributo2.subList(1,atributo2.size()), formula.get(1));
 		} else if (atributo1.get(0).equals("sala") && atributo2.get(0).equals("horario")) {
-			contaInicial = calculoParcialHorarioSala(atributo2, atributo1, formula.get(1));
-		} else if (atributo1.get(0).equals("sala") && atributo2.get(0).equals("horario")) {
-			contaInicial = calculoParcialSalaHorario(atributo1, atributo2, formula.get(1));
+			contaInicial = calculoParcialSalaHorario(atributo1.subList(1,atributo1.size()), atributo2.subList(1,atributo2.size()), formula.get(1));
 		}
-		if (formula.size() > 2) {
+		if (formula.size() > 3) {
 			int count = 0;
 			for (int i = 0; i < contaInicial.size(); i++) {
 				switch (formula.get(3)) {
@@ -137,10 +137,10 @@ public class Horario {
 
 	private List<String> comparaAtributos(List<String> listaRequesitosSalas, List<String> salaAtribuida, String operador) {
 		List<String> contaInicial = new ArrayList<>();
-		for (int i = 1; i < listaRequesitosSalas.size(); i++) {
-			int linhaSalaFicheiroCSV = getSalas().getNomeSalas().indexOf(salaAtribuida.get(i));
-			if(!getHorario().get(i).get(posicaoColunaSalaHorario()).equals("N/A")) {
-				List<String> caracteristicasSala = getSalas().getListaSalas().get(linhaSalaFicheiroCSV).getCaracteristicasSala();
+		for (int i = 0; i < listaRequesitosSalas.size(); i++) {
+			int linhaSalaFicheiroCSVSalas = getSalas().getNomeSalas().indexOf(salaAtribuida.get(i));
+			if(!getHorario().get(i).get(posicaoColunaSalaHorario()).equals("N/A") && linhaSalaFicheiroCSVSalas >= 0) {
+				List<String> caracteristicasSala = getSalas().getListaSalas().get(linhaSalaFicheiroCSVSalas).getCaracteristicasSala();
 				switch (operador) {
 				case "-":
 					caracteristicasSala.removeAll(listaRequesitosSalas);
@@ -168,20 +168,27 @@ public class Horario {
 
 	private List<String> calculoParcialHorarioSala(List<String> atributoHoraio, List<String> atributoSala, String operador) {
 		List<String> contaInicial = new ArrayList<>();
-		for (int i = 1; i < atributoHoraio.size(); i++) {
-			if(!getHorario().get(i).get(posicaoColunaSalaHorario()).equals("N/A")) {
+		for (int i = 0; i < atributoHoraio.size(); i++) {
+			int indexSalaAula = indexSalaAula(i);
+			if(!getHorario().get(i).get(posicaoColunaSalaHorario()).equals("N/A") && indexSalaAula >= 0) {
+				int valorHorario = Integer.parseInt(atributoHoraio.get(i));
+				int valorSala = Integer.parseInt(atributoSala.get(indexSalaAula));
 				switch (operador) {
 				case "*":
-					contaInicial.add(String.valueOf(Integer.parseInt(atributoHoraio.get(i))	* Integer.parseInt(atributoSala.get(indexSalaAula(i)))));
+					contaInicial.add(String.valueOf(valorHorario * valorSala));
 					break;
 				case "/":
-					contaInicial.add(String.valueOf(Integer.parseInt(atributoHoraio.get(i))	/ Integer.parseInt(atributoSala.get(indexSalaAula(i)))));
+					if(valorHorario > 0 && valorSala > 0) {
+						contaInicial.add(String.valueOf(valorHorario / valorSala));
+					}else {
+					contaInicial.add("0");
+					}
 					break;
 				case "+":
-					contaInicial.add(String.valueOf(Integer.parseInt(atributoHoraio.get(i)) + Integer.parseInt(atributoSala.get(indexSalaAula(i)))));
+					contaInicial.add(String.valueOf(valorHorario + valorSala));
 					break;
 				case "-":
-					int resultado = Integer.parseInt(atributoHoraio.get(i))	- Integer.parseInt(atributoSala.get(indexSalaAula(i)));
+					int resultado = valorHorario - valorSala;
 					if(resultado > 0) {
 						contaInicial.add(String.valueOf(resultado)); //Ha sobrelotacao
 					}else {
@@ -196,21 +203,28 @@ public class Horario {
 
 	private List<String> calculoParcialSalaHorario(List<String> atributoSala, List<String> atributoHoraio, String operador) {
 		List<String> contaInicial = new ArrayList<>();
-		for (int i = 1; i < atributoHoraio.size(); i++) {
-			if(!getHorario().get(i).get(posicaoColunaSalaHorario()).equals("N/A")) {
+		for (int i = 0; i < atributoHoraio.size(); i++) {
+			int indexSalaAula = indexSalaAula(i);
+			if(!getHorario().get(i).get(posicaoColunaSalaHorario()).equals("N/A") && indexSalaAula >= 0) {
+				int valorHorario = Integer.parseInt(atributoHoraio.get(i));
+				int valorSala = Integer.parseInt(atributoSala.get(indexSalaAula));
 				switch (operador) {
 				case "*":
-					contaInicial.add(String.valueOf(Integer.parseInt(atributoSala.get(indexSalaAula(i))) * Integer.parseInt(atributoHoraio.get(i))));
+					contaInicial.add(String.valueOf(valorSala * valorHorario));
 					break;
 				case "/":
-					contaInicial.add(String.valueOf(Integer.parseInt(atributoSala.get(indexSalaAula(i))) / Integer.parseInt(atributoHoraio.get(i))));
+					if(valorHorario > 0 && valorSala > 0) {
+						contaInicial.add(String.valueOf(valorSala / valorHorario));
+					}else {
+						contaInicial.add("0");
+					}
 					break;
 				case "+":
-					contaInicial.add(String.valueOf(Integer.parseInt(atributoSala.get(indexSalaAula(i))) + Integer.parseInt(atributoHoraio.get(i))));
+					contaInicial.add(String.valueOf(valorSala + valorHorario));
 					break;
 				case "-":
-					int resultado = Integer.parseInt(atributoSala.get(indexSalaAula(i))) - Integer.parseInt(atributoHoraio.get(i));
-					if(resultado > 0) {
+					int resultado = valorSala - valorHorario;
+					if(resultado < 0) {
 						contaInicial.add(String.valueOf(resultado)); //Ha sobrelotacao
 					}else {
 						contaInicial.add("0"); //Nao ha sobrelotacao
@@ -224,10 +238,6 @@ public class Horario {
 
 	private int indexSalaAula(int indexAula) {
 		int posicaoColunaSalaHorario = posicaoColunaSalaHorario();
-		if(getSalas().getNomeSalas().indexOf(getHorario().get(indexAula).get(posicaoColunaSalaHorario)) == -1) {
-			System.out.println(indexAula);
-			System.out.println(getHorario().get(indexAula).get(posicaoColunaSalaHorario));
-		}
 		return getSalas().getNomeSalas().indexOf(getHorario().get(indexAula).get(posicaoColunaSalaHorario));
 	}
 	

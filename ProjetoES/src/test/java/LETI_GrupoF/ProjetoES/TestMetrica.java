@@ -9,11 +9,10 @@ class TestMetrica {
 static Metrica metrica;
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-	metrica= new Metrica("Inscritos no turno - Capacidade Normal > 0");
-	
-	
+		metrica= new Metrica("Inscritos no turno - Capacidade Normal > 0");
 	}
 
+	@Test
 	void testMetrica() {
         assertNotNull(metrica);
     }
