@@ -225,7 +225,7 @@ public class Horario {
 	private int indexSalaAula(int indexAula) {
 		int posicaoColunaSalaHorario = posicaoColunaSalaHorario();
 		if(getSalas().getNomeSalas().indexOf(getHorario().get(indexAula).get(posicaoColunaSalaHorario)) == -1) {
-			System.out.println(getSalas().getNomeSalas().get(24));
+			System.out.println(indexAula);
 			System.out.println(getHorario().get(indexAula).get(posicaoColunaSalaHorario));
 		}
 		return getSalas().getNomeSalas().indexOf(getHorario().get(indexAula).get(posicaoColunaSalaHorario));
