@@ -1,6 +1,6 @@
-Edifcio;Nome sala;Capacidade Normal;Capacidade Exame;N caractersticas;Anfiteatro aulas;Apoio tcnico eventos;Arq 1;Arq 2;Arq 3;Arq 4;Arq 5;Arq 6;Arq 9;BYOD (Bring Your Own Device);Focus Group;Horrio sala visvel portal pblico;Laboratrio de Arquitectura de Computadores I;Laboratrio de Arquitectura de Computadores II;Laboratrio de Bases de Engenharia;Laboratrio de Electrnica;Laboratrio de Informtica;Laboratrio de Jornalismo;Laboratrio de Redes de Computadores I;Laboratrio de Redes de Computadores II;Laboratrio de Telecomunicaes;Sala Aulas Mestrado;Sala Aulas Mestrado Plus;Sala NEE;Sala Provas;Sala Reunio;Sala de Arquitectura;Sala de Aulas normal;videoconferncia;trio
-Ala Autnoma (ISCTE-IUL);Auditrio Afonso de Barros;80;39;4;;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;;
-Ala Autnoma (ISCTE-IUL);Auditrio Silva Leal;54;27;4;;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;;
+Edifcio;Nome sala;Capacidade Normal;Capacidade Exame;N caractersticas;Anfiteatro aulas;Apoio tcnico eventos;Arq 1;Arq 2;Arq 3;Arq 4;Arq 5;Arq 6;Arq 9;BYOD (Bring Your Own Device);Focus Group;Horrio sala visivel portal pblico;Laboratorio de Arquitectura de Computadores I;Laboratorio de Arquitectura de Computadores II;Laboratorio de Bases de Engenharia;Laboratorio de Electronica;Laboratorio de Informatica;Laboratorio de Jornalismo;Laboratorio de Redes de Computadores I;Laboratorio de Redes de Computadores II;Laboratorio de Telecomunicacoes;Sala Aulas Mestrado;Sala Aulas Mestrado Plus;Sala NEE;Sala Provas;Sala Reuniao;Sala de Arquitectura;Sala de Aulas normal;videoconferncia;Atrio
+Ala Autnoma (ISCTE-IUL);Auditorio Afonso de Barros;80;39;4;;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;;
+Ala Autnoma (ISCTE-IUL);Auditorio Silva Leal;54;27;4;;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;;
 Ala Autnoma (ISCTE-IUL);AA2.23;50;23;5;;;;;;;;;;;;x;;;;;;;;;;x;x;x;;;;x;;
 Ala Autnoma (ISCTE-IUL);AA2.24;30;16;4;;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;;
 Ala Autnoma (ISCTE-IUL);AA2.25;38;21;4;;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;;
@@ -21,16 +21,16 @@ Edifcio II (ISCTE-IUL);C0.08;1;0;1;;;;;;;;;;;;x;;;;;;;;;;;;;;;;;;
 Edifcio II (ISCTE-IUL);D0.01;2;2;2;;;;;;;;;;;;x;;;;;;;;;;;;;;;;;x;
 Edifcio II (ISCTE-IUL);D0.03;15;0;2;;;;;;;;;;;x;x;;;;;;;;;;;;;;;;;;
 Edifcio II (ISCTE-IUL);D0.05;6;0;2;;;;;;;;;;;x;x;;;;;;;;;;;;;;;;;;
-Edifcio II (ISCTE-IUL);Espao Exposies;41;41;1;;;;;;;;;;;;x;;;;;;;;;;;;;;;;;;
+Edifcio II (ISCTE-IUL);Espaco Exposicoes;41;41;1;;;;;;;;;;;;x;;;;;;;;;;;;;;;;;;
 Edifcio II (ISCTE-IUL);A1;1;0;2;;;;;;;;;;;;x;;;;;;;;;;;;;;;;;;x
-Edifcio II (ISCTE-IUL);Auditrio B1.03;204;102;6;x;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;x;
-Edifcio II (ISCTE-IUL);Auditrio B1.04;192;96;6;x;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;x;
-Edifcio II (ISCTE-IUL);Auditrio C1.03;70;44;5;;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;x;
-Edifcio II (ISCTE-IUL);Auditrio C1.04;60;44;5;;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;x;
+Edifcio II (ISCTE-IUL);Auditorio B1.03;204;102;6;x;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;x;
+Edifcio II (ISCTE-IUL);Auditorio B1.04;192;96;6;x;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;x;
+Edifcio II (ISCTE-IUL);Auditorio C1.03;70;44;5;;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;x;
+Edifcio II (ISCTE-IUL);Auditorio C1.04;60;44;5;;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;x;
 Edifcio II (ISCTE-IUL);B1;29;0;2;;;;;;;;;;;;x;;;;;;;;;;;;;;;;;;x
 Edifcio II (ISCTE-IUL);B1.01;12;0;2;;;;;;;;;;;;x;;;;;;;;;;;;;;x;;;;
 Edifcio II (ISCTE-IUL);B1.02;1;0;2;;;;;;;;;;;;x;;;;;;;;;;;;;;x;;;;
-Edifcio II (ISCTE-IUL);Balco Recepo;1;0;1;;;;;;;;;;;;x;;;;;;;;;;;;;;;;;;
+Edifcio II (ISCTE-IUL);Balcao Recepcao;1;0;1;;;;;;;;;;;;x;;;;;;;;;;;;;;;;;;
 Edifcio II (ISCTE-IUL);C1;1;0;2;;;;;;;;;;;;x;;;;;;;;;;;;;;;;;;x
 Edifcio II (ISCTE-IUL);C1.01;35;23;5;;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;x;
 Edifcio II (ISCTE-IUL);D1.01;35;21;2;;;;;;;;;;;;x;;;;;x;;;;;;;;;;;;;
@@ -46,9 +46,9 @@ Edifcio II (ISCTE-IUL);D1.10;20;12;2;;;;;;;;;;;;x;;;;;x;;;;;;;;;;;;;
 Edifcio II (ISCTE-IUL);D1.11;22;17;2;;;;;;;;;;;;x;;;;;x;;;;;;;;;;;;;
 Edifcio II (ISCTE-IUL);D1.12;27;18;2;;;;;;;;;;;;x;;;;;x;;;;;;;;;;;;;
 Edifcio II (ISCTE-IUL);D1.14;27;16;2;;;;;;;;;;;;x;;;;;x;;;;;;;;;;;;;
-Edifcio II (ISCTE-IUL);Grande Auditrio;498;0;1;;;;;;;;;;;;x;;;;;;;;;;;;;;;;;;
-Edifcio II (ISCTE-IUL);Auditrio B2.03;180;0;2;;;;;;;;;;;;x;;;;;;;;;;;;;;;;;x;
-Edifcio II (ISCTE-IUL);Auditrio B2.04;192;96;6;x;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;x;
+Edifcio II (ISCTE-IUL);Grande Auditorio;498;0;1;;;;;;;;;;;;x;;;;;;;;;;;;;;;;;;
+Edifcio II (ISCTE-IUL);Auditorio B2.03;180;0;2;;;;;;;;;;;;x;;;;;;;;;;;;;;;;;x;
+Edifcio II (ISCTE-IUL);Auditorio B2.04;192;96;6;x;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;x;
 Edifcio II (ISCTE-IUL);B2;1;0;2;;;;;;;;;;;;x;;;;;;;;;;;;;;;;;;x
 Edifcio II (ISCTE-IUL);B2.01;50;31;5;;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;x;
 Edifcio II (ISCTE-IUL);B2.02;52;26;5;;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;x;
@@ -103,9 +103,9 @@ Edifcio Sedas Nunes (ISCTE-IUL);0E07.1;12;0;2;;;;;;;;;;;;x;;;;;;;;;;;;;;x;;;;
 Edifcio Sedas Nunes (ISCTE-IUL);0NE;1;0;2;;;;;;;;;;;;x;;;;;;;;;;;;;;;;;;x
 Edifcio Sedas Nunes (ISCTE-IUL);0S01;41;23;2;;;;;;;;;;;;x;;;;;x;;;;;;;;;;;;;
 Edifcio Sedas Nunes (ISCTE-IUL);0S02;41;23;2;;;;;;;;;;;;x;;;;;x;;;;;;;;;;;;;
-Edifcio Sedas Nunes (ISCTE-IUL);Auditrio 0NE01;72;34;6;x;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;x;
-Edifcio Sedas Nunes (ISCTE-IUL);Auditrio 0NE02-Caiano Pereira;89;40;5;x;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;;
-Edifcio Sedas Nunes (ISCTE-IUL);Auditrio 0NE03 - Mario Murteira;89;40;5;x;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;;
+Edifcio Sedas Nunes (ISCTE-IUL);Auditorio 0NE01;72;34;6;x;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;x;
+Edifcio Sedas Nunes (ISCTE-IUL);Auditorio 0NE02-Caiano Pereira;89;40;5;x;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;;
+Edifcio Sedas Nunes (ISCTE-IUL);Auditorio 0NE03 - Mario Murteira;89;40;5;x;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;;
 Edifcio Sedas Nunes (ISCTE-IUL);1E02;50;25;2;;;;;;;;;;;;x;;;;;;;;;;;;;;;;x;;
 Edifcio Sedas Nunes (ISCTE-IUL);1E03;52;26;2;;;;;;;;;;;;x;;;;;;;;;;;;;;;;x;;
 Edifcio Sedas Nunes (ISCTE-IUL);1E04;50;25;4;;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;;
@@ -115,8 +115,8 @@ Edifcio Sedas Nunes (ISCTE-IUL);1E07;50;25;4;;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;;
 Edifcio Sedas Nunes (ISCTE-IUL);1E08;50;25;4;;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;;
 Edifcio Sedas Nunes (ISCTE-IUL);1E10;48;24;4;;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;;
 Edifcio Sedas Nunes (ISCTE-IUL);1NE00;1;0;2;;;;;;;;;;;;x;;;;;;;;;;;;;;;;;;x
-Edifcio Sedas Nunes (ISCTE-IUL);Auditrio 1;129;64;5;x;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;;
-Edifcio Sedas Nunes (ISCTE-IUL);Auditrio 1NE03 - JJ Laginha;296;0;2;;x;;;;;;;;;;x;;;;;;;;;;;;;;;;;;
+Edifcio Sedas Nunes (ISCTE-IUL);Auditorio 1;129;64;5;x;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;;
+Edifcio Sedas Nunes (ISCTE-IUL);Auditorio 1NE03 - JJ Laginha;296;0;2;;x;;;;;;;;;;x;;;;;;;;;;;;;;;;;;
 Edifcio Sedas Nunes (ISCTE-IUL);2E02;50;24;4;;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;;
 Edifcio Sedas Nunes (ISCTE-IUL);2E03;52;23;4;;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;;
 Edifcio Sedas Nunes (ISCTE-IUL);2E04;50;25;4;;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;;
@@ -125,8 +125,8 @@ Edifcio Sedas Nunes (ISCTE-IUL);2E06;50;25;4;;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;;
 Edifcio Sedas Nunes (ISCTE-IUL);2E07;50;25;4;;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;;
 Edifcio Sedas Nunes (ISCTE-IUL);2E08;50;25;4;;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;;
 Edifcio Sedas Nunes (ISCTE-IUL);2E10;48;24;4;;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;;
-Edifcio Sedas Nunes (ISCTE-IUL);Auditrio 2;129;64;5;x;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;;
-Edifcio Sedas Nunes (ISCTE-IUL);Auditrio 4;250;125;5;x;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;;
-Polidesportivo (ISCTE-IUL);Balnerio feminino;1;0;1;;;;;;;;;;;;x;;;;;;;;;;;;;;;;;;
-Polidesportivo (ISCTE-IUL);Balnerio masculino;1;0;1;;;;;;;;;;;;x;;;;;;;;;;;;;;;;;;
+Edifcio Sedas Nunes (ISCTE-IUL);Auditorio 2;129;64;5;x;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;;
+Edifcio Sedas Nunes (ISCTE-IUL);Auditorio 4;250;125;5;x;;;;;;;;;;;x;;;;;;;;;;x;x;;;;;x;;
+Polidesportivo (ISCTE-IUL);Balneario feminino;1;0;1;;;;;;;;;;;;x;;;;;;;;;;;;;;;;;;
+Polidesportivo (ISCTE-IUL);Balneario masculino;1;0;1;;;;;;;;;;;;x;;;;;;;;;;;;;;;;;;
 Polidesportivo (ISCTE-IUL);Campo;1;0;1;;;;;;;;;;;;x;;;;;;;;;;;;;;;;;;
