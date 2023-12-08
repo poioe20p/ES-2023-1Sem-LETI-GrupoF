@@ -22,7 +22,7 @@ public class Sala {
 		informacaoSala = dataSala.subList(0, 4);
 		
 		for(int i = 5; i < dataSala.size(); i++) {
-			if(dataSala.get(i).trim().equals("X")) {
+			if(dataSala.get(i).trim().equals("x")) {
 				caracteristicasSala.add(columnTitles.get(i));
 			}
 		}
@@ -90,7 +90,7 @@ public class Sala {
 	 * @return Lista de caracteristicas da sala.
 	 */
 	public String getCampo(int index) {
-		if(index > 4) {
+		if(index < 4) {
 			return informacaoSala.get(index);
 		}else {
 			return caracteristicasSala.get(index);

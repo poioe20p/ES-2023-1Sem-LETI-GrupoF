@@ -1,11 +1,13 @@
 package LETI_GrupoF.ProjetoES;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * A classe Reader e responsavel por ler dados de um arquivo CSV, processar e
@@ -38,18 +40,21 @@ public class Reader {
 	 */
 	private List<List<String>> dividirPorColuna(File csv) {
 		List<List<String>> data = new ArrayList<>();
-		Scanner sc;
+		BufferedReader br;
 		try {
-			sc = new Scanner(csv);
-			columnTitles = readColumnTitles(sc);
-			while (sc.hasNextLine()) {
-				List<String> linha = new ArrayList<>(List.of(sc.nextLine().split(";")));
+			br = new BufferedReader(new FileReader(csv));
+			columnTitles = readColumnTitles(br);
+			String line;
+			while ((line = br.readLine()) != null) {
+				List<String> linha = new ArrayList<>(List.of(line.split(";")));
 				data.add(formatDataFromFile(linha));
 			}
+			br.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		}
-
+		} catch (IOException e) {
+	        e.printStackTrace();
+	    }
 		return data;
 	}
 
@@ -58,7 +63,7 @@ public class Reader {
 	 * ausentes.
 	 * @return Lista de strings formatada.
 	 */
-	private List<String> formatDataFromFile(List<String> linha) throws FileNotFoundException {
+	private List<String> formatDataFromFile(List<String> linha) {
 		while (linha.size() < getColumnTitles().size()) {
 			linha.add("N/A");
 		}
@@ -70,13 +75,13 @@ public class Reader {
 	 *
 	 * @param sc Scanner para leitura do arquivo CSV.
 	 * @return Lista de strings contendo os titulos das colunas.
-	 * @throws FileNotFoundException Excecao lancada se o arquivo nao for
-	 *                               encontrado.
+	 * @throws IOException 
 	 */
-	public List<String> readColumnTitles(Scanner sc) throws FileNotFoundException {
+	public List<String> readColumnTitles(BufferedReader br) throws IOException {
 		List<String> titles = new ArrayList<>();
-		if (sc.hasNextLine()) {
-			titles = Arrays.asList(sc.nextLine().split(";"));
+		String line = br.readLine();
+		if (line != null) {
+			titles = Arrays.asList(line.split(";"));
 		}
 		return titles;
 	}
