@@ -18,6 +18,7 @@ public class HtmlCreator {
 	private final List<String> columnFields;
 	private Horario horario;
 	private List<String> userOrderTitles = new ArrayList<>();
+	private List<String> columnTitlesForQualitySchedule;
 
 	/**
 	 * Construtor da classe HtmlCreator. Inicializa um objeto HtmlCreator com o
@@ -37,10 +38,11 @@ public class HtmlCreator {
 		}
 	}
 
-	public HtmlCreator(List<List<String>> dataForHtml, List<String> userOrderTitles) {
+	public HtmlCreator(List<List<String>> dataForHtml, List<String> userOrderTitles, List<String> columTitles) {
 		this.dataForHtml = dataForHtml;
 		this.userOrderTitles = userOrderTitles;
 		this.columnFields = new ArrayList<>();
+		this.columnTitlesForQualitySchedule = columTitles;
 		for(String titles: userOrderTitles) {
 			String titlesTrimmed = titles.replace(" ", "");
 			columnFields.add(titlesTrimmed + "_field");
@@ -67,7 +69,8 @@ public class HtmlCreator {
 			if(horario != null) {
 				titlesPosition.add(String.valueOf(horario.getColumnTitles().indexOf(title)));
 			} else {
-				titlesPosition.add(String.valueOf(dataForHtml.get(0).indexOf(title)));
+				//Aqui necessito do cabeçalho do ficheiro CSV submetido pelo utilizador.
+				titlesPosition.add(String.valueOf(columnTitlesForQualitySchedule.indexOf(title)));
 			}
 		}
 		return titlesPosition;

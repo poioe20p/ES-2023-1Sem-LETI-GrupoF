@@ -6,8 +6,8 @@ import LETI_GrupoF.ProjetoES.Metrica;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Stream;
 
 public class ScheduleQualityCalculationPage extends JFrame implements LayoutDefinable {
@@ -23,9 +23,8 @@ public class ScheduleQualityCalculationPage extends JFrame implements LayoutDefi
     private List<String> metricas = new ArrayList<>();
     private Horario horario;
     private List<String> variablesForFormula = new ArrayList<>();
-    private boolean isListAltered = false;
-
-    private static final long serialVersionUID = 1L;
+    private JPanel formulaCreatingPanel;
+    private JButton addFormula;
 
 
 
@@ -84,7 +83,7 @@ public class ScheduleQualityCalculationPage extends JFrame implements LayoutDefi
     }
 
     private JPanel topFormulaCreatingPanel(List<String> variablesForFormula) {
-        JPanel formulaCreatingPanel = new JPanel(new GridBagLayout());
+        formulaCreatingPanel = new JPanel(new GridBagLayout());
         formulaCreatingPanel.setBackground(Color.darkGray);
         gbc = resetGBC(gbc);
 
@@ -94,18 +93,23 @@ public class ScheduleQualityCalculationPage extends JFrame implements LayoutDefi
         listOfVariables = new JComboBox<>(variablesForFormula.toArray(new String[0]));
         listOfVariables.setPreferredSize(new Dimension(200, 40));
         listOfVariables2 = new JComboBox<>(variablesForFormula.toArray(new String[0]));
+        listOfVariables2.addItem("Ignore");
+        listOfVariables2.removeItem("Variable");
         listOfVariables2.setPreferredSize(new Dimension(200, 40));
-        updateLists();
-
-        listOfMatOperators = new JComboBox<>(new String[]{"Operation", "=", "!=", "+", "-", "*", "/"});
+        listOfVariables2.setEnabled(false);
+        listOfMatOperators = new JComboBox<>(new String[]{"Operation", "=", "!=", "+", "-", "*", "/", "Ignore"});
         listOfMatOperators.setPreferredSize(new Dimension(200, 40));
-        listOfMatOperators2 = new JComboBox<>(new String[] {"Condition Operator (Optional)", ">", "<", "="});
+        listOfMatOperators.setEnabled(false);
+        listOfMatOperators2 = new JComboBox<>(new String[] {"Condition Operator (Optional)", ">", "<", "=", "Ignore"});
         listOfMatOperators2.setPreferredSize(new Dimension(200, 40));
+        listOfMatOperators2.setEnabled(false);
 
         //Permite garantir que o utilizador apenas entra um inteiro na ultima coluna
-        integerField = new JTextField("Number (Optional)");
+        integerField = new JTextField("Optional Field");
         integerField.setColumns(13);
+        integerField.setEnabled(false);
 
+        updateList();
 
         gbc.insets = new Insets(15, 15, 15, 15);
         gbc.gridwidth = 5;
@@ -133,9 +137,10 @@ public class ScheduleQualityCalculationPage extends JFrame implements LayoutDefi
         JButton removeLastAddedFormula = LayoutDefinable.defineButtonLayout(Color.RED,
                 Color.white, "Remove Formula", new Dimension(130, 40));
         removeLastAddedFormula.addActionListener(e -> updateFormulaListPane(-1,  null));
-        JButton addFormula = LayoutDefinable.defineButtonLayout(Color.GREEN,
+        addFormula = LayoutDefinable.defineButtonLayout(Color.GREEN,
                 Color.WHITE, "Add Formula", new Dimension(130, 40));
         addFormula.addActionListener(e -> updateFormulaListPane(1, getVariablesFromFormula()));
+        addFormula.setEnabled(false);
         calculateScheduleQuality = LayoutDefinable.defineButtonLayout(Color.BLUE,
                 Color.WHITE, "Schedule Quality", new Dimension(130, 40));
         JButton goBackButton = LayoutDefinable.defineButtonLayout(Color.RED,
@@ -144,12 +149,24 @@ public class ScheduleQualityCalculationPage extends JFrame implements LayoutDefi
             previousFrame.setVisible(true);
             LayoutDefinable.setVisibility(this, false);
         });
+        JButton resetListOptions = LayoutDefinable.defineButtonLayout(Color.BLACK,
+                Color.WHITE, "Reset Options", new Dimension(130, 40));
+        resetListOptions.addActionListener(rLO -> {
+            listOfMatOperators2.setEnabled(false);
+            listOfMatOperators.setEnabled(false);
+            listOfVariables2.setEnabled(false);
+            integerField.setEnabled(false);
+            listOfVariables2.setModel(new DefaultComboBoxModel<>(variablesForFormula.toArray(new String[0])));
+            listOfVariables.setModel(new DefaultComboBoxModel<>(variablesForFormula.toArray(new String[0])));
+        });
 
         gbc.fill = GridBagConstraints.BOTH;
         gbc.insets = new Insets(15, 15, 15, 15);
         formulaCreatingPanel.add(addFormula,gbc);
         gbc.gridx++;
         formulaCreatingPanel.add(removeLastAddedFormula, gbc);
+        gbc.gridx++;
+        formulaCreatingPanel.add(resetListOptions, gbc);
         gbc.gridx++;
         formulaCreatingPanel.add(calculateScheduleQuality, gbc);
         gbc.gridx++;
@@ -158,23 +175,31 @@ public class ScheduleQualityCalculationPage extends JFrame implements LayoutDefi
     }
 
     private void updateFormulaListPane(int operation, List<String> formula) {
-        StringBuilder formulaEmString = new StringBuilder("Métrica: ");
-        StringBuilder metrica = new StringBuilder();
-        if(operation == -1) {
-            if (!variableListModel.isEmpty()) variableListModel.remove(variableListModel.size() - 1);
-        }
+        if(formula == null) return;
         else {
-            for(int i = 0; i < formula.size(); i++) {
-                formulaEmString.append(formula.get(i)).append(" ");
-                if (i != (formula.size() - 1)) {
-                    metrica.append(formula.get(i)).append(";");
-                } else {
-                    metrica.append(formula.get(i));
+            StringBuilder formulaEmString = new StringBuilder("Métrica: ");
+            StringBuilder metrica = new StringBuilder();
+            if (operation == -1) {
+                if (!variableListModel.isEmpty()) variableListModel.remove(variableListModel.size() - 1);
+            } else {
+                for (int i = 0; i < formula.size(); i++) {
+                    formulaEmString.append(formula.get(i)).append(" ");
+                    if (i != (formula.size() - 1)) {
+                        metrica.append(formula.get(i)).append(";");
+                    } else {
+                        metrica.append(formula.get(i));
+                    }
                 }
+                metricas.add(metrica.toString());
+                variableListModel.addElement(String.valueOf(formulaEmString));
             }
-            metricas.add(metrica.toString());
-            variableListModel.addElement(String.valueOf(formulaEmString));
         }
+        listOfMatOperators2.setEnabled(false);
+        listOfMatOperators.setEnabled(false);
+        listOfVariables2.setEnabled(false);
+        integerField.setEnabled(false);
+        listOfVariables2.setModel(new DefaultComboBoxModel<>(variablesForFormula.toArray(new String[0])));
+        listOfVariables.setModel(new DefaultComboBoxModel<>(variablesForFormula.toArray(new String[0])));
     }
 
     private List<String> getVariablesFromFormula() {
@@ -185,17 +210,30 @@ public class ScheduleQualityCalculationPage extends JFrame implements LayoutDefi
         String matOperator2 = (String) listOfMatOperators2.getSelectedItem();
         String input = integerField.getText();
 
-        if(Stream.of(variable1, variable2, matOperator1).filter(Objects::nonNull).anyMatch(String::isBlank)) {
-            JOptionPane.showMessageDialog(this, "Please make sure that at least all variables and the mat operator are selected", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        else {
-            if(!matOperator1.isBlank() && input != null) {
-                Stream.of(variable1, matOperator1, variable2, matOperator2, input).forEach(formula::add);
+        if(variable1.equals("Variable") || matOperator1.equals("Operation") || matOperator2.equals("Condition Operator (Optional)")) {
+            JOptionPane.showMessageDialog(this,
+                    "Please select a variable and or a operator", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return null;
+        } else {
+            if (matOperator2.equals("Ignore")) {
+                formula.add(variable1);
+                formula.add(matOperator1);
+                formula.add(variable2);
+            } else if (matOperator1.equals("Ignore")) {
+                formula.add(variable1);
+                formula.add(matOperator2);
+                formula.add(input);
+            } else {
+                formula.add(variable1);
+                formula.add(matOperator1);
+                formula.add(variable2);
+                formula.add(matOperator2);
+                formula.add(input);
             }
-            else {
-                Stream.of(variable1, matOperator1, variable2).forEach(formula::add);
-            }
         }
+
+        addFormula.setEnabled(false);
         return formula;
     }
 
@@ -203,10 +241,9 @@ public class ScheduleQualityCalculationPage extends JFrame implements LayoutDefi
         return calculateScheduleQuality;
     };
 
-
     public List<Metrica> getScheduleMetrics() {
         List<Metrica> metricasDoUtilizador = new ArrayList<>();
-        for(String metrica : metricas) {
+        for(String metrica : new ArrayList<>(new LinkedHashSet<>(metricas))) {
             metricasDoUtilizador.add(new Metrica(metrica));
         }
         return metricasDoUtilizador;
@@ -239,69 +276,99 @@ public class ScheduleQualityCalculationPage extends JFrame implements LayoutDefi
      * seleciona tendo em conta o tipo de variavel selecionada na lista. Pois pretende-se que o utilizador apenas possa fazer operaçõe com varivaeis do mesmo tipo.
      *
      */
-    private void updateLists() {
-        JComboBox<String> stringOperation = new JComboBox<>(new String[] {"String Operation", "=", "!="});
-        stringOperation.setPreferredSize(new Dimension(200, 40));
-        JComboBox<String> mathOperation = new JComboBox<>(new String[]{"Mathematical Operation", "+", "-", "*", "/"});
-        mathOperation.setPreferredSize(new Dimension(200, 40));
-        List<String> auxVariablesForFormula = new ArrayList<>(variablesForFormula);
-        listOfVariables.addActionListener(e -> {
+    private void updateList() {
+        listOfVariables.addActionListener(lV -> {
             String variable = (String) listOfVariables.getSelectedItem();
-            if(!Objects.equals(variable, "Variable")) {
-                auxVariablesForFormula.remove(variable);
-                listOfVariables2.setModel(new DefaultComboBoxModel<>(auxVariablesForFormula.toArray(new String[0])));
-                if(hasIntegerValues(variable)) {
-                    listOfMatOperators.setModel(new DefaultComboBoxModel<>(new String[]{"Operation", "+", "-", "*", "/"}));
-                    listOfVariables2.setModel(new DefaultComboBoxModel<>(auxVariablesForFormula.toArray(new String[0])));
-                    isListAltered = true;
-                }
-                else {
-                    listOfMatOperators.setModel(new DefaultComboBoxModel<>(new String[]{"Operation", "-", "=", "!="}));
-                    auxVariablesForFormula.remove("Capacidade Normal");
-                    auxVariablesForFormula.remove("Capacidade Exame");
-                    auxVariablesForFormula.removeIf(this::hasIntegerValues);
-                    listOfVariables2.setModel(new DefaultComboBoxModel<>(auxVariablesForFormula.toArray(new String[0])));
-                    isListAltered = true;
-                }
+            if(!variable.equals("Variable")) {
+                setUpNoActionList(listOfVariables2, hasIntegerValues(variable), variable);
+                listOfMatOperators.setEnabled(true);
+            } else {
+                listOfMatOperators.setModel(new DefaultComboBoxModel<>(new String[]{"Operation", "=", "!=", "+", "-", "*", "/", "Ignore"}));
+                listOfVariables2.setModel(new DefaultComboBoxModel<>(variablesForFormula.toArray(new String[0])));
+                listOfVariables2.setEnabled(false);
+                listOfMatOperators.setEnabled(false);
+                listOfMatOperators2.setEnabled(false);
+                integerField.setEnabled(false);
             }
-            else {
-//                isListAltered = false;
-                if(isListAltered) {
-                    listOfVariables2.setModel(new DefaultComboBoxModel<>(variablesForFormula.toArray(new String[0])));
-                    listOfMatOperators.setModel(new DefaultComboBoxModel<>(new String[]{"Operation", "=", "!=", "+", "-", "*", "/"}));
+        });
+
+        listOfMatOperators.addActionListener(lM -> {
+            String matOperator = (String) listOfMatOperators.getSelectedItem();
+            if(matOperator.equals("Ignore")) {
+                listOfVariables2.setEnabled(false);
+                listOfMatOperators2.setEnabled(true);
+            } else if(!matOperator.equals("Operation")) {
+                listOfVariables2.setEnabled(true);
+            }
+        });
+
+        listOfVariables2.addActionListener(lV2 -> {
+            String variable = (String) listOfVariables2.getSelectedItem();
+            if(!variable.equals("Variable") && !variable.equals("Ignore")) {
+                listOfMatOperators2.setEnabled(true);
+            }
+        });
+
+        listOfMatOperators2.addActionListener(lM2 -> {
+            String matOperator = (String) listOfMatOperators2.getSelectedItem();
+            if(!matOperator.equals("Ignore") && !matOperator.equals("Condition Operator (Optional)")) {
+                integerField.setEnabled(true);
+            } else if (matOperator.equals("Ignore")) {
+                //This case is when only the 1st 3 are used.
+                if (listOfMatOperators.isEnabled() && listOfVariables2.isEnabled()) {
+                    addFormula.setEnabled(true);
                 }
             }
         });
 
-        listOfVariables2.addActionListener(e -> {
-            String variable = (String) listOfVariables2.getSelectedItem();
-            if(!Objects.equals(variable, "Variable")) {
-                auxVariablesForFormula.remove(variable);
-                listOfVariables.setModel(new DefaultComboBoxModel<>(auxVariablesForFormula.toArray(new String[0])));
-                if(hasIntegerValues(variable)) {
-                    listOfMatOperators.setModel(new DefaultComboBoxModel<>(new String[]{"Operation", "+", "-", "*", "/"}));
-                    listOfVariables.setModel(new DefaultComboBoxModel<>(auxVariablesForFormula.toArray(new String[0])));
-                    isListAltered = true;
+        integerField.addActionListener(iF -> {
+            String variableType = (String) listOfVariables.getSelectedItem();
+            String input = integerField.getText();
+            if(hasIntegerValues(variableType)) {
+                try {
+                    int value = Integer.parseInt(input);
+                    addFormula.setEnabled(true);
+                } catch (NumberFormatException e) {
+                    addFormula.setEnabled(false);
+                    JOptionPane.showMessageDialog(this,
+                            "Please enter an integer value", "Error",
+                            JOptionPane.ERROR_MESSAGE);
                 }
-                else {
-                    listOfMatOperators.setModel(new DefaultComboBoxModel<>(new String[]{"Operation", "-", "=", "!="}));
-                    auxVariablesForFormula.remove("Capacidade Normal");
-                    auxVariablesForFormula.remove("Capacidade Exame");
-                    auxVariablesForFormula.removeIf(this::hasIntegerValues);
-                    listOfVariables.setModel(new DefaultComboBoxModel<>(auxVariablesForFormula.toArray(new String[0])));
-                    isListAltered = true;
-                }
-            }
-            else {
-//                isListAltered = false;
-                if(isListAltered) {
-                    listOfVariables.setModel(new DefaultComboBoxModel<>(variablesForFormula.toArray(new String[0])));
-                    listOfMatOperators.setModel(new DefaultComboBoxModel<>(new String[]{"Operation", "=", "!=", "+", "-", "*", "/"}));
-                }
+            } else {
+                addFormula.setEnabled(true);
             }
         });
-        auxVariablesForFormula.clear();
-        auxVariablesForFormula.addAll(variablesForFormula);
+
+    }
+    private void setUpNoActionList(JComboBox<String> listVariableToChange, boolean isIntegerTypeVariable, String variableToRemove) {
+        List<String> aux = isIntegerTypeVariable ? getListWithIntegerOnlyVariables(variablesForFormula) : getListWithNonIntegerOnlyVariables(variablesForFormula);
+        aux.remove(variableToRemove);
+        if (isIntegerTypeVariable) {
+            listOfMatOperators.setModel(new DefaultComboBoxModel<>(new String[]{"Operation", "+", "-", "*", "/", "Ignore"}));
+        } else {
+            listOfMatOperators.setModel(new DefaultComboBoxModel<>(new String[]{"Operation", "-", "=", "!=", "Ignore"}));
+        }
+        listVariableToChange.setModel(new DefaultComboBoxModel<>(aux.toArray(new String[0])));
+    }
+
+    private List<String> getListWithIntegerOnlyVariables(List<String> variables) {
+        List<String> integerOnlyVariables = new ArrayList<>();
+        for(String variable : variables) {
+            if(hasIntegerValues(variable)) {
+                integerOnlyVariables.add(variable);
+            }
+        }
+        return integerOnlyVariables;
+    }
+
+    private List<String> getListWithNonIntegerOnlyVariables(List<String> variables) {
+        List<String> nonIntegerOnlyVariables = new ArrayList<>();
+        for(String variable : variables) {
+            if(!hasIntegerValues(variable)) {
+                nonIntegerOnlyVariables.add(variable);
+            }
+        }
+        return nonIntegerOnlyVariables;
     }
 
     public static void main(String[] args) {

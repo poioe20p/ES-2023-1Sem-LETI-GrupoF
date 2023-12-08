@@ -73,7 +73,7 @@ public class Reader {
 	/**
 	 * Metodo que le os titulos das colunas do arquivo CSV.
 	 *
-	 * @param sc Scanner para leitura do arquivo CSV.
+	 * @param br BufferedReader para leitura do arquivo CSV.
 	 * @return Lista de strings contendo os titulos das colunas.
 	 * @throws IOException 
 	 */

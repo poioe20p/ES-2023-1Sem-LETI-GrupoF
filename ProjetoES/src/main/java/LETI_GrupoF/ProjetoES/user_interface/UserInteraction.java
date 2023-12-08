@@ -80,7 +80,7 @@ public class UserInteraction {
 			}
 			scheduleQualityTable = new ScheduleQualityTable
 					(horario, scheduleQualityCalculationPage);
-			setUpScheduleQualityTableButtons();
+			setUpScheduleQualityTableButtons(horario.getColumnTitles());
 			scheduleQualityTable.setVisible(true);
 			scheduleQualityCalculationPage.setVisible(false);
 		});
@@ -90,13 +90,13 @@ public class UserInteraction {
 	 * Este metodo define o comportamento dos botoes da pagina ScheduleQualityTable que
 	 * corresponde à pagina onde as metricas sao apresentadas.
 	 */
-	private void setUpScheduleQualityTableButtons() {
+	private void setUpScheduleQualityTableButtons(List<String> columnTitles) {
 		scheduleQualityTable.getOpenMetricScheduleButton().addActionListener(e -> {
 			String formulaMetricaLinhaSelecionada = (String) scheduleQualityTable.getTable().
 					getValueAt(scheduleQualityTable.getTable().getSelectedRow(), 0);
 			for(Metrica metrica: scheduleQualityTable.getData()) {
 				if(metrica.getFormula().equals(formulaMetricaLinhaSelecionada)) {
-					htmlCreator = new HtmlCreator(metrica.getAulasComComtribuicao(), columnsOrderingPage.getUserOrderedColumnTitles());
+					htmlCreator = new HtmlCreator(metrica.getAulasComComtribuicao(), columnsOrderingPage.getUserOrderedColumnTitles(), columnTitles);
 					openSchedule();
 				}
 			}

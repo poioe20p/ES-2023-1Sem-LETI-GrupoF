@@ -5,11 +5,9 @@ import LETI_GrupoF.ProjetoES.Metrica;
 
 import javax.swing.*;
 import javax.swing.table.*;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.awt.*;
+import java.util.List;
 
 public class ScheduleQualityTable extends JFrame {
 
@@ -27,17 +25,13 @@ public class ScheduleQualityTable extends JFrame {
     public ScheduleQualityTable(Horario horario, JFrame previousFrame) {
         this.horario = horario;
         data = new ArrayList<>(horario.getMetricas().keySet());
-        LayoutDefinable.basicLayout("Schedule Quality Table", this, LayoutDefinable.getColor("gray"));
+        LayoutDefinable.basicLayout("Schedule Quality Table (Select Line on Table and then \"Open Schedule\" to open respective schedule for metric)", this, LayoutDefinable.getColor("gray"));
         previousFrame.setVisible(false);
         metricTable = new MetricTableModel();
         table = new JTable(metricTable);
 
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-//        table.setRowHeight(25);
-
-        //Usar isto
-        //table.getSelectedRow();
 
         JButton backButton = LayoutDefinable.defineButtonLayout(LayoutDefinable.getColor("red"), LayoutDefinable.getColor("white"),
                 "Back", new Dimension(100, 50));
@@ -68,6 +62,7 @@ public class ScheduleQualityTable extends JFrame {
         add(scheduleQualityTablePanel, BorderLayout.SOUTH);
         updateTable();
     }
+
 
     private void setUpTableNavigationButtons() {
         previousPageButton.addActionListener(e -> {
@@ -103,11 +98,11 @@ public class ScheduleQualityTable extends JFrame {
 
     //Apartir daqui consigo saber qual foi a linha selecionada e sabendo qual foi a linha selecionada consigo também a metrica e logo os valores de aulas
     public JTable getTable() {
-    	return table;
+        return table;
     }
 
     public List<Metrica> getData() {
-    	return data;
+        return data;
     }
 
 
@@ -131,12 +126,16 @@ public class ScheduleQualityTable extends JFrame {
 
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
-            Metrica metrica = metricas.get(rowIndex);
-            return switch (columnIndex) {
-                case 0 -> metrica.getFormula();
-                case 1 -> horario.getMetricas().get(metrica);
-                default -> null;
-            };
+            if(rowIndex >= metricas.size() || rowIndex < 0)  {
+                throw new IndexOutOfBoundsException();
+            } else {
+                Metrica metrica = metricas.get(rowIndex);
+                return switch (columnIndex) {
+                    case 0 -> metrica.getFormula();
+                    case 1 -> horario.getMetricas().get(metrica);
+                    default -> null;
+                };
+            }
         }
 
         @Override

@@ -33,5 +33,9 @@ public class Metrica {
 	public int getTotal () {
 		return aulasComComtribuicao != null ? aulasComComtribuicao.size() : 0;
 	}
-	
+
+	@Override
+	public boolean equals(Object obj) {
+		return this.getFormula().equals(((Metrica) obj).getFormula());
+	}
 }
