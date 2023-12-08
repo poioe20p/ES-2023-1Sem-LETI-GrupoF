@@ -1,1 +1,1 @@
-Inscritos no turno - Capacidade Normal > 0
+Sala atribuída à aula != Características da sala pedida para a aula
