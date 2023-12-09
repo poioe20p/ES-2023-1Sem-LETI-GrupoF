@@ -28,21 +28,14 @@ public class TestSaveState {
 
 		}
 		horario.setOrdemCampos(ordemCampos);
-
 	}
-
 	@Test
 	void testGuardarHorario() throws FileNotFoundException {
 		sS.guardarHorario(horario.getHorarioFilePath(), horario.getOrdemCampos(),
 				new ArrayList<>(horario.getMetricas().keySet()));
-		assertNotNull(sS.RecuperarHorarioAntigo(), "O horário não foi salvo corretamente.");
+		assertNotNull(sS.RecuperarHorarioAntigo());
 	}
 
-//	@Test
-//	void testGuardarMetrica() {
-//		sS.guardarMetricas(numeroAulasSobrelotacao);
-//		assertNotNull(sS.RecuperarHorarioAntigo(), "A métrica não foi salva corretamente.");
-//	}
 
 	@Test
 	void testLimparSaveState() throws FileNotFoundException {

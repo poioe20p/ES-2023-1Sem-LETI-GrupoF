@@ -1,1 +1,14 @@
-Sala atribuída à aula != Características da sala pedida para a aula
+C:\Users\ricar\eclipse-workspace\ES-2023-1Sem-LETI-GrupoF\ProjetoES\HorarioDeExemplo.csv
+Curso:0
+Unidade Curricular:1
+Turno:2
+Turma:3
+Inscritos no turno:4
+Dia da semana:5
+Hora início da aula:6
+Hora fim da aula:7
+Data da aula:8
+Características da sala pedida para a aula:9
+Sala atribuída à aula:10
+FOC
+Inscritos no turno - Capacidade Normal

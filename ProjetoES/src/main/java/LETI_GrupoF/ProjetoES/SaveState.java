@@ -36,12 +36,9 @@ public class SaveState {
 
 			writer.println(csvFilePath);
 
-			if (metricas != null) {
-
-				for (Map.Entry<String, Integer> entry : ordemCampos.entrySet()) {
-					writer.println(entry.getKey() + ":" + entry.getValue());
-				}
-			
+			for (Map.Entry<String, Integer> entry : ordemCampos.entrySet()) {
+				writer.println(entry.getKey() + ":" + entry.getValue());
+			}
 
 			writer.println("FOC");
 
@@ -93,48 +90,43 @@ public class SaveState {
 	 */
 
 	Horario RecuperarHorarioAntigo() {
-		Horario horarioRecuperado = new Horario(null);
-		String FilePath = null;
-		Map<String, Integer> oCampos = new HashMap<>();
-		List<Metrica> metricas = new ArrayList<>();
 
 		Scanner sc;
 		try {
 			sc = new Scanner(new File("SaveState.txt"));
-			FilePath = sc.nextLine();
-			System.out.println(FilePath);
-			System.out.println(sc.nextLine());
+			if (sc.hasNextLine()) {
+				String FilePath = sc.nextLine();
+				Map<String, Integer> oCampos = new HashMap<>();
+				List<Metrica> metricas = new ArrayList<>();
+				String linha = sc.nextLine();
+				while (linha != null && !linha.trim().equals("FOC")) {
+					String[] partes = linha.split(":");
+					oCampos.put(partes[0], Integer.parseInt(partes[1]));
+				}
 
-			String linha = sc.nextLine();
-			while (linha != null && !linha.trim().equals("FOC")) {
-				String[] partes = linha.split(":");
-				oCampos.put(partes[0], Integer.parseInt(partes[1]));
+				if (linha.trim().equals("FOC")) {
+					sc.nextLine();
+				}
+
+				while (linha != null) {
+					Metrica novaMetrica = new Metrica(linha);
+					metricas.add(novaMetrica);
+				}
+				Horario horarioRecuperado = new Horario(FilePath);
+				horarioRecuperado.setOrdemCampos(oCampos);
+
+				for (int i = 0; i != metricas.size(); i++) {
+					horarioRecuperado.adicionarMetrica(metricas.get(i));
+				}
+				System.out.println(horarioRecuperado.getHorarioFilePath());
+				sc.close();
+
+				return horarioRecuperado;
 			}
-
-			if (linha.trim().equals("FOC")) {
-				sc.nextLine();
-			}
-
-			while (linha != null) {
-				Metrica novaMetrica = new Metrica(linha);
-				metricas.add(novaMetrica);
-			}
-			horarioRecuperado = new Horario(FilePath);
-			horarioRecuperado.setOrdemCampos(oCampos);
-
-			for (int i = 0; i != metricas.size(); i++) {
-				horarioRecuperado.adicionarMetrica(metricas.get(i));
-			}
-
-			System.out.println(horarioRecuperado.getHorarioFilePath());
-			sc.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-
-		System.out.println(horarioRecuperado.getHorarioFilePath());
-
-		return horarioRecuperado;
+		return null;
 
 	}
 
@@ -153,6 +145,10 @@ public class SaveState {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public String getSaveStateFilePath() {
+		return SaveStateFilePath;
 	}
 
 }
