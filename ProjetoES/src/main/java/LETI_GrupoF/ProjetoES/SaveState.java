@@ -1,7 +1,7 @@
 package LETI_GrupoF.ProjetoES;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -10,6 +10,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 public class SaveState {
 	private String SaveStateFilePath = "SaveState.txt";
@@ -24,8 +25,9 @@ public class SaveState {
 	 *                    associado indica a posicao do mesmo.
 	 */
 
-	void guardarHorario(String csvFilePath, Map<String, Integer> ordemCampos) {
+	void guardarHorario(String csvFilePath, Map<String, Integer> ordemCampos, List<Metrica> metricas) {
 
+		LimparSaveState();
 		List<Map.Entry<String, Integer>> entryList = new ArrayList<>(ordemCampos.entrySet());
 		entryList.sort(Comparator.comparing(Map.Entry::getValue));
 		try {
@@ -34,10 +36,19 @@ public class SaveState {
 
 			writer.println(csvFilePath);
 
-			for (Map.Entry<String, Integer> entry : ordemCampos.entrySet()) {
-				writer.println(entry.getKey() + ":" + entry.getValue());
-			}
+			if (metricas != null) {
+
+				for (Map.Entry<String, Integer> entry : ordemCampos.entrySet()) {
+					writer.println(entry.getKey() + ":" + entry.getValue());
+				}
+			
+
 			writer.println("FOC");
+
+			for (int i = 0; i != metricas.size(); i++) {
+				writer.println(metricas.get(i).getFormula());
+			}
+
 			writer.close();
 
 		} catch (IOException e) {
@@ -52,24 +63,24 @@ public class SaveState {
 	 * estado anterior das formulas caso o utilizador pretenda recuperar a sessao
 	 * anterior
 	 *
-//	 * @param formula A formula criada pelo utilizador que sera guardada. Permite
-	 *                recuperar a formula caso o utilizador retome a sessão.
+	 * // * @param formula A formula criada pelo utilizador que sera guardada.
+	 * Permite recuperar a formula caso o utilizador retome a sessão.
 	 */
 
-	void guardarMetricas(Metrica metrica) {
-
-		try {
-			FileWriter file = new FileWriter(SaveStateFilePath);
-			PrintWriter writer = new PrintWriter(file);
-
-			writer.println(metrica.getFormula());
-			writer.close();
-
-		} catch (IOException e) {
-
-			e.printStackTrace();
-		}
-	}
+//	void guardarMetricas(Metrica metrica) {
+//
+//		try {
+//			FileWriter file = new FileWriter(SaveStateFilePath);
+//			PrintWriter writer = new PrintWriter(file);
+//
+//			writer.println(metrica.getFormula());
+//			writer.close();
+//
+//		} catch (IOException e) {
+//
+//			e.printStackTrace();
+//		}
+//	}
 
 	/**
 	 * Recupera o horario anterior, permitindo que o utilizador retome a sua sessao
@@ -78,43 +89,50 @@ public class SaveState {
 	 * @return Um objeto do tipo Horario representando o horario previamente
 	 *         armazenado. Retorna null se não houver um horario anteriormente
 	 *         armazenado.
+	 * @throws FileNotFoundException
 	 */
 
 	Horario RecuperarHorarioAntigo() {
-
+		Horario horarioRecuperado = new Horario(null);
 		String FilePath = null;
 		Map<String, Integer> oCampos = new HashMap<>();
 		List<Metrica> metricas = new ArrayList<>();
 
+		Scanner sc;
 		try {
-			BufferedReader reader = new BufferedReader(new FileReader(SaveStateFilePath));
+			sc = new Scanner(new File("SaveState.txt"));
+			FilePath = sc.nextLine();
+			System.out.println(FilePath);
+			System.out.println(sc.nextLine());
 
-			FilePath = reader.readLine();
-
-			String linha = reader.readLine();
-			while (!linha.trim().equals("FOC")) {
+			String linha = sc.nextLine();
+			while (linha != null && !linha.trim().equals("FOC")) {
 				String[] partes = linha.split(":");
 				oCampos.put(partes[0], Integer.parseInt(partes[1]));
 			}
 
-			while (linha != null) {
-				Metrica novaMetrica = new Metrica(linha.trim());
-				metricas.add(novaMetrica);
+			if (linha.trim().equals("FOC")) {
+				sc.nextLine();
 			}
 
-			reader.close();
+			while (linha != null) {
+				Metrica novaMetrica = new Metrica(linha);
+				metricas.add(novaMetrica);
+			}
+			horarioRecuperado = new Horario(FilePath);
+			horarioRecuperado.setOrdemCampos(oCampos);
 
-		} catch (IOException e) {
+			for (int i = 0; i != metricas.size(); i++) {
+				horarioRecuperado.adicionarMetrica(metricas.get(i));
+			}
+
+			System.out.println(horarioRecuperado.getHorarioFilePath());
+			sc.close();
+		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-
 		}
 
-		Horario horarioRecuperado = new Horario(FilePath);
-		horarioRecuperado.setOrdemCampos(oCampos);
-
-		for (int i = 0; i != metricas.size(); i++) {
-			horarioRecuperado.adicionarMetrica(metricas.get(i));
-		}
+		System.out.println(horarioRecuperado.getHorarioFilePath());
 
 		return horarioRecuperado;
 
