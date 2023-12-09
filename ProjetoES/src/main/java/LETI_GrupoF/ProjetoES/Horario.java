@@ -30,33 +30,24 @@ public class Horario {
 		Reader dataHorarioDoCSV = new Reader(horarioFilePath);
 		columnTitles = dataHorarioDoCSV.getColumnTitles();
 		horario = dataHorarioDoCSV.getTableData();
-		// ss.guardarHorario(csvFilePath, ordemCampos); //Ta comentado porque se neste
-		// momento ordemCampos ainda nao foi inicializado
-		// Faz mais sentido tar no metodo setOrdemCampos
 		salas = new Salas(csvFilePath);
 	}
 
 	public void adicionarMetrica(Metrica metrica) {
 		metricas.put(metrica, calcularQualidade(metrica));
-		ss.guardarHorario(getHorarioFilePath(), getOrdemCampos(), new ArrayList<>(metricas.keySet()));
-
 	}
 
 	private int calcularQualidade(Metrica metrica) {
-		List<String> formula = metrica.getComponentesFormula(); // Vai buscar os componetes da formula para o calculo da
-																// metrica
+		List<String> formula = metrica.getComponentesFormula(); // Vai buscar os componetes da formula para o calculo da metrica
 		List<String> atributo1 = defineAtributo(formula.get(0));
 		List<String> atributo2 = defineAtributo(formula.get(2));
 		List<String> contaInicial = new ArrayList<>();
 		if (atributo1.get(0).equals("horario") && atributo2.get(0).equals("horario")) {
-			contaInicial = calculoParcialHorario(atributo1.subList(1, atributo1.size()),
-					atributo2.subList(1, atributo2.size()), formula.get(1));
+			contaInicial = calculoParcialHorario(atributo1.subList(1, atributo1.size()), atributo2.subList(1, atributo2.size()), formula.get(1));
 		} else if (atributo1.get(0).equals("horario") && atributo2.get(0).equals("sala")) {
-			contaInicial = calculoParcialHorarioSala(atributo1.subList(1, atributo1.size()),
-					atributo2.subList(1, atributo2.size()), formula.get(1));
+			contaInicial = calculoParcialHorarioSala(atributo1.subList(1, atributo1.size()), atributo2.subList(1, atributo2.size()), formula.get(1));
 		} else if (atributo1.get(0).equals("sala") && atributo2.get(0).equals("horario")) {
-			contaInicial = calculoParcialSalaHorario(atributo1.subList(1, atributo1.size()),
-					atributo2.subList(1, atributo2.size()), formula.get(1));
+			contaInicial = calculoParcialSalaHorario(atributo1.subList(1, atributo1.size()), atributo2.subList(1, atributo2.size()), formula.get(1));
 		}
 		if (formula.size() > 3) {
 			int count = 0;
@@ -105,33 +96,28 @@ public class Horario {
 	}
 
 	/**
-	 * Devolve uma lista da informacao de um certo atributo/coluna,
-	 * independentemente do ficheiro em que se localiza
+	 * Devolve uma lista da informacao de um certo atributo/coluna, independentemente do ficheiro em que se localiza
 	 *
 	 * @return Lista de strings representando os dados da coluna.
 	 */
 	private List<String> defineAtributo(String nomeAtributo) {
 		List<String> atributo = new ArrayList<>();
-		if (getColumnTitles().contains(nomeAtributo)) { // Verifica se o atributo (que é um campo/coluna de um dos
-														// ficheiros(horario ou salas)) pertence ao horario
+		if (getColumnTitles().contains(nomeAtributo)) { // Verifica se o atributo (que é um campo/coluna de um dos ficheiros(horario ou salas)) pertence ao horario
 			atributo.add("horario");
 			for (int i = 0; i < getHorario().size(); i++) {
-				atributo.add(getHorario().get(i).get(ordemCampos.get(nomeAtributo))); // Vai busacar uma lista com todo
-																						// o conteudo do atributo
+				atributo.add(getHorario().get(i).get(ordemCampos.get(nomeAtributo))); // Vai busacar uma lista com todo o conteudo do atributo
 			}
 		} else if (getSalas().getColumnTitles().contains(nomeAtributo)) { // Verifica se o atributo pertence as salas
 			atributo.add("sala");
 			for (int i = 0; i < getSalas().getListaSalas().size(); i++) {
 				atributo.add(getSalas().getListaSalas().get(i).getInformacaoSala()
-						.get(getSalas().getColumnTitles().indexOf(nomeAtributo))); // Vai busacar uma lista com todo o
-																					// conteudo do atributo
+						.get(getSalas().getColumnTitles().indexOf(nomeAtributo))); // Vai busacar uma lista com todo o conteudo do atributo
 			}
 		}
 		return atributo;
 	}
 
-	private List<String> calculoParcialHorario(List<String> atributoHoraio1, List<String> atributoHoraio2,
-			String operador) {
+	private List<String> calculoParcialHorario(List<String> atributoHoraio1, List<String> atributoHoraio2, String operador) {
 		List<String> contaInicial = new ArrayList<>();
 		if (isListaDeSalas(atributoHoraio1)) {
 			contaInicial = comparaAtributos(atributoHoraio2, atributoHoraio1, operador);
@@ -148,8 +134,7 @@ public class Horario {
 		return false;
 	}
 
-	private List<String> comparaAtributos(List<String> listaRequesitosSalas, List<String> salaAtribuida,
-			String operador) {
+	private List<String> comparaAtributos(List<String> listaRequesitosSalas, List<String> salaAtribuida, String operador) {
 		List<String> contaInicial = new ArrayList<>();
 		for (int i = 0; i < listaRequesitosSalas.size(); i++) {
 			int linhaSalaFicheiroCSVSalas = getSalas().getNomeSalas().indexOf(salaAtribuida.get(i));
@@ -176,13 +161,14 @@ public class Horario {
 					}
 					break;
 				}
+			}else {
+				contaInicial.add("0"); // Nao ha sala
 			}
 		}
 		return contaInicial;
 	}
 
-	private List<String> calculoParcialHorarioSala(List<String> atributoHoraio, List<String> atributoSala,
-			String operador) {
+	private List<String> calculoParcialHorarioSala(List<String> atributoHoraio, List<String> atributoSala, String operador) {
 		List<String> contaInicial = new ArrayList<>();
 		for (int i = 0; i < atributoHoraio.size(); i++) {
 			int indexSalaAula = indexSalaAula(i);
@@ -212,13 +198,14 @@ public class Horario {
 					}
 					break;
 				}
+			}else {
+				contaInicial.add("0"); // Nao ha sala
 			}
 		}
 		return contaInicial;
 	}
 
-	private List<String> calculoParcialSalaHorario(List<String> atributoSala, List<String> atributoHoraio,
-			String operador) {
+	private List<String> calculoParcialSalaHorario(List<String> atributoSala, List<String> atributoHoraio, String operador) {
 		List<String> contaInicial = new ArrayList<>();
 		for (int i = 0; i < atributoHoraio.size(); i++) {
 			int indexSalaAula = indexSalaAula(i);
@@ -248,6 +235,8 @@ public class Horario {
 					}
 					break;
 				}
+			}else {
+				contaInicial.add("0"); // Nao ha sala
 			}
 		}
 		return contaInicial;

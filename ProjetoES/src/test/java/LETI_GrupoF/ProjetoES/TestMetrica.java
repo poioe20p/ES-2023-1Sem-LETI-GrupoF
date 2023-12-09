@@ -20,9 +20,7 @@ static Metrica metrica;
     @Test
     void testAulasComContribuicao() {
         assertNotNull(metrica.getAulasComComtribuicao());
-
-       
-    }
+     }
 
     @Test
     void testComponentesFormula() {
@@ -32,15 +30,10 @@ static Metrica metrica;
     @Test
     void testFormula() {
         assertNotNull(metrica.getFormula());
-
-       
     }
 
     @Test
     void testTotal() {
-        assertNotNull(metrica.getTotal());
-
-        
-       
+        assertNotNull(metrica.getTotal());   
     }
 }
