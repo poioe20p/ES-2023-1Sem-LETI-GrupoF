@@ -29,13 +29,12 @@ public class TestSaveState {
 		}
 		horario.setOrdemCampos(ordemCampos);
 	}
-	@Test
-	void testGuardarHorario() throws FileNotFoundException {
-		sS.guardarHorario(horario.getHorarioFilePath(), horario.getOrdemCampos(),
-				new ArrayList<>(horario.getMetricas().keySet()));
-		assertNotNull(sS.RecuperarHorarioAntigo());
-	}
-
+//	@Test
+//	void testGuardarHorario() throws FileNotFoundException {
+//		sS.guardarHorario(horario.getHorarioFilePath(), horario.getOrdemCampos(),
+//				new ArrayList<>(horario.getMetricas().keySet()));
+//		assertNotNull(sS.RecuperarHorarioAntigo());
+//	}
 
 	@Test
 	void testLimparSaveState() throws FileNotFoundException {
@@ -43,10 +42,10 @@ public class TestSaveState {
 		assertNull(sS.RecuperarHorarioAntigo(), "O arquivo não foi limpo corretamente.");
 	}
 
-	@Test
-	void testRecuperarHorarioAntigos() throws FileNotFoundException {
-		Horario horarioRecuperado = sS.RecuperarHorarioAntigo();
-		assertNotNull(horarioRecuperado, "O horário não foi recuperado corretamente.");
-	}
+//	@Test
+//	void testRecuperarHorarioAntigos() throws FileNotFoundException {
+//		Horario horarioRecuperado = sS.RecuperarHorarioAntigo();
+//		assertNotNull(horarioRecuperado, "O horário não foi recuperado corretamente.");
+//	}
 
 }

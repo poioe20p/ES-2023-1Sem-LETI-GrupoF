@@ -70,8 +70,10 @@ public class ColumnsOrderingPage extends JFrame implements LayoutDefinable {
 
         scheduleQualityButton = LayoutDefinable.defineButtonLayout(Color.BLUE,
                 Color.WHITE, "Schedule Quality", new Dimension(150, 50));
+
         openScheduleButton = LayoutDefinable.defineButtonLayout(Color.BLUE,
                 Color.WHITE, "Open Schedule", new Dimension(150, 50));
+
         JButton moveUpButton = LayoutDefinable.defineButtonLayout(Color.BLUE, Color.WHITE, "Move Up", new Dimension(130, 50));
         moveUpButton.addActionListener(e -> moveSelectedColumn(userList, -1));
         JButton moveDownButton = LayoutDefinable.defineButtonLayout(Color.BLUE, Color.WHITE, "Move Down", new Dimension(130, 50));

@@ -12,27 +12,25 @@ class TestSubmitFilePage {
 
 	@Test
 	void testCsvFileLocationTextField() {
-		UserInteraction userInteraction = new UserInteraction();
-		SubmitFilePage submitFilePage = (SubmitFilePage) userInteraction.getSubmitFilePage();
+		SubmitFilePage submitFilePage = new SubmitFilePage();
 		assertNotNull(submitFilePage.getCsvFileLocationTextField());
 	}
 
-//	@Test
-//	void testContinueButton() {
-//		assertNotNull(submitFilePage.getContinueButton());
-//	}
+	@Test
+	void testContinueButton() {
+		SubmitFilePage submitFilePage = new SubmitFilePage();
+		assertNotNull(submitFilePage.getContinueButton());
+	}
 
 	@Test
 	void testIsRemoteFile() {
-		UserInteraction userInteraction = new UserInteraction();
-		SubmitFilePage submitFilePage = (SubmitFilePage) userInteraction.getSubmitFilePage();
+		SubmitFilePage submitFilePage = new SubmitFilePage();
 		assertFalse(submitFilePage.isRemoteFile()); // Assuming default is false
 	}
 
 	@Test
 	void testSetRemoteFile() {
-		UserInteraction userInteraction = new UserInteraction();
-		SubmitFilePage submitFilePage = (SubmitFilePage) userInteraction.getSubmitFilePage();
+		SubmitFilePage submitFilePage = new SubmitFilePage();
 		submitFilePage.setRemoteFile(true);
 		assertTrue(submitFilePage.isRemoteFile());
 	}

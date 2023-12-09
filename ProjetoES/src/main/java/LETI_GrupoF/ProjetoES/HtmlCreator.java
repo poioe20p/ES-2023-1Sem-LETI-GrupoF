@@ -50,11 +50,6 @@ public class HtmlCreator {
 		this.horario = null;
 	}
 
-
-//	public List<String> getUserOrderTitles() {
-//		return userOrderTitles;
-//	}
-
 	/**
 	 * Devolve uma lista com a posicao dos valores associados a cada titulo na ordem
 	 * do arquivo CSV fornecido pelo usuario.
@@ -69,7 +64,6 @@ public class HtmlCreator {
 			if(horario != null) {
 				titlesPosition.add(String.valueOf(horario.getColumnTitles().indexOf(title)));
 			} else {
-				//Aqui necessito do cabeçalho do ficheiro CSV submetido pelo utilizador.
 				titlesPosition.add(String.valueOf(columnTitlesForQualitySchedule.indexOf(title)));
 			}
 		}
@@ -146,7 +140,7 @@ public class HtmlCreator {
 		Element body = doc.appendElement("body");
 
 		// Cria e adiciona o elemento div com o id "horario"
-		Element tableDiv = body.appendElement("div").attr("id", "horario");
+		body.appendElement("div").attr("id", "horario");
 
 		// Cria e adiciona o elemento script com o link para o ficheiro JavaScript do
 		// tabulator
@@ -198,10 +192,6 @@ public class HtmlCreator {
 	 */
 	public String getHtmlPath() {
 		return pageFilePath;
-	}
-
-	public List<List<String>> getSchedule() {
-		return dataForHtml;
 	}
 
 }

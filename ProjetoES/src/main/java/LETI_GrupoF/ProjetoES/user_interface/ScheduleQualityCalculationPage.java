@@ -376,8 +376,8 @@ public class ScheduleQualityCalculationPage extends JFrame implements LayoutDefi
     public static void main(String[] args) {
         List<String> variaveis = new ArrayList<>(List.of("AAAA", "SDKJFN", "AKDNSJ", "AKJDS"));
         JFrame frame = new JFrame();
-//        ScheduleQualityCalculationPage sqcp = new ScheduleQualityCalculationPage(variaveis,  frame, new Horario("ProjetoES/HorarioRemoto.csv"));
-//        LayoutDefinable.setVisibility(sqcp, true);
+        ScheduleQualityCalculationPage sqcp = new ScheduleQualityCalculationPage(variaveis,  frame, new Horario("ProjetoES/HorarioRemoto.csv"));
+        LayoutDefinable.setVisibility(sqcp, true);
     }
 
 }

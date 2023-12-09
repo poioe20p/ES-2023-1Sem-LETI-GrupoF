@@ -95,6 +95,8 @@ public class UserInteraction {
 					getValueAt(scheduleQualityTable.getTable().getSelectedRow(), 0);
 			for(Metrica metrica: scheduleQualityTable.getData()) {
 				if(metrica.getFormula().equals(formulaMetricaLinhaSelecionada)) {
+					System.out.println(formulaMetricaLinhaSelecionada);
+					System.out.println(metrica.getAulasComComtribuicao());
 					htmlCreator = new HtmlCreator(metrica.getAulasComComtribuicao(), columnsOrderingPage.getUserOrderedColumnTitles(), columnTitles);
 					openSchedule();
 				}
@@ -102,17 +104,6 @@ public class UserInteraction {
 		});
 	}
 
-
-	/**
-	 * Este devolve a lista de metricas definidas pelo utilizador.
-	 *
-	 * @return uma lista de strings com as metricas definidas pelo utilizador.
-	 */
-
-	public List<Metrica> getUserMetrics() {
-		return scheduleQualityCalculationPage == null ? null
-				: scheduleQualityCalculationPage.getScheduleMetrics();
-	}
 
 	/**
 	 * Este metodo define o comportamento do botao de continuar e submeter.
@@ -167,20 +158,6 @@ public class UserInteraction {
 			}
 		});
 	}
-
-	/**
-	 * Este metodo retorna os titulos das colunas da tabela
-	 * ordenados pelo usuario na GUI.
-	 */
-
-//	public List<String> getUserOrderedColumnTitles() {
-//		return submitFilePage.getUserOrderedColumnTitles();
-//	}
-
-	public HtmlCreator getHtmlCreator() {
-		return htmlCreator;
-	}
-
 
 	/**
 	 * Este metodo salva o arquivo remoto em um arquivo local.
@@ -291,23 +268,5 @@ public class UserInteraction {
 		variablesForMetricCalculation.add("Capacidade Exame");
 		return variablesForMetricCalculation;
 	}
-
-	public JFrame getSubmitFilePage() {
-		return submitFilePage;
-	}
-
-//	public JFrame getColumnsOrderingPage() {
-//		return columnsOrderingPage;
-//	}
-//
-//	public JFrame getScheduleQualityCalculationPage() {
-//		return scheduleQualityCalculationPage;
-//	}
-//
-//	public JFrame getScheduleQualityTable() {
-//		return scheduleQualityTable;
-//	}
-
-
 
 }
