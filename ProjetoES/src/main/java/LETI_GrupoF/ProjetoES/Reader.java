@@ -21,8 +21,7 @@ public class Reader {
 
 	/**
 	 * Construtor da classe Reader. Inicializa o objeto Reader com o caminho do
-	 * arquivo CSV e realiza a leitura do arquivo para preencher as estruturas de
-	 * dados.
+	 * arquivo CSV e realiza a leitura do arquivo para preencher as estruturas de dados.
 	 *
 	 * @param ficheiroLocal O caminho local do arquivo CSV a ser lido.
 	 */
@@ -32,8 +31,7 @@ public class Reader {
 	}
 
 	/**
-	 * Metodo privado que realiza a leitura do arquivo CSV, divide as linhas em
-	 * colunas e formata os dados conforme necessario.
+	 * Metodo privado que realiza a leitura do arquivo CSV, divide as linhas em colunas e formata os dados conforme necessario.
 	 *
 	 * @param csv O arquivo CSV a ser lido.
 	 * @return Uma lista de listas de strings representando os dados da tabela CSV.
@@ -59,8 +57,7 @@ public class Reader {
 	}
 
 	/**
-	 * Metodo privado que formata os dados lidos do arquivo, preenchendo valores
-	 * ausentes.
+	 * Metodo privado que formata os dados lidos do arquivo, preenchendo valores ausentes.
 	 * @return Lista de strings formatada.
 	 */
 	private List<String> formatDataFromFile(List<String> linha) {

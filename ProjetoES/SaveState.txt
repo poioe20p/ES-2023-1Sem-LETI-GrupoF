@@ -1,4 +1,4 @@
-C:\Users\ricar\eclipse-workspace\ES-2023-1Sem-LETI-GrupoF\ProjetoES\HorarioDeExemplo.csv
+HorarioDeExemplo.csv
 Curso:0
 Unidade Curricular:1
 Turno:2
@@ -11,4 +11,3 @@ Data da aula:8
 Características da sala pedida para a aula:9
 Sala atribuída à aula:10
 FOC
-Inscritos no turno - Capacidade Normal

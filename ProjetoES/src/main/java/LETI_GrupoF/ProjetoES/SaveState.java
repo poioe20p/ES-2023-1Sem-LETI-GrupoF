@@ -5,79 +5,68 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
 public class SaveState {
-	private String SaveStateFilePath = "SaveState.txt";
+	
+	private static final String saveStateFilePath = "SaveState.txt";
+	private static String horarioFilePath;
+	private static Map<String, Integer> ordemCampos;
+	private static Map<Metrica, Integer> metricas;
 
 	/**
-	 * Este método tem como finalidade armazenar um horário, que possibilita ao
+	 * Este método tem como finalidade guardas as configuracoes da aplicacao, que possibilita ao
 	 * utilizador a sua reutilização caso este queira retomar a sua sessão anterior.
 	 *
-	 * @param csvFilePath Indica qual o horario usado pelo utilizador na sessao
-	 * @param ordemCampos Um mapa que define a ordem e a posicao dos campos no
-	 *                    horario. Cada chave representa um campo e o valor
+	 * @param horarioFilePath Indica qual o horario usado pelo utilizador na sessao
+	 * @param ordemCampos Um mapa que define a ordem e a posicao dos campos no horario. Cada chave representa um campo e o valor
 	 *                    associado indica a posicao do mesmo.
 	 */
 
-	void guardarHorario(String csvFilePath, Map<String, Integer> ordemCampos, List<Metrica> metricas) {
-
-		LimparSaveState();
-		List<Map.Entry<String, Integer>> entryList = new ArrayList<>(ordemCampos.entrySet());
-		entryList.sort(Comparator.comparing(Map.Entry::getValue));
+	public static void guardarHorario(String horarioFilePath, Map<String, Integer> ordemCampos) {
 		try {
-			FileWriter file = new FileWriter(SaveStateFilePath);
+			FileWriter file = new FileWriter(saveStateFilePath);
 			PrintWriter writer = new PrintWriter(file);
 
-			writer.println(csvFilePath);
+			writer.println(horarioFilePath);
 
 			for (Map.Entry<String, Integer> entry : ordemCampos.entrySet()) {
 				writer.println(entry.getKey() + ":" + entry.getValue());
 			}
 
-			writer.println("FOC");
-
-			for (int i = 0; i != metricas.size(); i++) {
-				writer.println(metricas.get(i).getFormula());
-			}
+			writer.println("FOC"); //Fim Ordem Campos
 
 			writer.close();
 
 		} catch (IOException e) {
-			System.err.println("An error occurred while writing to the file: " + e.getMessage());
+			e.printStackTrace();
 		}
 
 	}
 
 	/**
 	 * Este metodo tem como objetivo armazenar as metricas, preservando as formulas
-	 * personalizadas introduzidas pelo utilizador. Permitindo assim restaurar o
+	 * personalizadas introduzidas pelo utilizador, permitindo assim restaurar o
 	 * estado anterior das formulas caso o utilizador pretenda recuperar a sessao
 	 * anterior
 	 *
 	 * // * @param formula A formula criada pelo utilizador que sera guardada.
 	 * Permite recuperar a formula caso o utilizador retome a sessão.
 	 */
-
-//	void guardarMetricas(Metrica metrica) {
-//
-//		try {
-//			FileWriter file = new FileWriter(SaveStateFilePath);
-//			PrintWriter writer = new PrintWriter(file);
-//
-//			writer.println(metrica.getFormula());
-//			writer.close();
-//
-//		} catch (IOException e) {
-//
-//			e.printStackTrace();
-//		}
-//	}
+	
+	public static void guardaMetricas(Map<Metrica, Integer> metricas) {
+		try {
+			FileWriter file = new FileWriter(saveStateFilePath, true);
+			PrintWriter writer = new PrintWriter(file);
+			for (Map.Entry<Metrica, Integer> entry : metricas.entrySet()) {
+				writer.println(entry.getKey().getFormula() + "=" + entry.getValue());
+			}
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Recupera o horario anterior, permitindo que o utilizador retome a sua sessao
@@ -89,46 +78,27 @@ public class SaveState {
 	 * @throws FileNotFoundException
 	 */
 
-	Horario RecuperarHorarioAntigo() {
-
-		Scanner sc;
-		try {
-			sc = new Scanner(new File("SaveState.txt"));
-			if (sc.hasNextLine()) {
-				String FilePath = sc.nextLine();
-				Map<String, Integer> oCampos = new HashMap<>();
-				List<Metrica> metricas = new ArrayList<>();
-				String linha = sc.nextLine();
-				while (linha != null && !linha.trim().equals("FOC")) {
-					String[] partes = linha.split(":");
-					oCampos.put(partes[0], Integer.parseInt(partes[1]));
-				}
-
-				if (linha.trim().equals("FOC")) {
-					sc.nextLine();
-				}
-
-				while (linha != null) {
-					Metrica novaMetrica = new Metrica(linha);
-					metricas.add(novaMetrica);
-				}
-				Horario horarioRecuperado = new Horario(FilePath);
-				horarioRecuperado.setOrdemCampos(oCampos);
-
-				for (int i = 0; i != metricas.size(); i++) {
-					horarioRecuperado.adicionarMetrica(metricas.get(i));
-				}
-				System.out.println(horarioRecuperado.getHorarioFilePath());
-				sc.close();
-
-				return horarioRecuperado;
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		return null;
-
-	}
+	public static void recuperarHorarioAntigo() {
+        try {
+        	Scanner sc = new Scanner(new File(saveStateFilePath));
+            if(sc.hasNextLine()) {
+            	horarioFilePath = sc.nextLine();
+                while (sc.hasNextLine()) {
+                    String linha = sc.nextLine();
+                    if (!linha.trim().equals("FOC")) {
+                        String[] partes = linha.split(":");
+                        ordemCampos.put(partes[0], Integer.parseInt(partes[1]));
+                    } else {
+                    	String[] partes = linha.split(":");
+                        metricas.put(new Metrica(partes[0].trim().replace(" ", ";")), Integer.parseInt(partes[1]));
+                    }
+                }
+            }
+            sc.close();
+        } catch (FileNotFoundException e) {
+        	e.printStackTrace();
+        }
+    }
 
 	/**
 	 * Limpa o conteudo do arquivo SaveState.txt, removendo todas as informacoes
@@ -136,19 +106,30 @@ public class SaveState {
 	 * nao retomar a sessao anterior.
 	 *
 	 */
-	void LimparSaveState() {
+	void limparSaveState() {
 		FileWriter fileWriter;
 		try {
-			fileWriter = new FileWriter(SaveStateFilePath, false);
+			fileWriter = new FileWriter(saveStateFilePath);
 			fileWriter.close();
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
+	public String getHorarioFilePath() {
+		return horarioFilePath;
+	}
+
+	public Map<String, Integer> getOrdemCampos() {
+		return ordemCampos;
+	}
+
+	public Map<Metrica, Integer> getMetricas() {
+		return metricas;
+	}
+
 	public String getSaveStateFilePath() {
-		return SaveStateFilePath;
+		return saveStateFilePath;
 	}
 
 }
