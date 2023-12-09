@@ -10,13 +10,12 @@ import java.util.Map;
  */
 public class Horario {
 
-	static final private String csvFilePath = "CaracterizaçãoDasSalas.csv";
+	private static final String csvFilePath = "CaracterizaçãoDasSalas.csv";
 	private String horarioFilePath;
 	private List<List<String>> horario;
 	private List<String> columnTitles;
 	private Map<String, Integer> ordemCampos;
 	private Salas salas;
-	private SaveState ss = new SaveState();
 	private Map<Metrica, Integer> metricas = new LinkedHashMap<>();
 
 	/**
@@ -35,6 +34,7 @@ public class Horario {
 
 	public void adicionarMetrica(Metrica metrica) {
 		metricas.put(metrica, calcularQualidade(metrica));
+		SaveState.guardaMetricas(metricas);
 	}
 
 	private int calcularQualidade(Metrica metrica) {
@@ -128,10 +128,7 @@ public class Horario {
 	}
 
 	private boolean isListaDeSalas(List<String> atributo) {
-		if (getSalas().getNomeSalas().contains(atributo.get(1))) {
-			return true;
-		}
-		return false;
+		return getSalas().getNomeSalas().contains(atributo.get(1));
 	}
 
 	private List<String> comparaAtributos(List<String> listaRequesitosSalas, List<String> salaAtribuida, String operador) {
@@ -268,12 +265,8 @@ public class Horario {
 		return columnTitles;
 	}
 
-	public String getHorarioFilePath() {
-		return horarioFilePath;
-	}
-
 	/**
-	 * Obtem o horario associado a esta turma.
+	 * Obtem o horario.
 	 *
 	 * @return O horario como uma lista de listas de strings.
 	 */
@@ -282,20 +275,34 @@ public class Horario {
 	}
 
 	/**
-	 * Obtem o horario associado a esta turma.
+	 * Obtem o endereco do ficheiro csv do horario
 	 *
 	 * @return O horario como uma lista de listas de strings.
+	 */
+	public String getHorarioFilePath() {
+		return horarioFilePath;
+	}
+
+	/**
+	 * Obtem as salas.
+	 *
+	 * @return As salas.
 	 */
 	public Salas getSalas() {
 		return salas;
 	}
 
+	public void setMetricas(Map<Metrica, Integer> metricas) {
+		this.metricas = metricas;
+	}
+	
 	public Map<Metrica, Integer> getMetricas() {
 		return metricas;
 	}
 
 	public void setOrdemCampos(Map<String, Integer> ordemCampos) {
 		this.ordemCampos = ordemCampos;
+		SaveState.guardarHorario(getHorarioFilePath(), ordemCampos);
 	}
 
 	public Map<String, Integer> getOrdemCampos() {

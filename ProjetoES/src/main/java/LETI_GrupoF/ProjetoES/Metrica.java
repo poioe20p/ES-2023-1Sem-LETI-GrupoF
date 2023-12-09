@@ -30,7 +30,7 @@ public class Metrica {
 		return aulasComComtribuicao;
 	}
 
-	public int getTotal () {
+	public int getTotal() {
 		return aulasComComtribuicao != null ? aulasComComtribuicao.size() : 0;
 	}
 
