@@ -4,9 +4,9 @@ import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
 
 @Suite
-@SelectClasses({ TestHtmlCreator.class, TestReader.class, TestSubmitFilePage.class, TestUserInteraction.class,
-        TestHorario.class,  TestSala.class, TestSalas.class, TestMetrica.class, TesteScheduleQualityTable.class,
-        TesteScheduleQualityCalculationPage.class, TesteLayoutDefinable.class })
+@SelectClasses({ TestHorario.class, TestHtmlCreator.class, TestMetrica.class, TestReader.class, TestSala.class, TestSalas.class,
+	TesteLayoutDefinable.class, TesteScheduleQualityCalculationPage.class, TesteScheduleQualityTable.class, TestSubmitFilePage.class,
+	TestUserInteraction.class })
 
 public class AllTests {
 
