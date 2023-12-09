@@ -28,7 +28,7 @@ class TestHorario {
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		horario= new Horario(nomeFicheiroCSV);
+		horario = new Horario(nomeFicheiroCSV);
 		
 		Map<String, Integer> ordemCampos = new LinkedHashMap<String, Integer>();
 		for(int i = 0; i < horario.getColumnTitles().size(); i++) {

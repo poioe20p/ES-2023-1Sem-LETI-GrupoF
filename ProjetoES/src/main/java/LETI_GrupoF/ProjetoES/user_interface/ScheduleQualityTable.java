@@ -2,7 +2,6 @@ package LETI_GrupoF.ProjetoES.user_interface;
 
 import LETI_GrupoF.ProjetoES.Horario;
 import LETI_GrupoF.ProjetoES.Metrica;
-
 import javax.swing.*;
 import javax.swing.table.*;
 import java.util.*;
@@ -105,7 +104,7 @@ public class ScheduleQualityTable extends JFrame {
         return data;
     }
 
-    class MetricTableModel extends AbstractTableModel {
+   private class MetricTableModel extends AbstractTableModel {
         private final List<Metrica> metricas;
         public MetricTableModel() {
             this.metricas = new ArrayList<>(horario.getMetricas().keySet());

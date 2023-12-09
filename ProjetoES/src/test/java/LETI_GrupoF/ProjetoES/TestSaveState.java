@@ -41,17 +41,18 @@ class TestSaveState {
 		assertNotNull(horarioRecuperado, "O horário não foi recuperado corretamente.");
 	}
 
+
 	@Test
 	void testLimparSaveState() throws FileNotFoundException {
 		sS.LimparSaveState();
 		assertNull(sS.RecuperarHorarioAntigo(), "O arquivo não foi limpo corretamente.");
 	}
 
-	@Test
-	void testRecuperarHorarioAntigos() throws FileNotFoundException {
-		Horario horarioRecuperado = sS.RecuperarHorarioAntigo();
-		assertNotNull(horarioRecuperado, "O horário não foi recuperado corretamente.");
-	}
+//	@Test
+//	void testRecuperarHorarioAntigos() throws FileNotFoundException {
+//		Horario horarioRecuperado = sS.RecuperarHorarioAntigo();
+//		assertNotNull(horarioRecuperado, "O horário não foi recuperado corretamente.");
+//	}
 
 	@Test
 	void testGetHorarioFilePath() throws FileNotFoundException {
