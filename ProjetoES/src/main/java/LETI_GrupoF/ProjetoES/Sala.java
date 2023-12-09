@@ -31,39 +31,12 @@ public class Sala {
 	// Metodos de acesso aos atributos da sala
 
 	/**
-	 * Obtem o nome do edificio ao qual a sala pertence.
+	 * Obtem a lista com a informacao principal da sala.
 	 *
-	 * @return Nome do edificio.
+	 * @return Lista da informacao da sala.
 	 */
-	public String getEdificio() {
-		return informacaoSala.get(0);
-	}
-
-	/**
-	 * Obtem o nome da sala.
-	 *
-	 * @return Nome da sala.
-	 */
-	String getNome() {
-		return informacaoSala.get(1);
-	}
-
-	/**
-	 * Obtem a capacidade normal da sala.
-	 *
-	 * @return Capacidade normal da sala.
-	 */
-	public int getCapacidadeNormal() {
-		return Integer.parseInt(informacaoSala.get(2));
-	}
-
-	/**
-	 * Obtem a capacidade extra da sala.
-	 *
-	 * @return Capacidade extra da sala.
-	 */
-	public int getCapacidadeExame() {
-		return Integer.parseInt(informacaoSala.get(3));
+	public List<String> getInformacaoSala() {
+		return informacaoSala;
 	}
 
 	/**
@@ -83,24 +56,11 @@ public class Sala {
 	public List<String> getCaracteristicasSala() {
 		return caracteristicasSala;
 	}
-	
-	/**
-	 * Obtem a lista de tipos associados a sala.
-	 *
-	 * @return Lista de caracteristicas da sala.
-	 */
-	public String getCampo(int index) {
-		if(index < 4) {
-			return informacaoSala.get(index);
-		}else {
-			return caracteristicasSala.get(index);
-		}
-	}
 
 	@Override
 	public String toString() {
-		return "Sala [edificio=" + getEdificio() + ", nome=" + getNome() + ", capacidadeNormal=" + getCapacidadeNormal()
-				+ ", capacidadeExame=" + getCapacidadeExame() + ", nCaracteristicas=" + getNumeroCaracteristicas()
+		return "Sala [edificio=" + getInformacaoSala().get(0) + ", nome=" + getInformacaoSala().get(1) + ", capacidadeNormal=" + getInformacaoSala().get(2)
+				+ ", capacidadeExame=" + getInformacaoSala().get(3) + ", nCaracteristicas=" + getNumeroCaracteristicas()
 				+ ", caracteristicas=" + getCaracteristicasSala().toString() + "]";
 	}
 

@@ -27,7 +27,6 @@ class TestHorario {
 	static Metrica numeroAulasSalaMalAtribuida2 = new Metrica("Sala atribuída à aula;!=;Características da sala pedida para a aula");
 	
 	@BeforeAll
-	
 	static void setUpBeforeClass() throws Exception {
 		horario= new Horario(nomeFicheiroCSV);
 		
@@ -41,7 +40,6 @@ class TestHorario {
 	@Test
 	void testHorario() {
 		assertNotNull(horario);
-		assertNotNull(horario.getSalas());
 	}
 	
 	@Test
