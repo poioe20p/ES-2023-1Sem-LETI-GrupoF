@@ -13,6 +13,7 @@ public class SubmitFilePage extends JFrame {
     private final JTextField csvFileLocation;
     private boolean isRemoteFile = false;
     private JButton continueButton;
+    private JButton reloadLastSessionButton;
 
     /**
      * Construtor da classe UserForm.
@@ -88,6 +89,9 @@ public class SubmitFilePage extends JFrame {
         continueButton.setForeground(Color.WHITE);
         continueButton.setPreferredSize(new Dimension(150, 50));
         bottomPanel.add(continueButton, gbcBottomPanel);
+        gbcBottomPanel.gridx = 1;
+        reloadLastSessionButton = LayoutDefinable.defineButtonLayout(Color.BLUE, Color.WHITE, "Reload Last Session", new Dimension(150, 50));
+        bottomPanel.add(reloadLastSessionButton, gbcBottomPanel);
 
 
         //Ajuste da posição para o painel lateral esquerdo de baixo
@@ -150,5 +154,12 @@ public class SubmitFilePage extends JFrame {
      * @param remoteFile
      */
     public void setRemoteFile(boolean remoteFile) { isRemoteFile = remoteFile;}
+
+    /**
+     * Devolve o botão para carregar a ultima sessão.
+     *
+     * @return botão que tem o intuito de ser usado para carregar a ultima sessão
+     */
+    public JButton getReloadLastSessionButton() { return reloadLastSessionButton;}
 
 }

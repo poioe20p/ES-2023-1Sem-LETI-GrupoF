@@ -3,6 +3,7 @@ package LETI_GrupoF.ProjetoES.user_interface;
 import LETI_GrupoF.ProjetoES.Horario;
 import LETI_GrupoF.ProjetoES.HtmlCreator;
 import LETI_GrupoF.ProjetoES.Metrica;
+import LETI_GrupoF.ProjetoES.SaveState;
 
 import javax.swing.*;
 import java.awt.*;
@@ -95,8 +96,6 @@ public class UserInteraction {
 					getValueAt(scheduleQualityTable.getTable().getSelectedRow(), 0);
 			for(Metrica metrica: scheduleQualityTable.getData()) {
 				if(metrica.getFormula().equals(formulaMetricaLinhaSelecionada)) {
-					System.out.println(formulaMetricaLinhaSelecionada);
-					System.out.println(metrica.getAulasComComtribuicao());
 					htmlCreator = new HtmlCreator(metrica.getAulasComComtribuicao(), columnsOrderingPage.getUserOrderedColumnTitles(), columnTitles);
 					openSchedule();
 				}
@@ -156,6 +155,10 @@ public class UserInteraction {
 				// No caso de não existir o ficheiro aparece uma mensagem de erro
 				JOptionPane.showMessageDialog(submitFilePage, "Invalid file path.", "Error", JOptionPane.ERROR_MESSAGE);
 			}
+		});
+
+		submitFilePage.getReloadLastSessionButton().addActionListener(e -> {
+//			Horario horario = new Horario(SaveState.)
 		});
 	}
 
