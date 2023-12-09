@@ -21,7 +21,7 @@ public class Horario {
 	/**
 	 * Construtor da classe Schedule.
 	 *
-	 * // * @param table, Reader de tabela que fornece os dados para o horario.
+	 * @param table, Reader de tabela que fornece os dados para o horario.
 	 */
 
 	public Horario(String horarioFilePath) {
@@ -294,6 +294,7 @@ public class Horario {
 
 	public void setMetricas(Map<Metrica, Integer> metricas) {
 		this.metricas = metricas;
+		SaveState.guardaMetricas(metricas);
 	}
 	
 	public Map<Metrica, Integer> getMetricas() {

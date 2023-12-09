@@ -11,15 +11,13 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-public class TestSaveState {
+class TestSaveState {
 
 	static String nomeFicheiroCSV = "HorarioDeExemplo.csv";
 	static Horario horario;
 	static Metrica numeroAulasSobrelotacao = new Metrica("Inscritos no turno;-;Capacidade Normal;>;0");
-	static SaveState sS = new SaveState();
 
 	@BeforeAll
-
 	static void setUpBeforeClass() throws Exception {
 		horario = new Horario(nomeFicheiroCSV);
 		Map<String, Integer> ordemCampos = new LinkedHashMap<String, Integer>();
@@ -29,12 +27,20 @@ public class TestSaveState {
 		}
 		horario.setOrdemCampos(ordemCampos);
 	}
-//	@Test
-//	void testGuardarHorario() throws FileNotFoundException {
-//		sS.guardarHorario(horario.getHorarioFilePath(), horario.getOrdemCampos(),
-//				new ArrayList<>(horario.getMetricas().keySet()));
-//		assertNotNull(sS.RecuperarHorarioAntigo());
-//	}
+	
+	@Test
+	void testGuardarHorario() throws FileNotFoundException {
+		sS.guardarHorario(horario.getHorarioFilePath(), horario.getOrdemCampos(),
+				new ArrayList<>(horario.getMetricas().keySet()));
+		assertNotNull(sS.RecuperarHorarioAntigo());
+	}
+
+	@Test
+	void testGuardarMetricas() throws FileNotFoundException {
+		Horario horarioRecuperado = sS.RecuperarHorarioAntigo();
+		assertNotNull(horarioRecuperado, "O horário não foi recuperado corretamente.");
+	}
+
 
 	@Test
 	void testLimparSaveState() throws FileNotFoundException {
@@ -47,5 +53,23 @@ public class TestSaveState {
 //		Horario horarioRecuperado = sS.RecuperarHorarioAntigo();
 //		assertNotNull(horarioRecuperado, "O horário não foi recuperado corretamente.");
 //	}
+
+	@Test
+	void testGetHorarioFilePath() throws FileNotFoundException {
+		Horario horarioRecuperado = sS.RecuperarHorarioAntigo();
+		assertNotNull(horarioRecuperado, "O horário não foi recuperado corretamente.");
+	}
+
+	@Test
+	void testGetOrdemCampos() throws FileNotFoundException {
+		Horario horarioRecuperado = sS.RecuperarHorarioAntigo();
+		assertNotNull(horarioRecuperado, "O horário não foi recuperado corretamente.");
+	}
+
+	@Test
+	void testGetMetricas() throws FileNotFoundException {
+		Horario horarioRecuperado = sS.RecuperarHorarioAntigo();
+		assertNotNull(horarioRecuperado, "O horário não foi recuperado corretamente.");
+	}
 
 }
