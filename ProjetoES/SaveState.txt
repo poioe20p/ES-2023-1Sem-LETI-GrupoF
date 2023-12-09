@@ -11,3 +11,16 @@ Data da aula:8
 Características da sala pedida para a aula:9
 Sala atribuída à aula:10
 FOC
+Inscritos no turno - Capacidade Normal > 0=3341
+Capacidade Normal - Inscritos no turno < 0=3341
+Características da sala pedida para a aula - Sala atribuída à aula=78473
+Inscritos no turno * Capacidade Exame > 0=23203
+Capacidade Exame * Inscritos no turno > 0=23203
+Inscritos no turno / Capacidade Exame = 10=0
+Capacidade Exame / Inscritos no turno = 10=12
+Inscritos no turno + Capacidade Normal=2274693
+Capacidade Normal + Inscritos no turno=2274693
+Características da sala pedida para a aula = Sala atribuída à aula=20085
+Sala atribuída à aula = Características da sala pedida para a aula=20085
+Características da sala pedida para a aula != Sala atribuída à aula=3625
+Sala atribuída à aula != Características da sala pedida para a aula=3625

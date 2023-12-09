@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -57,11 +59,26 @@ public class SaveState {
 	
 	public static void guardaMetricas(Map<Metrica, Integer> metricas) {
 		try {
-			FileWriter file = new FileWriter(saveStateFilePath, true);
+			Scanner sc = new Scanner(new File(saveStateFilePath));
+			List<String> linhas = new ArrayList<>();
+			while (sc.hasNextLine()) {
+                String linha = sc.nextLine();
+				if (!linha.trim().equals("FOC")) {
+					linhas.add(linha);
+				}else {
+					linhas.add(linha);
+					break;
+				}
+			}
+			FileWriter file = new FileWriter(saveStateFilePath);
 			PrintWriter writer = new PrintWriter(file);
+			for(String linha : linhas) {
+				writer.println(linha);
+			}
 			for (Map.Entry<Metrica, Integer> entry : metricas.entrySet()) {
 				writer.println(entry.getKey().getFormula() + "=" + entry.getValue());
 			}
+			sc.close();
 			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -126,10 +143,6 @@ public class SaveState {
 
 	public Map<Metrica, Integer> getMetricas() {
 		return metricas;
-	}
-
-	public String getSaveStateFilePath() {
-		return saveStateFilePath;
 	}
 
 }
