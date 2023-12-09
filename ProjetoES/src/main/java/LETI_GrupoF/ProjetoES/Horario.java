@@ -111,7 +111,7 @@ public class Horario {
 		} else if (getSalas().getColumnTitles().contains(nomeAtributo)) { // Verifica se o atributo pertence as salas
 			atributo.add("sala");
 			for (int i = 0; i < getSalas().getListaSalas().size(); i++) {
-				atributo.add(getSalas().getListaSalas().get(i).getCampo(getSalas().getColumnTitles().indexOf(nomeAtributo))); // Vai busacar uma lista com todo o conteudo do atributo
+				atributo.add(getSalas().getListaSalas().get(i).getInformacaoSala().get(getSalas().getColumnTitles().indexOf(nomeAtributo))); // Vai busacar uma lista com todo o conteudo do atributo
 			}
 		}
 		return atributo;

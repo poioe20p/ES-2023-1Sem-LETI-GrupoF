@@ -37,7 +37,7 @@ public class Salas {
 	public List<String> getNomeSalas() {
 		List<String> nomeSalas = new ArrayList<>();
 		for(int i = 0; i < getListaSalas().size(); i++) {
-			nomeSalas.add(getListaSalas().get(i).getNome());
+			nomeSalas.add(getListaSalas().get(i).getInformacaoSala().get(1));
 		}
 		return nomeSalas;
 	}
