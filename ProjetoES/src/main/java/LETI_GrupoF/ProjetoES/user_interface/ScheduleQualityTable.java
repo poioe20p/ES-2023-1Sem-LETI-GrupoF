@@ -105,7 +105,6 @@ public class ScheduleQualityTable extends JFrame {
         return data;
     }
 
-
     class MetricTableModel extends AbstractTableModel {
         private final List<Metrica> metricas;
         public MetricTableModel() {

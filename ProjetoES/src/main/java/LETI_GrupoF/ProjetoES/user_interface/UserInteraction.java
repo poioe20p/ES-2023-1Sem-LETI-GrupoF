@@ -17,13 +17,12 @@ import java.util.List;
 public class UserInteraction {
 
 	// Pagina da GUI
-	private final SubmitFilePage submitFilePage;
+	private SubmitFilePage submitFilePage;
 	private HtmlCreator htmlCreator;
 	private ScheduleQualityCalculationPage scheduleQualityCalculationPage;
 	private ColumnsOrderingPage columnsOrderingPage;
 	private ScheduleQualityTable scheduleQualityTable;
 
-	private List<Integer> indicesForUserCSVColumns;
 	/**
 	 *
 	 * @param args
@@ -288,21 +287,27 @@ public class UserInteraction {
 			variablesForMetricCalculation.add(userOrderedColumnTitles.get(4));
 		}
 
-//		variablesForMetricCalculation.add("Salas Aulas Mestrado");
-//		variablesForMetricCalculation.add("Salas Aulas Mestrado Plus");
-//		variablesForMetricCalculation.add("Salas Aulas Licenciatura");
-//		variablesForMetricCalculation.add("Sala NEE");
-//		variablesForMetricCalculation.add("Sala Provas");
-//		variablesForMetricCalculation.add("Sala Exames");
-//		variablesForMetricCalculation.add("Sala Reunião");
-//		variablesForMetricCalculation.add("Sala de Arquitetura");
-//		variablesForMetricCalculation.add("Sala de Arquitetura Plus");
-//		variablesForMetricCalculation.add("Sala de Aulas normal");
-//		variablesForMetricCalculation.add("Videoconferência");
-
 		variablesForMetricCalculation.add("Capacidade Normal");
 		variablesForMetricCalculation.add("Capacidade Exame");
 		return variablesForMetricCalculation;
 	}
+
+	public JFrame getSubmitFilePage() {
+		return submitFilePage;
+	}
+
+//	public JFrame getColumnsOrderingPage() {
+//		return columnsOrderingPage;
+//	}
+//
+//	public JFrame getScheduleQualityCalculationPage() {
+//		return scheduleQualityCalculationPage;
+//	}
+//
+//	public JFrame getScheduleQualityTable() {
+//		return scheduleQualityTable;
+//	}
+
+
 
 }

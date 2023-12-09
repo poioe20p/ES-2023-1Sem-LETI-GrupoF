@@ -340,6 +340,8 @@ public class ScheduleQualityCalculationPage extends JFrame implements LayoutDefi
         });
 
     }
+
+
     private void setUpNoActionList(JComboBox<String> listVariableToChange, boolean isIntegerTypeVariable, String variableToRemove) {
         List<String> aux = isIntegerTypeVariable ? getListWithIntegerOnlyVariables(variablesForFormula) : getListWithNonIntegerOnlyVariables(variablesForFormula);
         aux.remove(variableToRemove);
