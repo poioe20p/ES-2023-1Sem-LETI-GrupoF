@@ -3,9 +3,7 @@ package LETI_GrupoF.ProjetoES.user_interface;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * A classe ColumnsOrderingPage representa uma interface gráfica do usuário para reordenar colunas.

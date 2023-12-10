@@ -12,6 +12,7 @@ class TestHorario {
 	
 	static String nomeFicheiroCSV = "HorarioDeExemplo.csv";
 	static Horario horario;
+	static Map<String, Integer> ordemCampos;
 	static Metrica numeroAulasSobrelotacao = new Metrica("Inscritos no turno;-;Capacidade Normal;>;0");
 	static Metrica numeroAulasSobrelotacao2 = new Metrica("Capacidade Normal;-;Inscritos no turno;<;0");
 	static Metrica numeroAulasSalaDesperdicada = new Metrica("Características da sala pedida para a aula;-;Sala atribuída à aula");
@@ -30,7 +31,7 @@ class TestHorario {
 	static void setUpBeforeClass() throws Exception {
 		horario = new Horario(nomeFicheiroCSV);
 		
-		Map<String, Integer> ordemCampos = new LinkedHashMap<String, Integer>();
+		ordemCampos = new LinkedHashMap<>();
 		for(int i = 0; i < horario.getColumnTitles().size(); i++) {
 			ordemCampos.put(horario.getColumnTitles().get(i), i);
 		}
@@ -70,6 +71,11 @@ class TestHorario {
 	}
 	
 	@Test
+	void testGetHorarioFilePath() {
+		assertEquals(nomeFicheiroCSV, horario.getHorarioFilePath());
+	}
+	
+	@Test
 	void testGetSalas() {
 		assertNotNull(horario.getSalas());
 	}
@@ -78,5 +84,17 @@ class TestHorario {
 	void testGetMetricas() {
 		assertNotNull(horario.getMetricas());
 	}
+	
+	@Test
+	void testSetMetricas() {
+		Map<Metrica, Integer> metricas = horario.getMetricas();
+		horario.setMetricas(metricas);
+		assertEquals(ordemCampos.size(), horario.getMetricas().size());
+	}
 
+	@Test
+	void testGetOrdemCampos() {
+		assertEquals(ordemCampos, horario.getOrdemCampos());
+	}
+	
 }
