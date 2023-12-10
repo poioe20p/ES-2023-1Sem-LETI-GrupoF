@@ -179,15 +179,4 @@ public class ScheduleQualityTable extends JFrame {
 		}
 	}
 
-	public static void main(String[] args) {
-		Horario horario = new Horario("HorarioDeExemplo.csv");
-		Map<String, Integer> metricas = new LinkedHashMap<>();
-		int i = 0;
-		for (String s : horario.getColumnTitles()) {
-			metricas.put(s, i);
-		}
-		horario.setOrdemCampos(metricas);
-		ScheduleQualityTable scheduleQualityTable = new ScheduleQualityTable(horario, new JFrame());
-		scheduleQualityTable.setVisible(true);
-	}
 }

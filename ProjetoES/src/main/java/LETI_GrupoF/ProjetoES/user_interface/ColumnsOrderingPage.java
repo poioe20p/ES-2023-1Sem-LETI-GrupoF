@@ -264,12 +264,4 @@ public class ColumnsOrderingPage extends JFrame implements LayoutDefinable {
         return columnTitlesUpdated;
     }
 
-    public static void main(String[] args) {
-        //Create an instance to run the page please
-        ColumnsOrderingPage cOP = new ColumnsOrderingPage(new ArrayList<>(List.of(
-                "Curso", "Unidade Curricular", "Turno", "Turma", "Inscritos no turno",
-                "Dia da semana", "Hora de início da aula", "Hora de fim da aula", "Data da aula",
-                "Caracaterísticas da sala atribuída para a aula", "Sala de aula atribuída")), new JFrame());
-        LayoutDefinable.setVisibility(cOP, true);
-    }
 }
