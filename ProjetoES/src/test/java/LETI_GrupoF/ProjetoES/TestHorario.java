@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 class TestHorario {
 	
-	static String nomeFicheiroCSV = "ProjetoES/HorarioDeExemplo.csv";
+	static String nomeFicheiroCSV = "HorarioDeExemplo.csv";
 	static Horario horario;
 	static Metrica numeroAulasSobrelotacao = new Metrica("Inscritos no turno;-;Capacidade Normal;>;0");
 	static Metrica numeroAulasSobrelotacao2 = new Metrica("Capacidade Normal;-;Inscritos no turno;<;0");

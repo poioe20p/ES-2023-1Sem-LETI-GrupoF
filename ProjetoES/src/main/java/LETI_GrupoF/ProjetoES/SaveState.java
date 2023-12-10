@@ -9,7 +9,7 @@ import java.util.*;
 
 public class SaveState {
 
-	private static final String saveStateFilePath = "ProjetoES/SaveState.txt";
+	private static final String saveStateFilePath = "SaveState.txt";
 	private static String horarioFilePath;
 	private static Map<String, Integer> ordemCampos = new LinkedHashMap<>();
 	private static Map<Metrica, Integer> metricas = new LinkedHashMap<>();
@@ -93,18 +93,18 @@ public class SaveState {
 	 */
 
 	public static void recuperarHorarioAntigo() {
-		boolean isPastFOC = false;
+		boolean isFOC = true;
 		try {
 			Scanner sc = new Scanner(new File(saveStateFilePath));
 			if(sc.hasNextLine()) {
 				horarioFilePath = sc.nextLine();
 				while (sc.hasNextLine()) {
 					String linha = sc.nextLine();
-					if (!linha.trim().equals("FOC") && !isPastFOC) {
+					if (!linha.trim().equals("FOC") && isFOC) {
 						String[] partes = linha.split(":");
 						ordemCampos.put(partes[0], Integer.parseInt(partes[1]));
-					} else if (!isPastFOC) {
-						isPastFOC = true;
+					} else if (isFOC) {
+						isFOC = false;
 					} else {
 						String[] partes = linha.split(":");
 						metricas.put(new Metrica(partes[0].trim().replace(" ", ";")), Integer.parseInt(partes[1]));
@@ -123,7 +123,7 @@ public class SaveState {
 	 * nao retomar a sessao anterior.
 	 *
 	 */
-	void limparSaveState() {
+	public static void limparSaveState() {
 		FileWriter fileWriter;
 		try {
 			fileWriter = new FileWriter(saveStateFilePath);
@@ -133,16 +133,20 @@ public class SaveState {
 		}
 	}
 
-	static public String getHorarioFilePath() {
+	public static String getHorarioFilePath() {
 		return horarioFilePath;
 	}
 
-	static public Map<String, Integer> getOrdemCampos() {
+	public static Map<String, Integer> getOrdemCampos() {
 		return ordemCampos;
 	}
 
-	static public Map<Metrica, Integer> getMetricas() {
+	public static Map<Metrica, Integer> getMetricas() {
 		return metricas;
+	}
+	
+	public static String getSaveStateFilePath() {
+		return saveStateFilePath;
 	}
 
 }

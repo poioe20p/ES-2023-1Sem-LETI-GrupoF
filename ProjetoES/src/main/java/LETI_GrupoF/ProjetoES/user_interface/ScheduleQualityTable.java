@@ -153,7 +153,7 @@ public class ScheduleQualityTable extends JFrame {
     }
 
     public static void main(String[] args) {
-        Horario horario = new Horario("ProjetoES/HorarioDeExemplo.csv");
+        Horario horario = new Horario("HorarioDeExemplo.csv");
         Map<String, Integer> metricas = new LinkedHashMap<>();
         int i = 0;
         for(String s: horario.getColumnTitles()) {

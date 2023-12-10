@@ -1,20 +1,17 @@
 package LETI_GrupoF.ProjetoES;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.*;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class TestHtmlCreator {
 	//static HtmlCreator horario, horarioNaoExistente;
-	static String dataFilePath = "ProjetoES/HorarioDeExemplo.csv";
+	static String dataFilePath = "HorarioDeExemplo.csv";
 	 static Horario horario;
 	 static HtmlCreator html;
 	 static HtmlCreator html2;

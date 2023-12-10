@@ -10,7 +10,7 @@ import java.util.Map;
  */
 public class Horario {
 
-	private static final String csvFilePath = "ProjetoES/CaracterizaçãoDasSalas.csv";
+	private static final String csvFilePath = "CaracterizaçãoDasSalas.csv";
 	private String horarioFilePath;
 	private List<List<String>> horario;
 	private List<String> columnTitles;
