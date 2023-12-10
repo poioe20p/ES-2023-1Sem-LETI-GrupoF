@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ColumnsOrderingPage extends JFrame implements LayoutDefinable {
-	
+
     private JButton openScheduleButton;
     private DefaultListModel<String> userListModel;
     private JButton scheduleQualityButton;
@@ -17,6 +17,7 @@ public class ColumnsOrderingPage extends JFrame implements LayoutDefinable {
             "Curso", "Unidade Curricular", "Turno", "Turma", "Inscritos no turno",
             "Dia da semana", "Hora de início da aula", "Hora de fim da aula", "Data da aula",
             "Caracaterísticas da sala atribuída para a aula", "Sala de aula atribuída"));
+
     public ColumnsOrderingPage(List<String> userColumnTitles, JFrame previousFrame) {
         LayoutDefinable.basicLayout("Columns Ordering", this, Color.darkGray);
 
@@ -81,6 +82,7 @@ public class ColumnsOrderingPage extends JFrame implements LayoutDefinable {
         JButton confirmButton = LayoutDefinable.defineButtonLayout(Color.GREEN, Color.WHITE, "Confirm", new Dimension(130, 50));
         confirmButton.addActionListener(e -> popUpConfirmationPage());
         JButton goBackButton = LayoutDefinable.defineButtonLayout(Color.RED, Color.WHITE, "Go Back", new Dimension(130, 50));
+
         goBackButton.addActionListener(e -> {
             setVisible(false);
             dispose();
@@ -167,7 +169,6 @@ public class ColumnsOrderingPage extends JFrame implements LayoutDefinable {
 
         gbc.gridwidth = 1;
         gbc.gridy++;
-        //gbc.gridheight = 3;
         dialogPanel.add(scheduleQualityButton, gbc);
         gbc.gridx++;
         dialogPanel.add(openScheduleButton, gbc);

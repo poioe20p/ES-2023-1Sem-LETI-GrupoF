@@ -157,8 +157,23 @@ public class UserInteraction {
 			}
 		});
 
-		submitFilePage.getReloadLastSessionButton().addActionListener(e -> {
-//			Horario horario = new Horario(SaveState.)
+		submitFilePage.getSavedScheduleQualityButton().addActionListener(sSQB -> {
+			SaveState.recuperarHorarioAntigo();
+			Horario horario = new Horario(SaveState.getHorarioFilePath());
+			horario.setOrdemCampos(SaveState.getOrdemCampos());
+			horario.setMetricas(SaveState.getMetricas());
+			scheduleQualityCalculationPage = new ScheduleQualityCalculationPage(
+					variablesForMetricCalculation(new ArrayList<>(horario.getOrdemCampos().keySet())),
+					submitFilePage, horario);
+		});
+
+		submitFilePage.getOpenSavedScheduleButton().addActionListener(oSSB -> {
+			SaveState.recuperarHorarioAntigo();
+			Horario horario = new Horario(SaveState.getHorarioFilePath());
+			horario.setOrdemCampos(SaveState.getOrdemCampos());
+			horario.setMetricas(SaveState.getMetricas());
+			htmlCreator = new HtmlCreator(horario, new ArrayList<>(horario.getOrdemCampos().keySet()));
+			openSchedule();
 		});
 	}
 

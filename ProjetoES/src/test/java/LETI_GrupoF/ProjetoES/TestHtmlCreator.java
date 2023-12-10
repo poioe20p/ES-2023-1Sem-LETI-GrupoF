@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 
 class TestHtmlCreator {
 	//static HtmlCreator horario, horarioNaoExistente;
-	static String dataFilePath = "HorarioDeExemplo.csv";
+	static String dataFilePath = "ProjetoES/HorarioDeExemplo.csv";
 	 static Horario horario;
 	 static HtmlCreator html;
 	 static HtmlCreator html2;

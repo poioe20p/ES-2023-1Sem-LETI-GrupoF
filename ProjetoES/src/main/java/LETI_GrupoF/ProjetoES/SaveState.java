@@ -5,17 +5,14 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class SaveState {
 	
 	private static final String saveStateFilePath = "SaveState.txt";
 	private static String horarioFilePath;
-	private static Map<String, Integer> ordemCampos;
-	private static Map<Metrica, Integer> metricas;
+	private static Map<String, Integer> ordemCampos = new LinkedHashMap<>();
+	private static Map<Metrica, Integer> metricas = new LinkedHashMap<>();
 
 	/**
 	 * Este método tem como finalidade guardas as configuracoes da aplicacao, que possibilita ao
@@ -106,7 +103,7 @@ public class SaveState {
                         String[] partes = linha.split(":");
                         ordemCampos.put(partes[0], Integer.parseInt(partes[1]));
                     } else {
-                    	String[] partes = linha.split(":");
+                    	String[] partes = linha.split("=");
                         metricas.put(new Metrica(partes[0].trim().replace(" ", ";")), Integer.parseInt(partes[1]));
                     }
                 }
@@ -133,15 +130,15 @@ public class SaveState {
 		}
 	}
 
-	public String getHorarioFilePath() {
+	static public String getHorarioFilePath() {
 		return horarioFilePath;
 	}
 
-	public Map<String, Integer> getOrdemCampos() {
+	static public Map<String, Integer> getOrdemCampos() {
 		return ordemCampos;
 	}
 
-	public Map<Metrica, Integer> getMetricas() {
+	static public Map<Metrica, Integer> getMetricas() {
 		return metricas;
 	}
 
