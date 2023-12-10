@@ -19,11 +19,10 @@ public class Horario {
 	private Map<Metrica, Integer> metricas = new LinkedHashMap<>();
 
 	/**
-	 * Construtor da classe Schedule.
+	 * Construtor da classe Horario.
 	 *
-	 * @param table, Reader de tabela que fornece os dados para o horario.
+	 * @param horarioFilePath O caminho do arquivo CSV contendo os dados do horario.
 	 */
-
 	public Horario(String horarioFilePath) {
 		this.horarioFilePath = horarioFilePath;
 		Reader dataHorarioDoCSV = new Reader(horarioFilePath);
@@ -32,22 +31,31 @@ public class Horario {
 		salas = new Salas(csvFilePath);
 	}
 
+	/**
+	 * Adiciona uma métrica ao horário e salva o estado.
+	 *
+	 * @param metrica A métrica a ser adicionada.
+	 */
 	public void adicionarMetrica(Metrica metrica) {
 		metricas.put(metrica, calcularQualidade(metrica));
 		SaveState.guardaMetricas(metricas);
 	}
 
 	private int calcularQualidade(Metrica metrica) {
-		List<String> formula = metrica.getComponentesFormula(); // Vai buscar os componetes da formula para o calculo da metrica
+		List<String> formula = metrica.getComponentesFormula(); // Vai buscar os componetes da formula para o calculo da
+																// metrica
 		List<String> atributo1 = defineAtributo(formula.get(0));
 		List<String> atributo2 = defineAtributo(formula.get(2));
 		List<String> contaInicial = new ArrayList<>();
 		if (atributo1.get(0).equals("horario") && atributo2.get(0).equals("horario")) {
-			contaInicial = calculoParcialHorario(atributo1.subList(1, atributo1.size()), atributo2.subList(1, atributo2.size()), formula.get(1));
+			contaInicial = calculoParcialHorario(atributo1.subList(1, atributo1.size()),
+					atributo2.subList(1, atributo2.size()), formula.get(1));
 		} else if (atributo1.get(0).equals("horario") && atributo2.get(0).equals("sala")) {
-			contaInicial = calculoParcialHorarioSala(atributo1.subList(1, atributo1.size()), atributo2.subList(1, atributo2.size()), formula.get(1));
+			contaInicial = calculoParcialHorarioSala(atributo1.subList(1, atributo1.size()),
+					atributo2.subList(1, atributo2.size()), formula.get(1));
 		} else if (atributo1.get(0).equals("sala") && atributo2.get(0).equals("horario")) {
-			contaInicial = calculoParcialSalaHorario(atributo1.subList(1, atributo1.size()), atributo2.subList(1, atributo2.size()), formula.get(1));
+			contaInicial = calculoParcialSalaHorario(atributo1.subList(1, atributo1.size()),
+					atributo2.subList(1, atributo2.size()), formula.get(1));
 		}
 		if (formula.size() > 3) {
 			int count = 0;
@@ -95,23 +103,19 @@ public class Horario {
 		}
 	}
 
-	/**
-	 * Devolve uma lista da informacao de um certo atributo/coluna, independentemente do ficheiro em que se localiza
-	 *
-	 * @return Lista de strings representando os dados da coluna.
-	 */
 	private List<String> defineAtributo(String nomeAtributo) {
 		List<String> atributo = new ArrayList<>();
-		if (getColumnTitles().contains(nomeAtributo)) { // Verifica se o atributo (que é um campo/coluna de um dos ficheiros(horario ou salas)) pertence ao horario
+		if (getColumnTitles().contains(nomeAtributo)) { // Verifica se o atributo (que é um campo/coluna de um dos
+														// ficheiros(horario ou salas)) pertence ao horario
 			atributo.add("horario");
 			for (int i = 0; i < getHorario().size(); i++) {
-				atributo.add(getHorario().get(i).get(ordemCampos.get(nomeAtributo))); // Vai busacar uma lista com todo o conteudo do atributo
+				atributo.add(getHorario().get(i).get(ordemCampos.get(nomeAtributo))); // Vai buscar uma lista com todo o conteudo do atributo
 			}
 		} else if (getSalas().getColumnTitles().contains(nomeAtributo)) { // Verifica se o atributo pertence as salas
 			atributo.add("sala");
 			for (int i = 0; i < getSalas().getListaSalas().size(); i++) {
 				atributo.add(getSalas().getListaSalas().get(i).getInformacaoSala()
-						.get(getSalas().getColumnTitles().indexOf(nomeAtributo))); // Vai busacar uma lista com todo o conteudo do atributo
+						.get(getSalas().getColumnTitles().indexOf(nomeAtributo))); // Vai buscar uma lista com todo o conteudo do atributo
 			}
 		}
 		return atributo;
@@ -158,7 +162,7 @@ public class Horario {
 					}
 					break;
 				}
-			}else {
+			} else {
 				contaInicial.add("0"); // Nao ha sala
 			}
 		}
@@ -195,7 +199,7 @@ public class Horario {
 					}
 					break;
 				}
-			}else {
+			} else {
 				contaInicial.add("0"); // Nao ha sala
 			}
 		}
@@ -232,7 +236,7 @@ public class Horario {
 					}
 					break;
 				}
-			}else {
+			} else {
 				contaInicial.add("0"); // Nao ha sala
 			}
 		}
@@ -292,20 +296,40 @@ public class Horario {
 		return salas;
 	}
 
+	/**
+	 * Define as metricas e salva o estado.
+	 *
+	 * @param metricas As metricas a serem definidas.
+	 */
 	public void setMetricas(Map<Metrica, Integer> metricas) {
 		this.metricas = metricas;
 		SaveState.guardaMetricas(metricas);
 	}
-	
+
+	/**
+	 * Obtem as metricas associadas a este horario.
+	 *
+	 * @return As metricas.
+	 */
 	public Map<Metrica, Integer> getMetricas() {
 		return metricas;
 	}
 
+	/**
+	 * Define a ordem dos campos e salva o estado.
+	 *
+	 * @param ordemCampos A ordem dos campos a ser definida.
+	 */
 	public void setOrdemCampos(Map<String, Integer> ordemCampos) {
 		this.ordemCampos = ordemCampos;
 		SaveState.guardarHorario(getHorarioFilePath(), ordemCampos);
 	}
 
+	/**
+	 * Obtem a ordem dos campos associados a este horario.
+	 *
+	 * @return A ordem dos campos.
+	 */
 	public Map<String, Integer> getOrdemCampos() {
 		return ordemCampos;
 	}
