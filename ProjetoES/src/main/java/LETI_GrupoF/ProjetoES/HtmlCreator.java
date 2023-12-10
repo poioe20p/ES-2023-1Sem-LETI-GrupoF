@@ -13,7 +13,7 @@ import org.jsoup.nodes.Element;
  */
 public class HtmlCreator {
 
-	static final private String pageFilePath = "Horario.html";
+	static final private String pageFilePath = "ProjetoES/Horario.html";
 	private final List<List<String>> dataForHtml;
 	private final List<String> columnFields;
 	private Horario horario;
@@ -44,6 +44,18 @@ public class HtmlCreator {
 		this.userOrderTitles = userOrderTitles;
 		this.columnFields = new ArrayList<>();
 		this.columnTitlesForQualitySchedule = columTitles;
+		for(String titles: userOrderTitles) {
+			String titlesTrimmed = titles.replace(" ", "");
+			columnFields.add(titlesTrimmed + "_field");
+		}
+		this.isMetricsSchedule = true;
+	}
+
+	public HtmlCreator(List<List<String>> dataForHtml, List<String> classRoomColumnTitles) {
+		this.dataForHtml = dataForHtml;
+		this.userOrderTitles = classRoomColumnTitles;
+		this.columnFields = new ArrayList<>();
+		this.columnTitlesForQualitySchedule = classRoomColumnTitles;
 		for(String titles: userOrderTitles) {
 			String titlesTrimmed = titles.replace(" ", "");
 			columnFields.add(titlesTrimmed + "_field");

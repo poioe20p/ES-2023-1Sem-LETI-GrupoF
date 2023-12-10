@@ -20,6 +20,7 @@ public class ColumnsOrderingPage extends JFrame implements LayoutDefinable {
             "Curso", "Unidade Curricular", "Turno", "Turma", "Inscritos no turno",
             "Dia da semana", "Hora de início da aula", "Hora de fim da aula", "Data da aula",
             "Caracaterísticas da sala atribuída para a aula", "Sala de aula atribuída"));
+    private JButton viewClassRoomsButton;
 
     /**
      * Constroi uma nova ColumnsOrderingPage com os titulos de coluna do usuario especificados e o frame anterior.
@@ -84,6 +85,9 @@ public class ColumnsOrderingPage extends JFrame implements LayoutDefinable {
 
         openScheduleButton = LayoutDefinable.defineButtonLayout(Color.BLUE,
                 Color.WHITE, "Open Schedule", new Dimension(150, 50));
+
+        viewClassRoomsButton = LayoutDefinable.defineButtonLayout(Color.BLUE,
+                Color.WHITE, "View Class Rooms", new Dimension(150, 50));
 
         JButton moveUpButton = LayoutDefinable.defineButtonLayout(Color.BLUE, Color.WHITE, "Move Up", new Dimension(130, 50));
         moveUpButton.addActionListener(e -> moveSelectedColumn(userList, -1));
@@ -187,6 +191,8 @@ public class ColumnsOrderingPage extends JFrame implements LayoutDefinable {
         gbc.gridx++;
         dialogPanel.add(openScheduleButton, gbc);
         gbc.gridx++;
+        dialogPanel.add(viewClassRoomsButton, gbc);
+        gbc.gridx++;
         dialogPanel.add(goBack, gbc);
 
         dialog.setSize(800, 400);
@@ -213,6 +219,15 @@ public class ColumnsOrderingPage extends JFrame implements LayoutDefinable {
     public JButton getScheduleQualityButton () {
         return scheduleQualityButton;
     }
+
+
+    /**
+     * Obtém o botão "Ver Salas".
+     *
+     * @return O botão "Ver Salas".
+     */
+
+    public JButton getViewClassRoomsButtong () { return viewClassRoomsButton;}
 
     /**
      * Move a coluna selecionada para cima ou para baixo na lista.

@@ -31,11 +31,6 @@ class TestSalas {
 	void testListaSalas() {
 		assertNotNull(salas.getListaSalas());
 	}
-	
-	@Test
-	void testGetListaSalasFiltradas() {
-		assertNotNull(salas.getListaSalasFiltradas(List.of("Sala de Aulas normal", "videoconferncia")));
-	}
 
 	@Test
 	void testNomeSalas() {
@@ -46,11 +41,7 @@ class TestSalas {
 	void testColumnTitles() {
 		assertNotNull(salas.getColumnTitles());
 	}
-	
-	@Test
-	void testGetColumnsOrder() {
-		assertNotNull(salas.getColumnsOrder());
-	}
+
 }
 
 

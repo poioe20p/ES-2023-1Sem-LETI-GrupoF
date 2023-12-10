@@ -1,9 +1,6 @@
 package LETI_GrupoF.ProjetoES.user_interface;
 
-import LETI_GrupoF.ProjetoES.Horario;
-import LETI_GrupoF.ProjetoES.HtmlCreator;
-import LETI_GrupoF.ProjetoES.Metrica;
-import LETI_GrupoF.ProjetoES.SaveState;
+import LETI_GrupoF.ProjetoES.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,6 +20,7 @@ public class UserInteraction {
 	private ScheduleQualityCalculationPage scheduleQualityCalculationPage;
 	private ColumnsOrderingPage columnsOrderingPage;
 	private ScheduleQualityTable scheduleQualityTable;
+	private FilterAndDisplayClassRoom filterAndDisplayClassRoom;
 
 	/**
 	 *
@@ -62,6 +60,16 @@ public class UserInteraction {
 			scheduleQualityCalculationPage = new ScheduleQualityCalculationPage(variablesForMetricCalculation(columnsOrderingPage.getUserOrderedColumnTitles()), columnsOrderingPage, horario);
 			setUpScheduelQualityPageButton(horario, false);
 			scheduleQualityCalculationPage.setVisible(true);
+			columnsOrderingPage.setVisible(false);
+		});
+
+		columnsOrderingPage.getViewClassRoomsButtong().addActionListener(e -> {
+			filterAndDisplayClassRoom = new FilterAndDisplayClassRoom(new Salas("ProjetoES/CaracterizaçãoDasSalas.csv"), columnsOrderingPage);
+			filterAndDisplayClassRoom.getViewClassRooms().addActionListener(vCRB -> {
+				htmlCreator = new HtmlCreator(filterAndDisplayClassRoom.getFilteredClassRooms(), List.of("Edíficio", "Nome Sala","Capacidade Normal", "Capacidade Exame", "Caracterísiticas Sala"));
+				openSchedule();
+			});
+			filterAndDisplayClassRoom.setVisible(true);
 			columnsOrderingPage.setVisible(false);
 		});
 	}

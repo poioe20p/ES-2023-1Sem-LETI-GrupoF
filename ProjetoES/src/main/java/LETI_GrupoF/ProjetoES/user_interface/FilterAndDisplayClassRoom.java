@@ -1,6 +1,7 @@
 package LETI_GrupoF.ProjetoES.user_interface;
 
 
+import LETI_GrupoF.ProjetoES.Sala;
 import LETI_GrupoF.ProjetoES.Salas;
 
 import javax.swing.*;
@@ -16,11 +17,16 @@ public class FilterAndDisplayClassRoom extends JFrame implements LayoutDefinable
     private final JButton viewClassRooms;
     private GridBagConstraints gbc;
     private final List<String> userSelectedRoomTypes = new ArrayList<>();
-    private final List<String> userRoomCapacitySelection = new ArrayList<>();
+    private final List<String> userRoomNormalCapacitySelection = new ArrayList<>();
+    private final List<String> userRoomExamCapacitySelection = new ArrayList<>();
+
+
+    private Salas salas;
 
     public FilterAndDisplayClassRoom(Salas salas, JFrame previousFrame) {
         LayoutDefinable.basicLayout("Filter and Display Class Rooms", this, LayoutDefinable.getColor("gray"));
 
+        this.salas = salas;
         viewClassRooms = LayoutDefinable.defineButtonLayout(Color.BLUE, Color.WHITE,
                 "View Class Rooms", new Dimension(160, 50));
         JPanel lefPanel = setUpLeftPanel();
@@ -126,9 +132,9 @@ public class FilterAndDisplayClassRoom extends JFrame implements LayoutDefinable
         maxCapacityTextField2.setEnabled(false);
 
         JComboBox<String> conditionsListNormalCapacity = new JComboBox<>(new String[]{"=", "<", ">"});
-        JComboBox<String> conditionsListNormalCapacity2 = new JComboBox<>(new String[]{"<", ">"});
+        JComboBox<String> conditionsListNormalCapacity2 = new JComboBox<>(new String[]{" ", "<", ">"});
         JComboBox<String> conditionsListExamCapacity = new JComboBox<>(new String[]{"=", "<", ">"});
-        JComboBox<String> conditionsListExamCapacity2 = new JComboBox<>(new String[]{"<", ">"});
+        JComboBox<String> conditionsListExamCapacity2 = new JComboBox<>(new String[]{" " ,"<", ">"});
 
         conditionsListNormalCapacity.setEnabled(false);
         conditionsListNormalCapacity2.setEnabled(false);
@@ -139,14 +145,14 @@ public class FilterAndDisplayClassRoom extends JFrame implements LayoutDefinable
                 minCapacityTextField,
                 conditionsListNormalCapacity,
                 conditionsListNormalCapacity2,
-                maxCapacityTextField
+                maxCapacityTextField, false
         );
 
         setRightPanelButtons(
                 minCapacityTextField2,
                 conditionsListExamCapacity,
                 conditionsListExamCapacity2,
-                maxCapacityTextField2
+                maxCapacityTextField2, true
         );
 
         //Adicção de elementos para filtragem atraves da capacidade normal
@@ -188,7 +194,7 @@ public class FilterAndDisplayClassRoom extends JFrame implements LayoutDefinable
     }
 
     private void setRightPanelButtons(JTextField minCapacityTextField , JComboBox<String> conditionsListNormalCapacity,
-                                      JComboBox<String> conditionsListNormalCapacity2, JTextField maxCapacityTextField) {
+                                      JComboBox<String> conditionsListNormalCapacity2, JTextField maxCapacityTextField, boolean isExamFiltering) {
 
         minCapacityTextField.setEditable(true);
         maxCapacityTextField.setEditable(true);
@@ -196,20 +202,47 @@ public class FilterAndDisplayClassRoom extends JFrame implements LayoutDefinable
         restrictToIntegerOnly(maxCapacityTextField);
         minCapacityTextField.addActionListener(mCTF -> {
             conditionsListNormalCapacity.setEnabled(true);
-            userRoomCapacitySelection.add(minCapacityTextField.getText());
+
+            if(!isExamFiltering) {
+               userRoomNormalCapacitySelection.add(minCapacityTextField.getText());
+           } else {
+               userRoomExamCapacitySelection.add(minCapacityTextField.getText());
+           }
         });
 
         conditionsListNormalCapacity.addActionListener(cL -> {
-            userRoomCapacitySelection.add((String) conditionsListNormalCapacity.getSelectedItem());
-            if(!Objects.equals(conditionsListNormalCapacity.getSelectedItem(), "=")) conditionsListNormalCapacity2.setEnabled(true);
+            if(!isExamFiltering) {
+                userRoomNormalCapacitySelection.add((String) conditionsListNormalCapacity.getSelectedItem());
+            } else {
+                userRoomExamCapacitySelection.add((String) conditionsListNormalCapacity.getSelectedItem());
+            }
+            if(!Objects.equals(conditionsListNormalCapacity.getSelectedItem(), "=")) {
+                conditionsListNormalCapacity2.setEnabled(true);
+                conditionsListNormalCapacity2.setModel(new DefaultComboBoxModel<>(new String[]{(String) conditionsListNormalCapacity.getSelectedItem(), " "}));
+            }
         });
 
         conditionsListNormalCapacity2.addActionListener(cL2 -> {
-            userRoomCapacitySelection.add((String) conditionsListNormalCapacity2.getSelectedItem());
-            maxCapacityTextField.setEnabled(true);
+            String selectedCondition = (String) conditionsListNormalCapacity2.getSelectedItem();
+            if(selectedCondition.equals(" ")) {
+                maxCapacityTextField.setEnabled(false);
+            } else {
+                maxCapacityTextField.setEnabled(true);
+                if(!isExamFiltering) {
+                    userRoomNormalCapacitySelection.add(selectedCondition);
+                } else {
+                    userRoomExamCapacitySelection.add(selectedCondition);
+                }
+            }
         });
 
-        maxCapacityTextField.addActionListener(mCTF2 -> userRoomCapacitySelection.add(maxCapacityTextField.getText()));
+        maxCapacityTextField.addActionListener(mCTF2 -> {
+            if(!isExamFiltering) {
+                userRoomNormalCapacitySelection.add(maxCapacityTextField.getText());
+            } else {
+                userRoomExamCapacitySelection.add(maxCapacityTextField.getText());
+            }
+        });
     }
 
     private  void restrictToIntegerOnly(JTextField textField) {
@@ -239,6 +272,34 @@ public class FilterAndDisplayClassRoom extends JFrame implements LayoutDefinable
                 }
             }
         });
+    }
+
+    public JButton getViewClassRooms() {
+        return viewClassRooms;
+    }
+
+    public List<List<String>> getFilteredClassRooms() {
+        List<Sala> salasComCapacidadeFiltrada;
+        if(!userRoomExamCapacitySelection.isEmpty()) {
+            System.out.println(userRoomExamCapacitySelection);
+            salasComCapacidadeFiltrada = salas.getFirstAndSecondCapacityFilteredClassRooms(
+                    userRoomExamCapacitySelection, false, salas.getListaSalas());
+            if(!userRoomNormalCapacitySelection.isEmpty()) {
+                List<Sala> salasFiltradas = salas.getFirstAndSecondCapacityFilteredClassRooms(
+                        userRoomNormalCapacitySelection, true, salasComCapacidadeFiltrada);
+                System.out.println(salasFiltradas);
+                return salas.getListaSalasFiltradas(userSelectedRoomTypes , salasFiltradas);
+            }
+        } else {
+            if (!userRoomNormalCapacitySelection.isEmpty()) {
+                System.out.println(userRoomNormalCapacitySelection);
+                salasComCapacidadeFiltrada = salas.getFirstAndSecondCapacityFilteredClassRooms(
+                        userRoomNormalCapacitySelection, true, salas.getListaSalas());
+                System.out.println(salasComCapacidadeFiltrada);
+                return salas.getListaSalasFiltradas(userSelectedRoomTypes, salasComCapacidadeFiltrada);
+            }
+        }
+        return salas.getListaSalasFiltradas(userSelectedRoomTypes, salas.getListaSalas());
     }
 
     public static void main(String[] args) {
