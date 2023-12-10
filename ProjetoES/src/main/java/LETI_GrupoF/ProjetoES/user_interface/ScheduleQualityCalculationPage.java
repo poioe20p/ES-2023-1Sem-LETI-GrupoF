@@ -128,7 +128,7 @@ public class ScheduleQualityCalculationPage extends JFrame implements LayoutDefi
         gbc.gridx++;
         formulaCreatingPanel.add(listOfMatOperators2, gbc);
         gbc.gridx++;
-        formulaCreatingPanel.add(integerField, gbc);;
+        formulaCreatingPanel.add(integerField, gbc);
         return formulaCreatingPanel;
     }
 
@@ -150,6 +150,8 @@ public class ScheduleQualityCalculationPage extends JFrame implements LayoutDefi
                 Color.white, "Go Back", new Dimension(130, 40));
         goBackButton.addActionListener(e -> {
             previousFrame.setVisible(true);
+            getScheduleMetrics();
+            updateMetricTable();
             LayoutDefinable.setVisibility(this, false);
         });
         JButton resetListOptions = LayoutDefinable.defineButtonLayout(Color.BLACK,
@@ -329,7 +331,7 @@ public class ScheduleQualityCalculationPage extends JFrame implements LayoutDefi
             String input = integerField.getText();
             if(hasIntegerValues(variableType)) {
                 try {
-                    int value = Integer.parseInt(input);
+                    Integer.parseInt(input);
                     addFormula.setEnabled(true);
                 } catch (NumberFormatException e) {
                     addFormula.setEnabled(false);

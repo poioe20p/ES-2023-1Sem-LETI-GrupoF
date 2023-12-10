@@ -18,7 +18,7 @@ import java.util.List;
 public class UserInteraction {
 
 	// Pagina da GUI
-	private SubmitFilePage submitFilePage;
+	private final SubmitFilePage submitFilePage;
 	private HtmlCreator htmlCreator;
 	private ScheduleQualityCalculationPage scheduleQualityCalculationPage;
 	private ColumnsOrderingPage columnsOrderingPage;
