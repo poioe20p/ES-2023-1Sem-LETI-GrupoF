@@ -8,8 +8,8 @@ import java.io.PrintWriter;
 import java.util.*;
 
 public class SaveState {
-	
-	private static final String saveStateFilePath = "SaveState.txt";
+
+	private static final String saveStateFilePath = "ProjetoES/SaveState.txt";
 	private static String horarioFilePath;
 	private static Map<String, Integer> ordemCampos = new LinkedHashMap<>();
 	private static Map<Metrica, Integer> metricas = new LinkedHashMap<>();
@@ -53,13 +53,13 @@ public class SaveState {
 	 * // * @param formula A formula criada pelo utilizador que sera guardada.
 	 * Permite recuperar a formula caso o utilizador retome a sessão.
 	 */
-	
+
 	public static void guardaMetricas(Map<Metrica, Integer> metricas) {
 		try {
 			Scanner sc = new Scanner(new File(saveStateFilePath));
 			List<String> linhas = new ArrayList<>();
 			while (sc.hasNextLine()) {
-                String linha = sc.nextLine();
+				String linha = sc.nextLine();
 				if (!linha.trim().equals("FOC")) {
 					linhas.add(linha);
 				}else {
@@ -73,7 +73,7 @@ public class SaveState {
 				writer.println(linha);
 			}
 			for (Map.Entry<Metrica, Integer> entry : metricas.entrySet()) {
-				writer.println(entry.getKey().getFormula() + "=" + entry.getValue());
+				writer.println(entry.getKey().getFormula() + ":" + entry.getValue());
 			}
 			sc.close();
 			writer.close();
@@ -93,26 +93,29 @@ public class SaveState {
 	 */
 
 	public static void recuperarHorarioAntigo() {
-        try {
-        	Scanner sc = new Scanner(new File(saveStateFilePath));
-            if(sc.hasNextLine()) {
-            	horarioFilePath = sc.nextLine();
-                while (sc.hasNextLine()) {
-                    String linha = sc.nextLine();
-                    if (!linha.trim().equals("FOC")) {
-                        String[] partes = linha.split(":");
-                        ordemCampos.put(partes[0], Integer.parseInt(partes[1]));
-                    } else {
-                    	String[] partes = linha.split("=");
-                        metricas.put(new Metrica(partes[0].trim().replace(" ", ";")), Integer.parseInt(partes[1]));
-                    }
-                }
-            }
-            sc.close();
-        } catch (FileNotFoundException e) {
-        	e.printStackTrace();
-        }
-    }
+		boolean isPastFOC = false;
+		try {
+			Scanner sc = new Scanner(new File(saveStateFilePath));
+			if(sc.hasNextLine()) {
+				horarioFilePath = sc.nextLine();
+				while (sc.hasNextLine()) {
+					String linha = sc.nextLine();
+					if (!linha.trim().equals("FOC") && !isPastFOC) {
+						String[] partes = linha.split(":");
+						ordemCampos.put(partes[0], Integer.parseInt(partes[1]));
+					} else if (!isPastFOC) {
+						isPastFOC = true;
+					} else {
+						String[] partes = linha.split(":");
+						metricas.put(new Metrica(partes[0].trim().replace(" ", ";")), Integer.parseInt(partes[1]));
+					}
+				}
+			}
+			sc.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Limpa o conteudo do arquivo SaveState.txt, removendo todas as informacoes

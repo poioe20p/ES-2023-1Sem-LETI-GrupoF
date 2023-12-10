@@ -60,7 +60,7 @@ public class UserInteraction {
 		columnsOrderingPage.getScheduleQualityButton().addActionListener(e -> {
 			horario.setOrdemCampos(getIndicesForUserCSVColumnsMapping(columnsOrderingPage.getUserOrderedColumnTitles(), horario.getColumnTitles()));
 			scheduleQualityCalculationPage = new ScheduleQualityCalculationPage(variablesForMetricCalculation(columnsOrderingPage.getUserOrderedColumnTitles()), columnsOrderingPage, horario);
-			setUpScheduelQualityPageButton(horario);
+			setUpScheduelQualityPageButton(horario, false);
 			scheduleQualityCalculationPage.setVisible(true);
 			columnsOrderingPage.setVisible(false);
 		});
@@ -72,17 +72,25 @@ public class UserInteraction {
 	 * @param horario
 	 */
 
-	private void setUpScheduelQualityPageButton(Horario horario) {
+	private void setUpScheduelQualityPageButton(Horario horario, boolean isSavedSchedule) {
 		scheduleQualityCalculationPage.getCalculateScheduleQualityButton().addActionListener(e -> {
-			for(Metrica metrica: scheduleQualityCalculationPage.getScheduleMetrics()) {
-				//Calculo de cada metrica acontece aqui
-				horario.adicionarMetrica(metrica);
+			if(!isSavedSchedule) {
+				for (Metrica metrica : scheduleQualityCalculationPage.getScheduleMetrics()) {
+					//Calculo de cada metrica acontece aqui
+					horario.adicionarMetrica(metrica);
+				}
+				scheduleQualityTable = new ScheduleQualityTable
+						(horario, scheduleQualityCalculationPage);
+				setUpScheduleQualityTableButtons(horario.getColumnTitles(), false, null);
+				scheduleQualityTable.setVisible(true);
+				scheduleQualityCalculationPage.setVisible(false);
+			} else {
+				scheduleQualityTable = new ScheduleQualityTable
+						(horario, scheduleQualityCalculationPage);
+				setUpScheduleQualityTableButtons(horario.getColumnTitles(), true, horario);
+				scheduleQualityTable.setVisible(true);
+				scheduleQualityCalculationPage.setVisible(false);
 			}
-			scheduleQualityTable = new ScheduleQualityTable
-					(horario, scheduleQualityCalculationPage);
-			setUpScheduleQualityTableButtons(horario.getColumnTitles());
-			scheduleQualityTable.setVisible(true);
-			scheduleQualityCalculationPage.setVisible(false);
 		});
 	}
 
@@ -90,14 +98,19 @@ public class UserInteraction {
 	 * Este metodo define o comportamento dos botoes da pagina ScheduleQualityTable que
 	 * corresponde à pagina onde as metricas sao apresentadas.
 	 */
-	private void setUpScheduleQualityTableButtons(List<String> columnTitles) {
+	private void setUpScheduleQualityTableButtons(List<String> columnTitles, boolean isSavedSchedule, Horario horario) {
 		scheduleQualityTable.getOpenMetricScheduleButton().addActionListener(e -> {
 			String formulaMetricaLinhaSelecionada = (String) scheduleQualityTable.getTable().
 					getValueAt(scheduleQualityTable.getTable().getSelectedRow(), 0);
 			for(Metrica metrica: scheduleQualityTable.getData()) {
 				if(metrica.getFormula().equals(formulaMetricaLinhaSelecionada)) {
-					htmlCreator = new HtmlCreator(metrica.getAulasComComtribuicao(), columnsOrderingPage.getUserOrderedColumnTitles(), columnTitles);
-					openSchedule();
+					if(!isSavedSchedule) {
+						htmlCreator = new HtmlCreator(metrica.getAulasComComtribuicao(), columnsOrderingPage.getUserOrderedColumnTitles(), columnTitles);
+						openSchedule();
+					} else {
+						htmlCreator = new HtmlCreator(horario, new ArrayList<>(SaveState.getOrdemCampos().keySet()));
+						openSchedule();
+					}
 				}
 			}
 		});
@@ -165,6 +178,9 @@ public class UserInteraction {
 			scheduleQualityCalculationPage = new ScheduleQualityCalculationPage(
 					variablesForMetricCalculation(new ArrayList<>(horario.getOrdemCampos().keySet())),
 					submitFilePage, horario);
+			setUpScheduelQualityPageButton(horario, true);
+			scheduleQualityCalculationPage.setVisible(true);
+			submitFilePage.setVisible(false);
 		});
 
 		submitFilePage.getOpenSavedScheduleButton().addActionListener(oSSB -> {

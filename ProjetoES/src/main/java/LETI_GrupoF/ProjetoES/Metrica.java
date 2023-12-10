@@ -14,6 +14,10 @@ public class Metrica {
 		componentesFormula = List.of(formula.split(";"));
 		aulasComComtribuicao = new ArrayList<>();
 	}
+
+	public String getOriginalFormula() {
+		return formula;
+	}
 	public String getFormula() {
 		return formula.replace(";", " ");
 	}

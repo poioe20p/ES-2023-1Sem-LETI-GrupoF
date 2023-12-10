@@ -53,6 +53,9 @@ public class ScheduleQualityCalculationPage extends JFrame implements LayoutDefi
         scheduleQualityTabs.add("Formula Creation Tab", createFormulaPanel);
         scheduleQualityTabs.add("Created Formulas", createdFormulaDisplayPanel);
 
+        if(previousFrame instanceof SubmitFilePage) {
+            updateMetricTable();
+        }
         add(scheduleQualityTabs, BorderLayout.CENTER);
     }
 
@@ -239,7 +242,7 @@ public class ScheduleQualityCalculationPage extends JFrame implements LayoutDefi
 
     public JButton getCalculateScheduleQualityButton() {
         return calculateScheduleQuality;
-    };
+    }
 
     public List<Metrica> getScheduleMetrics() {
         List<Metrica> metricasDoUtilizador = new ArrayList<>();
@@ -371,6 +374,13 @@ public class ScheduleQualityCalculationPage extends JFrame implements LayoutDefi
             }
         }
         return nonIntegerOnlyVariables;
+    }
+
+    private void updateMetricTable() {
+       List<Metrica> metricasDoHorario = new ArrayList<>(horario.getMetricas().keySet());
+         for(Metrica metrica : metricasDoHorario) {
+            variableListModel.addElement(metrica.getFormula());
+         }
     }
 
     public static void main(String[] args) {
