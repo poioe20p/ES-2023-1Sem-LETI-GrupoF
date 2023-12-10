@@ -1,6 +1,9 @@
 package LETI_GrupoF.ProjetoES.user_interface;
 
 import javax.swing.*;
+
+import LETI_GrupoF.ProjetoES.SaveState;
+
 import java.awt.*;
 
 //Este UserForm como indica é a pagina que o utilizador vai ver quando entrar no programa
@@ -94,10 +97,9 @@ public class SubmitFilePage extends JFrame implements LayoutDefinable {
         bottomPanel.add(continueButton, gbcBottomPanel);
         gbcBottomPanel.gridx = 1;
         JButton reloadLastSessionButton = LayoutDefinable.defineButtonLayout(Color.BLUE, Color.WHITE, "Reload Last Session", new Dimension(150, 50));
-        reloadLastSessionButton.addActionListener(rLSB -> {
-            popUpConfirmationPage();
-        });
+        reloadLastSessionButton.addActionListener(rLSB -> popUpConfirmationPage());
         bottomPanel.add(reloadLastSessionButton, gbcBottomPanel);
+        reloadLastSessionButton.setEnabled(!SaveState.isEmpty());
 
 
         //Ajuste da posição para o painel lateral esquerdo de baixo

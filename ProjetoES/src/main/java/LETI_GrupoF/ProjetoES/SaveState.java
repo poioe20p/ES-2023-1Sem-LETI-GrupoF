@@ -46,12 +46,10 @@ public class SaveState {
 
 	/**
 	 * Este metodo tem como objetivo armazenar as metricas, preservando as formulas
-	 * personalizadas introduzidas pelo utilizador, permitindo assim restaurar o
-	 * estado anterior das formulas caso o utilizador pretenda recuperar a sessao
-	 * anterior
+	 * personalizadas introduzidas pelo utilizador, permitindo assim restaurar a
+	 * sessao anterior
 	 *
-	 * // * @param formula A formula criada pelo utilizador que sera guardada.
-	 * Permite recuperar a formula caso o utilizador retome a sessão.
+	 * @param metricas Os pares metrica-resultado defenidos pelo utilizador.
 	 */
 
 	public static void guardaMetricas(Map<Metrica, Integer> metricas) {
@@ -132,7 +130,7 @@ public class SaveState {
 	/**
 	 * Obtem o file path do ficheiro csv do horario gravado na ultima sessao.
 	 *
-	 * @return file path do ficheiro csv do horario.
+	 * @return File path do ficheiro csv do horario.
 	 */
 	public static String getHorarioFilePath() {
 		return horarioFilePath;
@@ -159,10 +157,29 @@ public class SaveState {
 	/**
 	 * Obtem o file path do ficheiro onde sao guradadas as informacoes de sessao para sessao
 	 *
-	 * @return file path do save file.
+	 * @return File path do save file.
 	 */
 	public static String getSaveStateFilePath() {
 		return saveStateFilePath;
+	}
+	
+	/**
+	 * Obtem o file path do ficheiro onde sao guradadas as informacoes de sessao para sessao
+	 *
+	 * @return True se o save file estiver vazio. False caso o contrario
+	 */
+	public static boolean isEmpty() {
+		List<String> linhas = new ArrayList<>();
+		try {
+			Scanner sc = new Scanner(new File(saveStateFilePath));
+			while (sc.hasNextLine()) {
+				linhas.add(sc.nextLine());
+			}
+			sc.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return linhas.isEmpty();
 	}
 
 }
