@@ -5,13 +5,13 @@ import java.util.List;
 
 public class Salas {
 
-	private List<Sala> salas;
+	private List<Sala> listasalas;
 	private List<String> columnTitles;
 
 	public Salas(String csvFilePath) {
 		Reader infoFromCSV = new Reader(csvFilePath);
 		columnTitles = infoFromCSV.getColumnTitles();
-		salas = lerSalasDoCSV(infoFromCSV.getTableData());
+		listasalas = lerSalasDoCSV(infoFromCSV.getTableData());
 	}
 
 	/**
@@ -31,7 +31,7 @@ public class Salas {
 	}
 
 	public List<Sala> getListaSalas() {
-		return salas;
+		return listasalas;
 	}
 
 	public List<String> getNomeSalas() {

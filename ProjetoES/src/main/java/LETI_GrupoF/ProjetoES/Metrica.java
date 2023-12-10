@@ -76,6 +76,9 @@ public class Metrica {
      */
 	@Override
 	public boolean equals(Object obj) {
+		if (obj == null || getClass() != obj.getClass()) {
+	        return false;
+	    }
 		return this.getFormula().equals(((Metrica) obj).getFormula());
 	}
 }

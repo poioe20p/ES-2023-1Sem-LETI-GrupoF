@@ -109,15 +109,13 @@ public class Horario {
 														// ficheiros(horario ou salas)) pertence ao horario
 			atributo.add("horario");
 			for (int i = 0; i < getHorario().size(); i++) {
-				atributo.add(getHorario().get(i).get(ordemCampos.get(nomeAtributo))); // Vai buscar uma lista com todo
-																						// o conteudo do atributo
+				atributo.add(getHorario().get(i).get(ordemCampos.get(nomeAtributo))); // Vai buscar uma lista com todo o conteudo do atributo
 			}
 		} else if (getSalas().getColumnTitles().contains(nomeAtributo)) { // Verifica se o atributo pertence as salas
 			atributo.add("sala");
 			for (int i = 0; i < getSalas().getListaSalas().size(); i++) {
 				atributo.add(getSalas().getListaSalas().get(i).getInformacaoSala()
-						.get(getSalas().getColumnTitles().indexOf(nomeAtributo))); // Vai buscar uma lista com todo o
-																					// conteudo do atributo
+						.get(getSalas().getColumnTitles().indexOf(nomeAtributo))); // Vai buscar uma lista com todo o conteudo do atributo
 			}
 		}
 		return atributo;
