@@ -7,6 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * A classe ColumnsOrderingPage representa uma interface gráfica do usuário para reordenar colunas.
+ * Permite que o utilizador personalize a ordem das colunas exibidas no horárioi.
+ */
+
 public class ColumnsOrderingPage extends JFrame implements LayoutDefinable {
 
     private JButton openScheduleButton;
@@ -18,6 +23,13 @@ public class ColumnsOrderingPage extends JFrame implements LayoutDefinable {
             "Dia da semana", "Hora de início da aula", "Hora de fim da aula", "Data da aula",
             "Caracaterísticas da sala atribuída para a aula", "Sala de aula atribuída"));
 
+    /**
+     * Constroi uma nova ColumnsOrderingPage com os titulos de coluna do usuario especificados e o frame anterior.
+     *
+     * @param userColumnTitles Lista de titulos da coluna definidos pelo usuario.
+     * @param previousFrame    O frame anterior no fluxo da interface do usuario.
+     */
+        
     public ColumnsOrderingPage(List<String> userColumnTitles, JFrame previousFrame) {
         LayoutDefinable.basicLayout("Columns Ordering", this, Color.darkGray);
 
@@ -134,6 +146,10 @@ public class ColumnsOrderingPage extends JFrame implements LayoutDefinable {
         add(rightPanel, gbc);
     }
 
+    /**
+     * Exibe um dialogo de confirmacao para a ordenacao de colunas e fornece opcoes para prosseguir ou voltar.
+     */
+    
     private void popUpConfirmationPage() {
         JDialog dialog = new JDialog(this, "Confirm Ordering", Dialog.ModalityType.APPLICATION_MODAL);
         dialog.setLayout(new GridBagLayout());
@@ -180,18 +196,31 @@ public class ColumnsOrderingPage extends JFrame implements LayoutDefinable {
         dialog.setVisible(true);
     }
 
+    /**
+     * Obtém o botão "Abrir Cronograma".
+     *
+     * @return O botão "Abrir Cronograma".
+     */
+    
     public JButton getOpenScheduleButton () {
         return openScheduleButton;
     }
 
+    /**
+     * Obtém o botão "Qualidade do Cronograma".
+     *
+     * @return O botão "Qualidade do Cronograma".
+     */
+    
     public JButton getScheduleQualityButton () {
         return scheduleQualityButton;
     }
 
     /**
-     * Move a coluna selecionada para cima ou para baixo.
-     * @param list
-     * @param direction
+     * Move a coluna selecionada para cima ou para baixo na lista.
+     *
+     * @param list      O JList contendo as colunas.
+     * @param direction A direção para mover a coluna (-1 para cima, 1 para baixo).
      */
 
     //Metodo que move as colunas visualmente e na lista de colunas de acordo com o botao que é clicado
