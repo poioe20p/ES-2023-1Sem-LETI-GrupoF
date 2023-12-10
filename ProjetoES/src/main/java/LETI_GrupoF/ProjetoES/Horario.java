@@ -263,7 +263,7 @@ public class Horario {
 	/**
 	 * Obtem os cabecalhos associados a este horario.
 	 *
-	 * @return O cabecalho.
+	 * @return Uma lisata com os cabecalhos.
 	 */
 	public List<String> getColumnTitles() {
 		return columnTitles;

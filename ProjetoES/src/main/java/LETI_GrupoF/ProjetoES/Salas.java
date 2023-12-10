@@ -8,6 +8,11 @@ public class Salas {
 	private List<Sala> listasalas;
 	private List<String> columnTitles;
 
+	/**
+	 * Construtor da classe Salas.
+	 *
+	 * @param csvFilePath   O caminho do arquivo CSV contendo os dados das salas.
+	 */
 	public Salas(String csvFilePath) {
 		Reader infoFromCSV = new Reader(csvFilePath);
 		columnTitles = infoFromCSV.getColumnTitles();
@@ -30,10 +35,20 @@ public class Salas {
 		return salas;
 	}
 
+	/**
+	 * Obtem a lista de salas.
+	 *
+	 * @return Lista de objetos sala.
+	 */
 	public List<Sala> getListaSalas() {
 		return listasalas;
 	}
 
+	/**
+	 * Obtem a lista de tipos nomes das salas.
+	 *
+	 * @return Lista de nomes das salas.
+	 */
 	public List<String> getNomeSalas() {
 		List<String> nomeSalas = new ArrayList<>();
 		for(int i = 0; i < getListaSalas().size(); i++) {
@@ -42,6 +57,11 @@ public class Salas {
 		return nomeSalas;
 	}
 	
+	/**
+	 * Obtem os cabecalhos associados as salas
+	 *
+	 * @return Lista de cabecalhos das salas.
+	 */
 	public List<String> getColumnTitles() {
 		return columnTitles;
 	}

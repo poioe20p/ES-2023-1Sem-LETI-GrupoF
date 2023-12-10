@@ -85,11 +85,7 @@ public class SaveState {
 	/**
 	 * Recupera o horario anterior, permitindo que o utilizador retome a sua sessao
 	 * anterior.
-	 *
-	 * @return Um objeto do tipo Horario representando o horario previamente
-	 *         armazenado. Retorna null se não houver um horario anteriormente
-	 *         armazenado.
-	 * @throws FileNotFoundException
+	 * 
 	 */
 
 	public static void recuperarHorarioAntigo() {
@@ -133,18 +129,38 @@ public class SaveState {
 		}
 	}
 
+	/**
+	 * Obtem o file path do ficheiro csv do horario gravado na ultima sessao.
+	 *
+	 * @return file path do ficheiro csv do horario.
+	 */
 	public static String getHorarioFilePath() {
 		return horarioFilePath;
 	}
 
+	/**
+	 * Obtem a ordem dos campos do horario defenidos na sessao anterior
+	 *
+	 * @return Mapa com a ordem dos campos.
+	 */
 	public static Map<String, Integer> getOrdemCampos() {
 		return ordemCampos;
 	}
 
+	/**
+	 * Obtem os pares metrica-resultado defenidos na sessao anterior
+	 *
+	 * @return Mapa com os pares metrica-resultado.
+	 */
 	public static Map<Metrica, Integer> getMetricas() {
 		return metricas;
 	}
-	
+
+	/**
+	 * Obtem o file path do ficheiro onde sao guradadas as informacoes de sessao para sessao
+	 *
+	 * @return file path do save file.
+	 */
 	public static String getSaveStateFilePath() {
 		return saveStateFilePath;
 	}

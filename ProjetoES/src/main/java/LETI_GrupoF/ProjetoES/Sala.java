@@ -17,7 +17,6 @@ public class Sala {
 	 *
 	 * @param caracterizacaoSala   A lista de toda a informacao que caracteriza a sala.
 	 */
-	
 	public Sala(List<String> dataSala, List<String> columnTitles){
 		informacaoSala = dataSala.subList(0, 4);
 		
