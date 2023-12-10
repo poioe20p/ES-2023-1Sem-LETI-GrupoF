@@ -13,4 +13,4 @@
 
 Erros, funcionalidades não implementadas ou não finalizadas:
 
--Neste projeto não foi implementada a funcionalidade que permite ao utilizador atribuir uma sala(s) para uma ou mais aulas.
+-Neste projeto não foi implementada a funcionalidade que permite ao utilizador atribuir uma sala(s) para uma ou mais aulas. Não é possivel filtrar pela capacidade somente pelas caracteristicas. 
