@@ -23,6 +23,12 @@ public class Metrica {
 		aulasComComtribuicao = new ArrayList<>();
 	}
 
+	/**
+     * Obtem a formula da metrica.
+     *
+     * @return A formula igual à colocada pelo utilizador inicialmente.
+     */
+	
     public String getOriginalFormula() {
 		return formula;
 	}

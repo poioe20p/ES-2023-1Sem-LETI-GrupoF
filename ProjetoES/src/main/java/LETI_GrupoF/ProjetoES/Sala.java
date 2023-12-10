@@ -11,22 +11,23 @@ public class Sala {
 
 	private List<String> informacaoSala = new ArrayList<>();
 	private List<String> caracteristicasSala = new ArrayList<>();
-	
+
 	/**
 	 * Construtor da classe Sala. Inicializa uma sala com as informações fornecidas.
 	 *
-	 * @param caracterizacaoSala   A lista de toda a informacao que caracteriza a sala.
+	 * @param dataSala     A lista de toda a informacao que caracteriza a sala.
+	 * @param columnTitles A lista de titulos do ficheiro das Salas
 	 */
-	public Sala(List<String> dataSala, List<String> columnTitles){
+	public Sala(List<String> dataSala, List<String> columnTitles) {
 		informacaoSala = dataSala.subList(0, 4);
-		
-		for(int i = 5; i < dataSala.size(); i++) {
-			if(dataSala.get(i).trim().equals("x")) {
+
+		for (int i = 5; i < dataSala.size(); i++) {
+			if (dataSala.get(i).trim().equals("x")) {
 				caracteristicasSala.add(columnTitles.get(i));
 			}
 		}
 	}
-	
+
 	// Metodos de acesso aos atributos da sala
 
 	/**
@@ -58,9 +59,10 @@ public class Sala {
 
 	@Override
 	public String toString() {
-		return "Sala [edificio=" + getInformacaoSala().get(0) + ", nome=" + getInformacaoSala().get(1) + ", capacidadeNormal=" + getInformacaoSala().get(2)
-				+ ", capacidadeExame=" + getInformacaoSala().get(3) + ", nCaracteristicas=" + getNumeroCaracteristicas()
-				+ ", caracteristicas=" + getCaracteristicasSala().toString() + "]";
+		return "Sala [edificio=" + getInformacaoSala().get(0) + ", nome=" + getInformacaoSala().get(1)
+				+ ", capacidadeNormal=" + getInformacaoSala().get(2) + ", capacidadeExame=" + getInformacaoSala().get(3)
+				+ ", nCaracteristicas=" + getNumeroCaracteristicas() + ", caracteristicas="
+				+ getCaracteristicasSala().toString() + "]";
 	}
 
 }

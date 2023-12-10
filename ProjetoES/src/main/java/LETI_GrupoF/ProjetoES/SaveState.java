@@ -7,6 +7,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
 
+/**
+ * A classe SaveState e responsavel por salvar e recuperar o estado da aplicacao, incluindo informacoes sobre o horario, a ordem dos campos no
+ * horario e as metricas definidas pelo utilizador.
+ */
+
 public class SaveState {
 
 	private static final String saveStateFilePath = "SaveState.txt";
@@ -15,12 +20,14 @@ public class SaveState {
 	private static Map<Metrica, Integer> metricas = new LinkedHashMap<>();
 
 	/**
-	 * Este método tem como finalidade guardas as configuracoes da aplicacao, que possibilita ao
-	 * utilizador a sua reutilização caso este queira retomar a sua sessão anterior.
+	 * Este metodo tem como finalidade guardas as configuracoes da aplicacao, que
+	 * possibilita ao utilizador a sua reutilizacao caso este queira retomar a sua
+	 * sessao anterior.
 	 *
 	 * @param horarioFilePath Indica qual o horario usado pelo utilizador na sessao
-	 * @param ordemCampos Um mapa que define a ordem e a posicao dos campos no horario. Cada chave representa um campo e o valor
-	 *                    associado indica a posicao do mesmo.
+	 * @param ordemCampos     Um mapa que define a ordem e a posicao dos campos no
+	 *                        horario. Cada chave representa um campo e o valor
+	 *                        associado indica a posicao do mesmo.
 	 */
 
 	public static void guardarHorario(String horarioFilePath, Map<String, Integer> ordemCampos) {
@@ -34,7 +41,7 @@ public class SaveState {
 				writer.println(entry.getKey() + ":" + entry.getValue());
 			}
 
-			writer.println("FOC"); //Fim Ordem Campos
+			writer.println("FOC"); // Fim Ordem Campos
 
 			writer.close();
 
@@ -60,14 +67,14 @@ public class SaveState {
 				String linha = sc.nextLine();
 				if (!linha.trim().equals("FOC")) {
 					linhas.add(linha);
-				}else {
+				} else {
 					linhas.add(linha);
 					break;
 				}
 			}
 			FileWriter file = new FileWriter(saveStateFilePath);
 			PrintWriter writer = new PrintWriter(file);
-			for(String linha : linhas) {
+			for (String linha : linhas) {
 				writer.println(linha);
 			}
 			for (Map.Entry<Metrica, Integer> entry : metricas.entrySet()) {
@@ -90,7 +97,7 @@ public class SaveState {
 		boolean isFOC = true;
 		try {
 			Scanner sc = new Scanner(new File(saveStateFilePath));
-			if(sc.hasNextLine()) {
+			if (sc.hasNextLine()) {
 				horarioFilePath = sc.nextLine();
 				while (sc.hasNextLine()) {
 					String linha = sc.nextLine();
@@ -155,16 +162,18 @@ public class SaveState {
 	}
 
 	/**
-	 * Obtem o file path do ficheiro onde sao guradadas as informacoes de sessao para sessao
+	 * Obtem o file path do ficheiro onde sao guradadas as informacoes de sessao
+	 * para sessao
 	 *
 	 * @return File path do save file.
 	 */
 	public static String getSaveStateFilePath() {
 		return saveStateFilePath;
 	}
-	
+
 	/**
-	 * Obtem o file path do ficheiro onde sao guradadas as informacoes de sessao para sessao
+	 * Obtem o file path do ficheiro onde sao guradadas as informacoes de sessao
+	 * para sessao
 	 *
 	 * @return True se o save file estiver vazio. False caso o contrario
 	 */

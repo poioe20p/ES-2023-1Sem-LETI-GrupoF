@@ -49,11 +49,11 @@ public class TesteLayoutDefinable {
         JFrame frame = new JFrame();
         testingFrame test = new testingFrame();
         LayoutDefinable.basicLayout("title", frame, Color.white);
-        Assertions.assertEquals(frame.getTitle(), "title");
-        Assertions.assertEquals(frame.getBackground(), Color.white);
-        Assertions.assertEquals(frame.getDefaultCloseOperation(), JFrame.EXIT_ON_CLOSE);
-        Assertions.assertEquals(frame.getExtendedState(), JFrame.MAXIMIZED_BOTH);
-        Assertions.assertEquals(frame.getWindowListeners().length, 1);
+        Assertions.assertEquals("title",frame.getTitle() );
+        Assertions.assertEquals( Color.white,frame.getBackground());
+        Assertions.assertEquals( JFrame.EXIT_ON_CLOSE, frame.getDefaultCloseOperation());
+        Assertions.assertEquals(JFrame.MAXIMIZED_BOTH,frame.getExtendedState() );
+        Assertions.assertEquals(1,frame.getWindowListeners().length);
         LayoutDefinable.setVisibility(frame, true);
         Assertions.assertTrue(frame.isVisible());
         LayoutDefinable.setVisibility(frame, false);
@@ -64,21 +64,21 @@ public class TesteLayoutDefinable {
     void testDefineButtonLayout() {
         JButton button = LayoutDefinable.defineButtonLayout(Color.white, Color.black, "text", new Dimension(10, 10));
         Assertions.assertNotNull(button);
-        Assertions.assertEquals(button.getBackground(), Color.white);
-        Assertions.assertEquals(button.getForeground(), Color.black);
-        Assertions.assertEquals(button.getText(), "text");
-        Assertions.assertEquals(button.getPreferredSize(), new Dimension(10, 10));
+        Assertions.assertEquals( Color.white,button.getBackground());
+        Assertions.assertEquals(Color.black,button.getForeground() );
+        Assertions.assertEquals( "text",button.getText());
+        Assertions.assertEquals(new Dimension(10, 10),button.getPreferredSize() );
     }
 
     @Test
     void testDefineTextFieldLayout() {
         JTextField textField = LayoutDefinable.defineTextFieldLayout("text", "font", 10, 10, Color.white, Color.black);
         Assertions.assertNotNull(textField);
-        Assertions.assertEquals(textField.getBackground(), Color.white);
-        Assertions.assertEquals(textField.getForeground(), Color.black);
-        Assertions.assertEquals(textField.getText(), "text");
-        Assertions.assertEquals(textField.getFont().getName(), "font");
-        Assertions.assertEquals(textField.getFont().getSize(), 10);
+        Assertions.assertEquals(Color.white,textField.getBackground() );
+        Assertions.assertEquals( Color.black,textField.getForeground());
+        Assertions.assertEquals( "text", textField.getText());
+        Assertions.assertEquals("font",textField.getFont().getName());
+        Assertions.assertEquals( 10,textField.getFont().getSize());
      }
 
     @Test
@@ -86,11 +86,11 @@ public class TesteLayoutDefinable {
         JTextArea textArea = LayoutDefinable.defineTextAreaLayout("text", "font",
                 10, 10, Color.white, Color.black);
         Assertions.assertNotNull(textArea);
-        Assertions.assertEquals(textArea.getBackground(), Color.white);
-        Assertions.assertEquals(textArea.getForeground(), Color.black);
-        Assertions.assertEquals(textArea.getText(), "text");
-        Assertions.assertEquals(textArea.getFont().getName(), "font");
-        Assertions.assertEquals(textArea.getFont().getSize(), 10);
+        Assertions.assertEquals(Color.white, textArea.getBackground());
+        Assertions.assertEquals( Color.black,textArea.getForeground());
+        Assertions.assertEquals("text",textArea.getText());
+        Assertions.assertEquals( "font",textArea.getFont().getName());
+        Assertions.assertEquals( 10,textArea.getFont().getSize());
     }
 
 

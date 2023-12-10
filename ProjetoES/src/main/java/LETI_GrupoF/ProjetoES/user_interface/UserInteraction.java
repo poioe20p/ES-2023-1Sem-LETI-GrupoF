@@ -13,7 +13,7 @@ import java.util.*;
 import java.util.List;
 
 /**
- * Esta classe fornece interatividade à página acessada pelo usuário.
+ * Esta classe fornece interatividade a pagina acessada pelo usuario.
  */
 public class UserInteraction {
 
@@ -67,9 +67,10 @@ public class UserInteraction {
 	}
 
 	/**
-	 * Este metodo define o comportamento dos botoes da pagina ScheduleQualityPage que corresponde à pagina onde as metricas sao calculadas.
+	 * Este metodo define o comportamento dos botoes da pagina ScheduleQualityPage que corresponde a pagina onde as metricas sao calculadas.
 	 *
 	 * @param horario
+	 * @param isSavedSchedule
 	 */
 
 	private void setUpScheduelQualityPageButton(Horario horario, boolean isSavedSchedule) {
@@ -96,7 +97,7 @@ public class UserInteraction {
 
 	/**
 	 * Este metodo define o comportamento dos botoes da pagina ScheduleQualityTable que
-	 * corresponde à pagina onde as metricas sao apresentadas.
+	 * corresponde a pagina onde as metricas sao apresentadas.
 	 */
 	private void setUpScheduleQualityTableButtons(List<String> columnTitles, boolean isSavedSchedule, Horario horario) {
 		scheduleQualityTable.getOpenMetricScheduleButton().addActionListener(e -> {

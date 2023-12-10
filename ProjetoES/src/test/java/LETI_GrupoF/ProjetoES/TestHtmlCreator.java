@@ -59,26 +59,26 @@ class TestHtmlCreator {
 	}
 
 	@Test
-	void testTitlesPostion() {
-		assertNotNull(html.tiltesPosition());
-		assertEquals(html.tiltesPosition().size(), 11);
-		assertNotNull(html2.tiltesPosition());
-		assertEquals(html2.tiltesPosition().size(), 11);
-		assertEquals(htmlFail.tiltesPosition().size(), 0);
+	void testTitlesPosition() {
+	    assertNotNull(html.tiltesPosition());
+	    assertEquals(11, html.tiltesPosition().size());
+	    assertNotNull(html2.tiltesPosition());
+	    assertEquals(11, html2.tiltesPosition().size());
+	    assertEquals(0, htmlFail.tiltesPosition().size());
 	}
 
 	@Test
 	void testGenerateHtmlPage() {
-		assertTrue(html2.generateHtmlPage());
-		assertTrue(html.generateHtmlPage());
-		assertTrue(htmlFail.generateHtmlPage());
+	    assertTrue(html2.generateHtmlPage());
+	    assertTrue(html.generateHtmlPage());
+	    assertTrue(htmlFail.generateHtmlPage());
 	}
  
 	@Test
 	void testGetHtmlPath() {
-		assertEquals(html.getHtmlPath(), "Horario.html");
-		assertEquals(html2.getHtmlPath(), "Horario.html");
-		assertEquals(htmlFail.getHtmlPath(), "Horario.html");
+	    assertEquals("Horario.html", html.getHtmlPath());
+	    assertEquals("Horario.html", html2.getHtmlPath());
+	    assertEquals("Horario.html", htmlFail.getHtmlPath());
 	}
 
 

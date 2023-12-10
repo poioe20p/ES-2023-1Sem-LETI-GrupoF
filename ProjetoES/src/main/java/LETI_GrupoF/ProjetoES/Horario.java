@@ -32,7 +32,7 @@ public class Horario {
 	}
 
 	/**
-	 * Adiciona uma métrica ao horário e salva o estado.
+	 * Adiciona uma metrica ao horario e salva o estado.
 	 *
 	 * @param metrica A métrica a ser adicionada.
 	 */
