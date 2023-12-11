@@ -32,8 +32,10 @@ class TestSalas {
 		assertNotNull(salas.getListaSalas());
 	}
 
+
+	//TEste para verificar se a lista de salas filtradas é null
 	@Test
-	void testNomeSalas() {
+	void testNomeSalass() {
 		assertNotNull(salas.getNomeSalas());
 	}
 
