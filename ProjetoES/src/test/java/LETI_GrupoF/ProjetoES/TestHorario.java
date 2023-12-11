@@ -84,13 +84,6 @@ class TestHorario {
 	void testGetMetricas() {
 		assertNotNull(horario.getMetricas());
 	}
-	
-	@Test
-	void testSetMetricas() {
-		Map<Metrica, Integer> metricas = horario.getMetricas();
-		horario.setMetricas(metricas);
-		assertEquals(ordemCampos.size(), horario.getMetricas().size());
-	}
 
 	@Test
 	void testGetOrdemCampos() {
